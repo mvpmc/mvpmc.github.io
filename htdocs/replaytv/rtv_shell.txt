@@ -46,8 +46,8 @@ RTV Device info
      major:    5
      minor:    1
      build:    1440
-  serialNum:   RTV5040J3TR0103130
-  udn:         uuid:a74f4677-c352-8b5c-3ee7-26382ab12cae 
+  serialNum:   RTV5040JXXXXXXXXXX
+  udn:         uuid:a1234556-c352-8b5c-3ee7-123456789012 
   vintage:     5
   status:      000000FF
 rtv_sh>
