@@ -1,0 +1,304 @@
+[honeycut@epox8k9a libreplaytv]$ rtv_shell 
+rtv: ipaddress: 172.31.1.5   hostname: epox8k9a
+*************************************
+  WELCOME TO THE REPLAYTV SHELL
+  15 subcommands bound
+  Enter "help" for help
+  Enter "<command> -h" for detailed command help
+  <CNTL>-\ or <CNTL>-C Exits
+*************************************
+
+rtv_sh>help
+
+SHELL COMMANDS:
+   sendlogs   :    send logs to a file
+   sdm        :    set the debug trace mask
+   discover   :    discover RTV devices
+   di         :    get RTV device information
+   devlist    :    print device list summary
+   guide      :    get RTV guide
+   delshow    :    delete a show
+   playpos    :    get shows current play position
+   free       :    free rtv data struct
+   fsvi       :    http filesystem: get volume info
+   fsstat     :    http filesystem: get file status
+   fsls       :    http filesystem: list directory
+   fsget      :    http filesystem: get file
+   crypttest  :    Test encryption routines
+   clitestfxn :    test parameter parsing
+   help       :    display this help
+
+   >help <command> provides detailed help for the command.
+
+
+************************************************************************************
+rtv_sh>di 172.31.1.10
+RTV Device info
+---------------
+  ipaddr:      172.31.1.10
+  deviceType:  urn:replaytv-com:device:ReplayDevice:1
+  name:        Den
+  modelDescr:  ReplayTV 5000 Digital Video Recorder
+  modelName:   ReplayTV 5000
+  modelNumber: 5040
+  versionStr:  530511440
+     vintage:  5
+     major:    5
+     minor:    1
+     build:    1440
+  serialNum:   RTV5040J3TR0103130
+  udn:         uuid:a74f4677-c352-8b5c-3ee7-26382ab12cae 
+  vintage:     5
+  status:      000000FF
+rtv_sh>
+rtv_sh>guide 172.31.1.10
+RTV Guide Snapshot Dump
+-----------------------
+timestamp:   1108954740
+status:      0x00000000
+numshows:    7
+
+Show #0:
+  title:       Law & Order: Criminal Intent
+  episode:     Pas De Deux
+  description: A criminal triggers a device to blow up his bank-robbing accomplice.
+  actors:      Vincent D'Onofrio, Kathryn Erbe, Courtney B. Vance
+  guest:       Charles Rocket, Enid Graham
+  suzuki:      24,66,70,74,0,5002,900
+  producer:    
+  director:    
+  genre:       CrimeDrama Drama 
+  rating:      TV-14
+  rating ext:  
+  quality:     Standard
+  input src:   Tuner
+  tuning:      6  (WNCN) WNCN
+  flags:       CC STEREO REPEAT
+  show_id:  0x4206d9ad   channel_id:  0x4203d20c
+  filename:           1107745197.mpg
+  file size           884085760 843(MB)
+  file creation time: 1107745197872
+                      2005-02-06 22:00:00
+                      02/06 at 10:00 PM
+  GOP_count:          7195
+  duration (seconds): 3598
+  duration:           1 hour
+  sch start time:     1107745200
+  sch start time:     2005-02-06 22:00:00
+  sch len (minutes):  60
+  minutes padding before: 0 minutes padding after: 0
+
+Show #1:
+  title:       Law & Order: Criminal Intent
+  episode:     Stress Position
+  description: The murder of a corrections officer leads detectives to a ring of abusive prison guards.
+  actors:      Vincent D'Onofrio, Kathryn Erbe, Courtney B. Vance
+  guest:       Chris Noth
+  suzuki:      24,66,70,74,0,5002,900
+  producer:    
+  director:    
+  genre:       CrimeDrama Drama 
+  rating:      TV-14
+  rating ext:  
+  quality:     Standard
+  input src:   Tuner
+  tuning:      6  (WNCN) WNCN
+  flags:       CC STEREO
+  show_id:  0x4210061d   channel_id:  0x4203d20c
+  filename:           1108346397.mpg
+  file size           881526272 840(MB)
+  file creation time: 1108346397875
+                      2005-02-13 21:00:00
+                      02/13 at  9:00 PM
+  GOP_count:          7195
+  duration (seconds): 3598
+  duration:           1 hour
+  sch start time:     1108346400
+  sch start time:     2005-02-13 21:00:00
+  sch len (minutes):  60
+  minutes padding before: 0 minutes padding after: 0
+
+Show #2:
+  title:       Law & Order: Criminal Intent
+  episode:     Sex Club
+  description: A U.S. senatorial candidate is suspected of murder.
+  actors:      Vincent D'Onofrio, Kathryn Erbe, Courtney B. Vance
+  guest:       Peter Bogdanovich, Rosanna Arquette, Matt Servitto
+  suzuki:      24,66,70,74,0,5002,900
+  producer:    
+  director:    
+  genre:       CrimeDrama Drama 
+  rating:      TV-14
+  rating ext:  
+  quality:     Standard
+  input src:   Tuner
+  tuning:      6  (WNCN) WNCN
+  flags:       CC STEREO
+  show_id:  0x4219328d   channel_id:  0x4203d20c
+  filename:           1108947597.mpg
+  file size           882410496 841(MB)
+  file creation time: 1108947598396
+                      2005-02-20 20:00:01
+                      02/20 at  8:00 PM
+  GOP_count:          7193
+  duration (seconds): 3597
+  duration:           1 hour
+  sch start time:     1108947600
+  sch start time:     2005-02-20 20:00:00
+  sch len (minutes):  60
+  minutes padding before: 0 minutes padding after: 0
+
+Show #3:
+  title:       Alias
+  episode:     Detente
+  description: Sydney and Nadia go under cover as young heiresses to find a deadly chemical.
+  actors:      Jennifer Garner, Victor Garber, Ron Rifkin
+  guest:       Boris Krutonog, Aengus James, Olga Vilner
+  suzuki:      1,2,24,66,74,1425,1429,0,5002,900
+  producer:    
+  director:    Craig Zisk
+  genre:       Drama Action Adventure Suspense
+  rating:      TV-14
+  rating ext:  V
+  quality:     Standard
+  input src:   Tuner
+  tuning:      9  (WTVD) WTVD
+  flags:       CC STEREO
+  show_id:  0x4213fb51   channel_id:  0x4203d337
+  filename:           1108605777.mpg
+  file size           869198336 828(MB)
+  file creation time: 1108605777498
+                      2005-02-16 21:03:00
+                      02/16 at  9:03 PM
+  GOP_count:          7076
+  duration (seconds): 3538
+  duration:           59 minutes
+  sch start time:     1108605780
+  sch start time:     2005-02-16 21:03:00
+  sch len (minutes):  59
+  minutes padding before: 0 minutes padding after: 0
+
+Show #4:
+  title:       Joan of Arcadia
+  episode:     Independence Day
+  description: Joan defies her parents; Friedman rebuffs Stevie's advances.
+  actors:      Joe Mantegna, Mary Steenburgen, Amber Tamblyn
+  guest:       Michael Welch, Christopher Marquette, Becky Wahlstrom
+  suzuki:      24,65,74,0,5002,900
+  producer:    
+  director:    
+  genre:       Drama 
+  rating:      TV-PG
+  rating ext:  LD
+  quality:     Standard
+  input src:   Tuner
+  tuning:      3  (WRAL) WRAL
+  flags:       CC STEREO
+  show_id:  0x42168f8d   channel_id:  0x4203d35f
+  filename:           1108774797.mpg
+  file size           881217536 840(MB)
+  file creation time: 1108774797407
+                      2005-02-18 20:00:00
+                      02/18 at  8:00 PM
+  GOP_count:          7195
+  duration (seconds): 3598
+  duration:           1 hour
+  sch start time:     1108774800
+  sch start time:     2005-02-18 20:00:00
+  sch len (minutes):  60
+  minutes padding before: 0 minutes padding after: 0
+
+Show #5:
+  title:       Survivor: Palau
+  episode:     This Has Never Happened Before!
+  description: Twenty people stranded on a group of islands compete to win the $1 million prize.
+  actors:      
+  guest:       
+  suzuki:      1,2,49,83,1411,0,5002,900,936
+  producer:    
+  director:    
+  genre:       GameShow RealityShow Action Adventure
+  rating:      
+  rating ext:  
+  quality:     Standard
+  input src:   Tuner
+  tuning:      3  (WRAL) WRAL
+  flags:       CC STEREO
+  show_id:  0x42153e0d   channel_id:  0x420d6dd9
+  filename:           1108688397.mpg
+  file size           879474688 838(MB)
+  file creation time: 1108688397603
+                      2005-02-17 20:00:00
+                      02/17 at  8:00 PM
+  GOP_count:          7195
+  duration (seconds): 3598
+  duration:           1 hour
+  sch start time:     1108688400
+  sch start time:     2005-02-17 20:00:00
+  sch len (minutes):  60
+  minutes padding before: 0 minutes padding after: 0
+
+Show #6:
+  title:       The Natural
+  episode:     
+  description: A magic bat gives a flawed baseball hero another crack at greatness in 1939.
+  actors:      Robert Redford, Robert Duvall, Glenn Close, Kim Basinger, Wilford Brimley
+  guest:       
+  suzuki:      109,120,125,33,56,57,65,0,5002,907
+  producer:    
+  director:    Barry Levinson
+  genre:       Drama 
+  rating:      PG
+  rating ext:  AC AL MV 
+  quality:     Medium
+  input src:   Tuner
+  tuning:      38  (AMC) AMC
+  flags:       CC MOVIE
+  movie_stars: 3    movie_year: 1984    movie_runtime: 138
+  show_id:  0x420ef061   channel_id:  0x420eaaa9
+  filename:           1108275297.mpg
+  file size           5046645248 4812(MB)
+  file creation time: 1108275297490
+                      2005-02-13 01:15:00
+                      02/13 at  1:15 AM
+  GOP_count:          21581
+  duration (seconds): 10791
+  duration:           3 hours
+  sch start time:     1108275300
+  sch start time:     2005-02-13 01:15:00
+  sch len (minutes):  180
+  minutes padding before: 0 minutes padding after: 0
+
+************************************************************************************
+rtv_sh>fsls -h   
+Usage:  fsls       <ip address> <path> [-l]
+
+rtv_sh>fsls 172.31.1.10 /Video -l
+RTV File listing
+PATH: /Video       Number of files: 22
+------------------------------------------
+/Video/1107745197.evt       2005-02-06 22:00:00    type=f  size:      100136       0(MB)
+/Video/1107745197.mpg       2005-02-06 22:00:00    type=f  size:   884085760     843(MB)
+/Video/1107745197.ndx       2005-02-06 22:00:00    type=f  size:      172736       0(MB)
+/Video/1108275297.evt       2005-02-13 01:15:00    type=f  size:      143912       0(MB)
+/Video/1108275297.mpg       2005-02-13 01:15:00    type=f  size:  5046645248    4812(MB)
+/Video/1108275297.ndx       2005-02-13 01:15:00    type=f  size:      518000       0(MB)
+/Video/1108346397.evt       2005-02-13 21:00:00    type=f  size:       95408       0(MB)
+/Video/1108346397.mpg       2005-02-13 21:00:00    type=f  size:   881526272     840(MB)
+/Video/1108346397.ndx       2005-02-13 21:00:00    type=f  size:      172736       0(MB)
+/Video/1108605777.evt       2005-02-16 21:03:00    type=f  size:       81176       0(MB)
+/Video/1108605777.mpg       2005-02-16 21:03:00    type=f  size:   869198336     828(MB)
+/Video/1108605777.ndx       2005-02-16 21:03:00    type=f  size:      169880       0(MB)
+/Video/1108688397.evt       2005-02-17 20:00:00    type=f  size:       44408       0(MB)
+/Video/1108688397.mpg       2005-02-17 20:00:00    type=f  size:   879474688     838(MB)
+/Video/1108688397.ndx       2005-02-17 20:00:00    type=f  size:      172736       0(MB)
+/Video/1108774797.evt       2005-02-18 20:00:00    type=f  size:       93440       0(MB)
+/Video/1108774797.mpg       2005-02-18 20:00:00    type=f  size:   881217536     840(MB)
+/Video/1108774797.ndx       2005-02-18 20:00:00    type=f  size:      172736       0(MB)
+/Video/1108947597.evt       2005-02-20 20:00:01    type=f  size:       98288       0(MB)
+/Video/1108947597.mpg       2005-02-20 20:00:01    type=f  size:   882410496     841(MB)
+/Video/1108947597.ndx       2005-02-20 20:00:01    type=f  size:      172688       0(MB)
+/Video/tmp                  1969-12-31 19:00:03    type=d  size:           0       0(MB)
+rtv_sh>
+rtv_sh>
+
