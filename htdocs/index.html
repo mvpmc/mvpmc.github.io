@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-<!-- $Id: index.html,v 1.7 2004/07/08 03:53:49 gettler Exp $ -->
+<!-- $Id: index.html,v 1.8 2004/07/11 16:42:47 gettler Exp $ -->
 
 <head>
 
@@ -160,7 +160,7 @@ p               {text-align: justify}
             <tr align="right">
               <td>
                 <font size="-1">
-                  $Revision: 1.7 $<br>$Date: 2004/07/08 03:53:49 $
+                  $Revision: 1.8 $<br>$Date: 2004/07/11 16:42:47 $
                 </font>
               </td>
             </tr>
@@ -186,24 +186,43 @@ list
 
 <br>
 
-<h3>dongle.bin builder</h3>
+<h3>mvpmc media player</h3>
 
 <p>
-This is a shell script which automates the process of building a new
-dongle.bin file.  It will extract the IBM kernel modules from a user supplied
-Hauppauge dongle.bin, and create a new dongle.bin from the filesystem and
-kernel supplied with this script.
+The mvpmc media player has been checked into the CVS repository.  It is
+capable of playing mpeg1/mpeg2 video from a MythTV server.  It also
+allows you to browse your filesystem and play mpeg1/mpeg2 video, mp3 audio,
+and display bmp, gif, png, and jpeg images from an NFS server.
 </p>
 
 <p>
-The filesystem contained in this tarball contains the <b>mvpmc</b> media
-player.  It is capable of playing recorded mpeg files off a MythTV server,
-as well as playing mpeg and mp3 files off an NFS filesystem.  It can also
-display bmp, gif, jpg, and png images.
+You can check all the code out of the CVS repository, or you can download
+binary or source tarballs.  Both the binary and source releases require you
+to have a Hauppauge supplied dongle.bin, so that the IBM kernel modules can
+be extracted.  They also require you to have an x86 linux system on
+which to create a new dongle.bin file.
 </p>
 
+<center>
+<table border="1">
+<tr><td>filename</td><td>type</td><td>size</td></tr>
+<tr>
+  <td><a href="dl/dongle_build.tar.gz">dongle_build.tar.gz</a></td>
+  <td>binary</td>
+  <td>3.5mb</td>
+</tr>
+<tr>
+  <td><a href="dl/mvpmc_src.tar.gz">mvpmc_src.tar.gz</a></td>
+  <td>source</td>
+  <td>9.2mb</td>
+</tr>
+</table>
+</center>
+
 <p>
-You can get the tarball <a href="dl/dongle_build.tar.gz">here</a>.
+The source tarball contains the following: busybox, libjpeg, libpng,
+libz, microwindows, mvplib, and mvpmc.  It also contains a build script
+to build all of the source code and create a new dongle.bin file.
 </p>
 
 <p>
@@ -223,39 +242,6 @@ interface.
 </p>
 
 <br>
-
-<h3>Building the source code</h3>
-
-<p>
-To build the code in CVS, check out the <i>mvplib</i> and <i>tests</i>
-CVS modules.  Also, get Microwindows 0.90
-<a href="dl/microwindows-0.90.tar.gz">here</a>,
-and a MediaMVP patch for it
-<a href="dl/microwindows-0.90_mvp.patch">here</a>.
-Apply the patch to Microwindows, and modify <i>src/config</i>
-and <i>src/Makefile.rules</i> to suite your build infrastructure.
-</p>
-
-<p>
-Next, run <b>autoconf</b> and <b>configure</b> in the <i>mvplib</i>
-and <i>tests</i> directories.  You will need to use the <i>--with-mvplib</i>
-and <i>--with-microwindows</i> options with <b>configure</b> to tell it
-where those directories are.  Then build
-<i>mvplib</i>, <i>microwindows</i>, and <i>tests</i>, in that order.  This
-will give you some widget test programs, and a couple demo media players,
-which will demonstrate the use of the MVP libraries and nano-X.
-</p>
-
-<p>
-Also note that the test program will produce binaries which use a shared
-libc.  So make sure you either have a ramdisk suitable containing a shared
-libc, or you change the makefiles to link the test programs static.
-</p>
-
-<p>
-Hopefully this will all be automated soon, but for now it is a manual
-process.
-</p>
 
         </td>
 
