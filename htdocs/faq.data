@@ -127,6 +127,17 @@ such as scheduling and deleting recordings does not yet exist.
 How do I connect to a ReplayTV/DVArchive?
 Since mvpmc does not support the ReplayTV discovery protocol, you need to
 specify the IP address of your ReplayTV/DVArchive server via the -R option.
+The -R option accepts a parameter string with the following suboptions:
+</p><pre>
+   ip=ipaddress1/ipaddress2/ipaddress3/...
+   debug=tracemask
+   logfile=nfsmount-logfile-path
+examples:
+   mvpmc -R "ip=192.168.1.10"
+   mvpmc -R "ip=192.168.1.10/192.168.1.11"
+   mvpmc -R "ip=192.168.1.10 debug=0ff logfile=/nfs/mvplogs"
+</pre><p>
+
 ###
 
 What keys do what on the remote control?
