@@ -7,7 +7,7 @@
 <h1>mvpmc Microsoft Windows HowTo</h1>
 
 <h2>John Honeycutt, 
-<a>honeycut@sourceforge.net</a></h2>2005-02-19, v0.00.01
+<a>honeycut@users.sourceforge.net</a></h2>2005-03-19, v0.00.02
 <hr>
 <em></em>
 <hr>
@@ -40,6 +40,9 @@
 
 <p>
 <h2><a name="toc10">10.</a> <a href="mvpmc_windoze_howto.html#s10">Verifying mvpmc</a></h2>
+
+<p>
+<h2><a name="toc11">11.</a> <a href="mvpmc_windoze_howto.html#s11">Configuring a CIFS server</a></h2>
 
 <hr>
 <h2><a name="s1">1.</a> <a href="#toc1">Introduction</a></h2>
@@ -143,7 +146,7 @@ rdate -s $SERVER
 # Mount my Windows XP boxes CIF's mpeg file share
 #
 mkdir /wxp_video
-mount.cifs //172.31.1.5/video_share /wxp_video/ -o password=guest
+mount.cifs //172.31.1.5/video_share /wxp_video/ -o password=guest,rsize=34000
 
 ########################
 # SECTION 2
@@ -371,7 +374,7 @@ i.e. Tools->ControlService->Start<br>
 </ol>
 
 <h2><a name="s8">8.</a> <a href="#toc8">Testing the TFTP Server</a></h2>
-By default the TFTP-turbo "virtual root directory is &ltTFTP Turbo install dir&gt/tftp_root<br>
+By default the TFTP-turbo virtual root directory is &lt TFTP Turbo install dir &gt/tftp_root<br>
 i.e.: The directory where files to be tftp'd are stored.<br><br>
 <ul>
 <li>Copy your mvp load in the tftp_root dir.<br>
@@ -403,7 +406,7 @@ TFTP-Turbo "Activity" window as shown below.<br><br>
 <br>Once the downloads complete the TV screen should go blank.<br>
 <b>NOTE:</b> If you don't see the files download then:<br>
 <ul>
-<li>Check the TFTP-Turbo log file for problems: The log file is &ltTFTP Turbo install dir&gt/tftpt.log<br>
+<li>Check the TFTP-Turbo log file for problems: The log file is &lt TFTP Turbo install dir &gt/tftpt.log<br>
 If there is not a log entry for the either the load file or config file then you probably
 have a firewall issue or the DHCP Server may have not correctly set the "Next Server" IP address to point to your windows box.<br> 
 In either case using ethereal to capture packets for the boot process should help isolate the issue.<br><br>
@@ -457,7 +460,7 @@ Also, the "env" command output shows the "TZ" variable correctly set.<br><br>
 WXP-Pro also starts it's own SNTP server. So, if you get a winsock error when starting
 the server just disable the Absolute's SNTP server.<br><br>
 <li>Telnet to the MVP and login.<br><br>
-<li>Enter: <font color="#0000FF">rdate &ltServer IP Addr&gt<br></font>
+<li>Enter: <font color="#0000FF">rdate &lt Server IP Addr &gt<br></font>
 Enter: <font color="#0000FF">date</font><br>
 The date should be set correctly. Example output below.<br>
 <blockquote><code>
@@ -483,12 +486,55 @@ should be displayed on the TV.<br>
 If you have DVArchive and/or ReplayTV's you should be able to discover them, view the guide,
 and play shows.<br>
 
-When done enter: <font color="#0000FF">&ltCNTL&GT-C</font> to terminate the mvpmc application.<br><br>
+When done enter: <font color="#0000FF">&lt CNTL &gt -C</font> to terminate the mvpmc application.<br><br>
 
 Finally, update your config script to run the rdate command and start mvpmc when the 
 MediaMVP boots.<br>
 Cycle the MVP's power.<br>
 The MVP should now boot, the date should be set correctly, and the mvpmc application should start.
+
+<h2><a name="s11">11.</a> <a href="#toc11">Configuring a CIFS server</a></h2>
+
+CIF's has been verified with WXP-Pro SP2 and samba 3.0.10.<br><br>
+Required Windows XP/2K registry addition:<br>
+To optimize streaming throughput go to the following Windows registry subkey:<br>
+\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters<br>
+Create a SizReqBuf value using the following information:<br>
+<code><blockquote>
+<pre>
+ValueName:      SizReqBuf
+DataType:       REG_DWORD
+Value(Decimal): 33000
+</pre>
+</code></blockquote>
+
+<br>On Windows the CIFS share needs to be setup for guest access.<br>
+Info on setting up a WinXP share is at 
+<a href="http://www.wown.com/j_helmig/wxpsimsh.htm">http://www.wown.com/j_helmig/wxpsimsh.htm</a>
+<br><br>
+For Linux add the following line to the server's smb.conf file's [global] section:<br>
+max xmit 64000<br><br>
+
+NOTE: The above optimizations basically set the MAX CIF's data blocks to values
+greater than 32K bytes.<br>
+The current mvpmc CIF's kernel code limits data blocks to 32K so this will 
+cause data to be streamed in efficient 32K chunks :-)<br><br>
+
+
+CIFS shares are mounted as follows from the MVP using the mount.cifs command.<br>
+NOTE: The "-o password=guest,rsize=34000" option should be used for
+accessing a guest share using 32K block sizes.<br>
+Following are example mvpmc config file entries for mounting a CIF's share
+
+<code><blockquote>
+<pre>
+mkdir /cifs_share
+mount.cifs //172.31.1.1/file_share /cifs_share/ -o password=guest,rsize=34000
+</pre>
+</code></blockquote>
+
+The above mounts the share named "file_share" from server 172.31.1.1<br>
+The file share is accessed on the MVP from directory "/cifs_share"<br><br>
 
 </body>
 </html>
