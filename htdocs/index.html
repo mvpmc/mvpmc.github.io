@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-<!-- $Id: index.html,v 1.4 2004/05/18 03:32:53 gettler Exp $ -->
+<!-- $Id: index.html,v 1.5 2004/06/08 01:40:24 gettler Exp $ -->
 
 <head>
 
@@ -160,7 +160,7 @@ p               {text-align: justify}
             <tr align="right">
               <td>
                 <font size="-1">
-                  $Revision: 1.4 $<br>$Date: 2004/05/18 03:32:53 $
+                  $Revision: 1.5 $<br>$Date: 2004/06/08 01:40:24 $
                 </font>
               </td>
             </tr>
@@ -189,25 +189,14 @@ list
 <h3>dongle.bin builder</h3>
 
 <p>
-I have created a shell script to make building bootable mediamvp dongle.bin
-files easier.  It takes your Hauppauge provided dongle.bin file, pulls out
-the kernel modules, adds them to your own ramdisk, and builds a new dongle.bin
-file from your ramdisk and kernel.
+This is a shell script which automates the process of building a new
+dongle.bin file.  It will extract the IBM kernel modules from a user supplied
+Hauppauge dongle.bin, and create a new dongle.bin from the filesystem and
+kernel supplied with this script.
 </p>
 
 <p>
-You can get the tarball <a href="dl/dongle_build.tar.gz">here</a>, and it
-includes the ramdisk, kernel, and build tools.  The build tools were built
-for x86 linux under Suse 9.0.  If they do not work for you, or if you are
-using a different architecture, then you will need to supply your own
-cross compilation environment (see
-<a href="http://www.dforsyth.net/mvp/software.html">here</a> for more info).
-</p>
-
-<p>
-Keep in mind that you will probably want to customize your ramdisk for your
-own network.  In particular, you may want to set up NFS mountpoints and
-a time server.  See /etc/rcS on the supplied ramdisk for more details.
+You can get the tarball <a href="dl/dongle_build.tar.gz">here</a>.
 </p>
 
 <h3>Demo Media Player</h3>
@@ -217,6 +206,20 @@ There is a demonstration media player in CVS, called <b>file_browser</b>.
 It is a a pretty simple program, which allows you to browse a filesystem
 and play audio and video files, as well as display images.  I use it to
 play mpeg2 files recorded with MythTV, and it has been working quite well.
+</p>
+
+<p>
+Features include:
+<ul>
+<li>mpeg1/mpeg2 video
+<li>mp3 audio
+<li>video thumbnails
+<li>30 second forward/backward skip
+<li>2x speed fast forward
+<li>pause and mute
+<li>OSD with timecode, progress bar, bitrate, etc.
+<li>DVD subtitles
+</ul>
 </p>
 
 <p>
