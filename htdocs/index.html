@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-<!-- $Id: index.html,v 1.9 2004/08/29 16:10:36 gettler Exp $ -->
+<!-- $Id: index.html,v 1.10 2004/09/02 03:05:32 gettler Exp $ -->
 
 <head>
 
@@ -150,6 +150,14 @@ p               {text-align: justify}
                       <a id="link" href="http://www.microwindows.org/">
                             Microwindows</a>&nbsp;<br>
 
+                      &nbsp;&nbsp;
+                      <a id="link" href="http://www.replaytv.com/">
+                            ReplayTV</a>&nbsp;<br>
+
+                      &nbsp;&nbsp;
+                      <a id="link" href="http://www.dvarchive.org/">
+                            DVArchive</a>&nbsp;<br>
+
                     </td>
                   </tr>
 
@@ -164,7 +172,7 @@ p               {text-align: justify}
             <tr align="right">
               <td>
                 <font size="-1">
-                  $Revision: 1.9 $<br>$Date: 2004/08/29 16:10:36 $
+                  $Revision: 1.10 $<br>$Date: 2004/09/02 03:05:32 $
                 </font>
               </td>
             </tr>
@@ -186,6 +194,19 @@ email <a href="mailto:gettler@users.sourceforge.net">here</a>.  You
 should also sign up for the developer mailing
 list
 <a href="http://lists.sourceforge.net/lists/listinfo/mvpmc-devel">here</a>.
+</p>
+
+<br>
+
+<h3>ReplayTV support</h3>
+
+<p>
+The latest version of the source code contains some proof-of-concept
+ReplayTV support.  Run mvpmc with the -R option to tell it the IP
+address of your ReplayTV box, and you may be able to watch your recorded
+shows.  I have tested this against DVArchive, but have been told it does
+not work with series 5000 ReplayTVs.  I do not have a ReplayTV, so if
+you are willing to get this working better, please send in a patch.
 </p>
 
 <br>
@@ -214,7 +235,8 @@ you will get with GNU libc.
 The mvpmc media player has been checked into the CVS repository.  It is
 capable of playing mpeg1/mpeg2 video from a MythTV server.  It also
 allows you to browse your filesystem and play mpeg1/mpeg2 video, mp3 audio,
-and display bmp, gif, png, and jpeg images from an NFS server.
+and display bmp, gif, png, and jpeg images from an NFS server.  It also
+has minimal support for connecting to a ReplayTV.
 </p>
 
 <p>
@@ -232,13 +254,13 @@ which to create a new dongle.bin file.
   <td><a href="dl/dongle_build.tar.gz">dongle_build.tar.gz</a></td>
   <td>binary</td>
   <td>3.0mb</td>
-  <td>29-Aug-04</td>
+  <td>1-Sep-04</td>
 </tr>
 <tr>
   <td><a href="dl/mvpmc_src.tar.gz">mvpmc_src.tar.gz</a></td>
   <td>source</td>
   <td>8.6mb</td>
-  <td>29-Aug-04</td>
+  <td>1-Sep-04</td>
 </tr>
 </table>
 </center>
