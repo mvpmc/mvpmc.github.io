@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-<!-- $Id: index.html,v 1.5 2004/06/08 01:40:24 gettler Exp $ -->
+<!-- $Id: index.html,v 1.6 2004/06/29 13:21:45 gettler Exp $ -->
 
 <head>
 
@@ -160,7 +160,7 @@ p               {text-align: justify}
             <tr align="right">
               <td>
                 <font size="-1">
-                  $Revision: 1.5 $<br>$Date: 2004/06/08 01:40:24 $
+                  $Revision: 1.6 $<br>$Date: 2004/06/29 13:21:45 $
                 </font>
               </td>
             </tr>
@@ -196,16 +196,21 @@ kernel supplied with this script.
 </p>
 
 <p>
+The filesystem contained in this tarball contains both the <b>file_browser</b>
+and the <b>myth_browser</b> demo programs.  These will allow you to play files
+off your filesystem and a MythTV server, respectively.
+</p>
+
+<p>
 You can get the tarball <a href="dl/dongle_build.tar.gz">here</a>.
 </p>
 
-<h3>Demo Media Player</h3>
+<h3>Demo Media Players</h3>
 
 <p>
-There is a demonstration media player in CVS, called <b>file_browser</b>.
-It is a a pretty simple program, which allows you to browse a filesystem
-and play audio and video files, as well as display images.  I use it to
-play mpeg2 files recorded with MythTV, and it has been working quite well.
+There are two demonstration media players in CVS, called <b>file_browser</b>
+and <b>myth_browser</b>.  They are very simple programs which allow you to
+play media files in your filesystem and off a MythTV server, respectively.
 </p>
 
 <p>
@@ -223,8 +228,9 @@ Features include:
 </p>
 
 <p>
-You can either build it from CVS, or download a static
-binary <a href="dl/file_browser.gz">here</a>.  Below is a screenshot of it
+You can either build these from CVS, or get them from the dongle.bin builder
+described above.
+Below is a screenshot of <b>file_browser</b>
 browsing my mythtv recordings directory (using
 <a href="dl/helvR12.fnt">this</a> font found
 <a href="http://www.cl.cam.ac.uk/~mgk25/download/ucs-fonts-75dpi100dpi.tar.gz">
@@ -259,8 +265,8 @@ and <i>tests</i> directories.  You will need to use the <i>--with-mvplib</i>
 and <i>--with-microwindows</i> options with <b>configure</b> to tell it
 where those directories are.  Then build
 <i>mvplib</i>, <i>microwindows</i>, and <i>tests</i>, in that order.  This
-will give you a test program called <b>menu</b>, which will demonstrate
-the widget library running under nano-X.
+will give you some widget test programs, and a couple demo media players,
+which will demonstrate the use of the MVP libraries and nano-X.
 </p>
 
 <p>
