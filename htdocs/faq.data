@@ -1,0 +1,200 @@
+What is the goal of this project?
+The goal is to build a media player that runs on the MediaMVP itself,
+and fetches media files off standard, external servers.  Currently, it
+supports using NFS, MythTV, or ReplayTV (with caveats, of course).
+###
+
+What is the state of mvpmc?
+mvpmc is alpha software.  Some things work, some things do not.
+Please do not be surprised if things do not work as well as you want,
+and please report bugs and missing functionality as you find them.
+###
+
+What do I need to get started?
+In order to build mvpmc from source, you will need a Linux system on
+which you can install a cross compilation environment.  If you do not
+have this, you can still build the binary release as long as you have
+an x86 Linux system on which to run the build script.
+
+Once you create your dongle.bin, you will want to set up a tftpboot
+server, and some sort of media server.  This could be as simple as an
+NFS filesystem, or as complicated as a MythTV backend.
+
+You will then need a DHCP server and a tftp server to allow the MediaMVP
+to boot.
+###
+
+How do I build a cross compilation environment?
+To build a uClibc cross compilation environment, you should download
+<a class=redlink href="dl/mvpmc_toolchain.tar.gz">this</a> tarball and run the
+<b>mvpmc-uclibc.sh</b> script.
+###
+
+Should I use glibc or uClibc?
+Functionally, there should be no difference between mvpmc built
+against glibc and uClibc.  The difference is size.  The uClibc based
+ramdisk will be around 1MB smaller than a glibc based ramdisk.  And on the
+MediaMVP, that is a big difference.
+###
+
+How do I build a new dongle.bin file?
+There is a build script in both the binary and source releases called
+dongle_build.sh.  You pass it a Hauppauge supplied dongle.bin file, and it
+will extract the IBM kernel modules, and build a new dongle.bin based on a
+supplied linux kernel and ramdisk filesystem.
+###
+
+NFS is hanging.  How do I fix this?
+Make sure you use the <b>rsize=4096,wsize=4096</b> options when mounting the
+NFS fileystem.  There is a file /etc/nfsmount.sh on the ramdisk that may make
+this easier.
+###
+
+Why is it trying to tftp a config file?
+The default init scripts do not start mvpmc.  Instead they try and tftp a
+config file from your tftp server.  This allows you to modify your use of
+mvpmc without rebuilding the dongle.bin file.  It also allows you to easily
+have different configurations for different MediaMVPs in your network.
+This config file is the name of your
+dongle.bin bootfile, with .config appended to it (ie, dongle.bin.config).
+
+This config file is a shell script that will be executed as the last step of
+booting the MediaMVP.  You should add things here to do whatever setup you
+need for your environment.  For example, you might want to set the date, mount
+an NFS filesystem, and start mvpmc with whatever options you need.
+
+An example config file might look like:
+</p><pre>
+rdate -s $SERVER
+mkdir /video
+/etc/nfsmount.sh ${SERVER}:/video /video
+mvpmc -f /etc/helvR10.fnt -s 192.168.1.15 &
+</pre><p>
+
+###
+
+What audio file types are supported?
+mvpmc is capable of playing mp3, ac3, and uncompressed WAV files.  At this
+time, audio support in mvpmc is quite weak.  It can play audio files, but does
+not allow you to seek in them, and does not support playlists.
+###
+
+What video file types are supported?
+mvpmc is capable of playing mpeg1/mpeg2 videos with mpeg or AC3 audio
+streams.  In addition, the user can choose the audio stream to play if there
+is more than one (ie, a DVD VOB file with multiple language tracks).
+###
+
+What image file types are supported?
+mvpmc is capable of displaying bmp, gif, png, and jpeg images.  At this time,
+image support in mvpmc is quite weak.  There is no support for scaling images
+to fit on the screen, for example.
+###
+
+Can I play a DVD movie?
+You should be able to play individual VOB files from a DVD, but there is no
+support for DVD menus at this time.  However, you will probably run into
+audio synchronization problems with Dolby Digital audio.
+###
+
+What is wrong with the DVD subtitles?
+The current DVD subtitle support allows the subtitles to be displayed,
+but neither at the correct time nor for the correct duration.
+###
+
+How do I select my preferred language track in an MPEG?
+Currently, the audio, video, and subtitle streams are referred to by
+their hex stream ID.  For DVD .VOB files, the information about which
+track goes with which language is not in the MPEG itself, so mvpmc is
+unable to give useful names to each stream.
+###
+
+How do I connect to a MythTV server?
+Use mvpmc with the -s flag to specify the IP address of the MythTV server.  If
+you also use the -r flag to specify the NFS mount point of the MythTV
+recordings directory, then you will play your MythTV recordings via NFS.  If
+not, you will play them via the Myth protocol.
+
+At this point, you'll probably want to use NFS since things like seek are not
+yet supported via the Myth protocol.
+###
+
+How well does mvpmc work as a MythTV frontend?
+If all you want to do is watch your recordings, it works great.  Functionality
+such as scheduling and deleting recordings does not yet exist.
+###
+
+How do I connect to a ReplayTV/DVArchive?
+Since mvpmc does not support the ReplayTV discovery protocol, you need to
+specify the IP address of your ReplayTV/DVArchive server via the -R option.
+###
+
+What keys do what on the remote control?
+When in the menus, up and down move the hilite up and down, and the red and
+yellow buttons are page up and page down, respectively.  Also, the OK button
+will select the hilited item, and the BACK/EXIT button will return you to the
+previous screen.
+
+While playing a video, the MUTE button will mute the audio.  The FULL button
+will zoom the image.  The PAUSE button will pause playback.  The STOP button
+will return you to the file/MythTV/ReplayTV menu.
+The MENU button
+will display the video popup menu.  The REPLAY and SKIP buttons will perform
+30 second skip backwards and forwards, respectively.  The number buttons will
+jump to a percentage offset into the file (ie, 6 is 60% into the file).
+And finally, the unlabled button next to MUTE will bring up the On Screen
+Display.
+###
+
+Why won't my image display properly?
+Image support is currently quite poor.  Some jpeg images, for example, will
+not display at all.  If you find your jpeg images will not display,
+reducing their size may help.
+###
+
+I found a bug.  What should I do?
+Either send an email to
+<a class=redlink href="mailto:gettler@users.sourceforge.net">gettler@users.sourceforge.net</a> or
+send an email to one of the
+<a class=redlink href="http://sourceforge.net/mail/?group_id=103474">mailing
+lists</a>.
+###
+
+What features are missing?
+In no particular order:
+<ul>
+<li>a real image viewer
+<li>a real audio player
+<li>image scaling
+<li>seek in an audio file
+<li>playlist support
+<li>ID3 support
+<li>screensaver
+<li>MythTV support for deleting recordings
+<li>MythTV support for scheduling recordings
+<li>MythTV support for watching live TV (and changing channels)
+<li>useful ReplayTV support
+<li>Tivo support
+<li>VideoLan support
+<li>video rewind
+<li>internationalization for the menus/OSD
+<li>a better default font
+<li>support for more audio types (ie, OGG, WMA, ...)
+<li>DVD subtitle support
+<li>DVD menu and navigation
+<li>support to customize menu/OSD colors from a config file
+<li>build tools for use under windows
+<li>user and developer documentation
+</ul>
+###
+
+How can I get involved?
+Send an email to one of the
+<a class=redlink href="http://sourceforge.net/mail/?group_id=103474">mailing
+lists</a> and participate in the discussions.  Feel free to volunteer to work
+on any piece of the project, and feel free to submit patches via email either
+to the development mailing list or to
+<a class=redlink
+href="mailto:gettler@users.sourceforge.net">gettler@users.sourceforge.net</a>.
+Or just use it and report back your ideas on how to make it better.
+###

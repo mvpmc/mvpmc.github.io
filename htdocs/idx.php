@@ -1,7 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-
-<!-- $Id: index.html,v 1.10 2004/09/02 03:05:32 gettler Exp $ -->
 
 <head>
 
@@ -21,6 +18,8 @@ a:hover         {background: DarkBlue; color: white; text-decoration: none}
 #link:active    {background: DarkBlue; color: white; text-decoration: none}
 #link:hover     {background: DarkBlue; color: white; text-decoration: none}
 p               {text-align: justify}
+h2		{background: LightBlue; color: Black; text-decoration: none}
+.redlink		{background: non; color: red; text-decoration: none}
 
 </style>
 
@@ -64,6 +63,26 @@ p               {text-align: justify}
 
                   <tr>
                     <td bgcolor="LightGrey" nowrap="nowrap">
+
+                      &nbsp;&nbsp;
+                      <a id="link"
+                            href="idx.php?pg=main">
+                            Home</a>&nbsp;<br>
+
+                      &nbsp;&nbsp;
+                      <a id="link"
+                            href="idx.php?pg=faq">
+                            FAQ</a>&nbsp;<br>
+
+                      &nbsp;&nbsp;
+                      <a id="link"
+                            href="idx.php?pg=downloads">
+                            Downloads</a>&nbsp;<br>
+
+                      &nbsp;&nbsp;
+                      <a id="link"
+                            href="idx.php?pg=screenshots">
+                            Screenshots</a>&nbsp;<br>
 
                       &nbsp;&nbsp;
                       <a id="link"
@@ -166,128 +185,11 @@ p               {text-align: justify}
             </tr>
 	  </table>
 
-          <br>
-
-          <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tr align="right">
-              <td>
-                <font size="-1">
-                  $Revision: 1.10 $<br>$Date: 2004/09/02 03:05:32 $
-                </font>
-              </td>
-            </tr>
-	  </table>
-
         </td>
 
         <td width="100%">
 
-<p>
-This project is just beginning.  The goal is to create a suite of
-libraries for controlling the Hauppauge MediaMVP, as well as a media
-player capable of playing media files served by software such as MythTV.
-</p>
-
-<p>
-If you wish to get involved, please send me
-email <a href="mailto:gettler@users.sourceforge.net">here</a>.  You
-should also sign up for the developer mailing
-list
-<a href="http://lists.sourceforge.net/lists/listinfo/mvpmc-devel">here</a>.
-</p>
-
-<br>
-
-<h3>ReplayTV support</h3>
-
-<p>
-The latest version of the source code contains some proof-of-concept
-ReplayTV support.  Run mvpmc with the -R option to tell it the IP
-address of your ReplayTV box, and you may be able to watch your recorded
-shows.  I have tested this against DVArchive, but have been told it does
-not work with series 5000 ReplayTVs.  I do not have a ReplayTV, so if
-you are willing to get this working better, please send in a patch.
-</p>
-
-<br>
-
-<h3>uClibc based toolchain</h3>
-
-<p>
-To build the current version of mvpmc, you should build yourself
-a uClibc based toolchain.  To do this, download 
-<a href="dl/mvpmc_toolchain.tar.gz">mvpmc_toolchain.tar.gz</a> and run
-the <b>mvpmc-uclibc.sh</b> script.  This will install a uClibc based
-toolchain in <b>/opt/crosstool</b> which you can use to build mvpmc
-against uClibc instead of glibc.
-</p>
-
-<p>
-Using uClibc will save over 1mb on the size of your ramdisk over what
-you will get with GNU libc.
-</p>
-
-<br>
-
-<h3>mvpmc media player</h3>
-
-<p>
-The mvpmc media player has been checked into the CVS repository.  It is
-capable of playing mpeg1/mpeg2 video from a MythTV server.  It also
-allows you to browse your filesystem and play mpeg1/mpeg2 video, mp3 audio,
-and display bmp, gif, png, and jpeg images from an NFS server.  It also
-has minimal support for connecting to a ReplayTV.
-</p>
-
-<p>
-You can check all the code out of the CVS repository, or you can download
-binary or source tarballs.  Both the binary and source releases require you
-to have a Hauppauge supplied dongle.bin, so that the IBM kernel modules can
-be extracted.  They also require you to have an x86 linux system on
-which to create a new dongle.bin file.
-</p>
-
-<center>
-<table border="1" cellpadding="6">
-<tr><td>filename</td><td>type</td><td>size</td><td>date</td></tr>
-<tr>
-  <td><a href="dl/dongle_build.tar.gz">dongle_build.tar.gz</a></td>
-  <td>binary</td>
-  <td>3.0mb</td>
-  <td>1-Sep-04</td>
-</tr>
-<tr>
-  <td><a href="dl/mvpmc_src.tar.gz">mvpmc_src.tar.gz</a></td>
-  <td>source</td>
-  <td>8.6mb</td>
-  <td>1-Sep-04</td>
-</tr>
-</table>
-</center>
-
-<p>
-The source tarball contains the following: busybox, libjpeg, libpng,
-libz, microwindows, mvplib, and mvpmc.  It also contains a build script
-to build all of the source code and create a new dongle.bin file.
-</p>
-
-<p>
-The following two screenshots are of the main menu and the MythTV
-interface.
-</p>
-
-<p>
-  <center>
-    <a href="dl/main_menu_00000001.jpg">
-      <img src="dl/main_menu_00000001.jpg" width=360 height=240 alt="screenshot">
-    </a>
-    <a href="dl/tour_00001130.jpg">
-      <img src="dl/tour_00001130.jpg" width=360 height=240 alt="screenshot">
-    </a>
-  </center>
-</p>
-
-<br>
+<?PHP if(isset($pg)) { include($pg.".php"); } ?>
 
         </td>
 
