@@ -1,7 +1,33 @@
+<h3>New Release - 07-Jan-05</h3>
+                                                                                
+<p>
+Version 0.1.2 of mvpmc has been released <a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=295235">here</a>.
+</p>
+                                                                                
+<hr>
+
+
+<h3>HOWTO Created - 2004-11-25</h3>
+<p>
+A Howto for getting the MediaMVP running has been created.  It's pretty
+sparse, so send your suggestions to <a
+href="mailto:rkulagow@rocketmail.com">mailto:rkulagow@rocketmail.com</a>
+
+<hr>
+
+<h3>New Release - 09-Nov-04</h3>
+
+<p>
+Version 0.1.1 of mvpmc has been released <a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=281542">here</a>.
+</p>
+
+<hr>
+
+
 <h3>New Release - 25-Oct-04</h3>
 
 <p>
-A new deveopment release of mvpmc is
+A new development release of mvpmc is
 available <a href="idx.php?pg=downloads">here</a>.  New
 features include:
 </p>

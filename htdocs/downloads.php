@@ -7,30 +7,41 @@ The following project releases are available:
 <ul>
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=273101">mvpmc 0.1</a>
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=274780">mvpmc 0.1a</a>
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=281542">mvpmc 0.1.1</a>
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=295235">mvpmc 0.1.2</a>
 </ul>
 
 <h2>Development Releases</h2>
 
 <?php
-function release($path, $fname, $header)
+
+function dev_release($list, $header)
 {
-	print "<h3>$header</h3>\n\n";
+	$dir = "development";
 
-	$fp = fopen("$path$fname", "r");
-	$fstat = fstat($fp);
-	$d = date("F d Y H:i:s T", $fstat["mtime"]);
+        print "<h3>$header</h3>\n\n";
 
-	print "<p>Name: <a href=\"$path$fname\">$fname</a></p>\n";
-	print "<p>Bytes: ";
-	print $fstat["size"];
-	print "</p>\n";
-	print "<p>Date: $d</p>\n";
+	foreach ($list as $item) {
+		$fp = fopen("$item", "r");
+		$fstat = fstat($fp);
+		$d = date("F d Y H:i:s T", $fstat["mtime"]);
 
-	fclose($fp);
-
-	print "\n<br>\n\n";
+		print "<p><ul>";
+		print "<li>Name: <a href=\"$dir/$item\">$item</a>\n";
+		print "<li>Bytes: ";
+		print $fstat["size"];
+		print "\n";
+		print "<li>Date: $d\n";
+		fclose($fp);
+		print "\n</ul></p><br>\n\n";
+	}
 }
 
-release("dl/", "dongle_build.tar.gz", "Binary Release");
-release("dl/", "mvpmc_src.tar.gz", "Source Release");
+chdir("development");
+
+$bin = glob("mvpmc-*-bin.tar.gz");
+$src = glob("mvpmc-*-src.tar.gz");
+
+dev_release($bin, "Binary Releases");
+dev_release($src, "Source Releases");
 ?>

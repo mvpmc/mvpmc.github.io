@@ -75,6 +75,10 @@ h2		{background: LightBlue; color: Black; text-decoration: none}
                             FAQ</a>&nbsp;<br>
 
                       &nbsp;&nbsp;
+                      <a id="link" href="mvpmc-HOWTO-singlehtml.html">
+                            HOWTO</a>&nbsp;<br>
+
+                      &nbsp;&nbsp;
                       <a id="link"
                             href="idx.php?pg=downloads">
                             Downloads</a>&nbsp;<br>

@@ -1,11 +1,13 @@
-<h2>FAQ</h2>
-
 <?php
 //
 // Parse a FAQ data file.  The data file consists of multiple questions
 // and answers, with a line of "###" in between each Q/A pair.
 //
 	$fp = fopen("faq.data", "r");
+	$fstat = fstat($fp);
+	$d = date("F d, Y", $fstat["mtime"]);
+
+	print "<h2>FAQ</h2><h4>$d</h4>\n";
 
 	$i = 0;
 	while (!feof($fp))
