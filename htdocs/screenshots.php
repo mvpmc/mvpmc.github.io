@@ -17,10 +17,10 @@ image("MythTV On-Screen-Display", "images/myth_osd.jpg");
 image("MythTV On-Screen-Display Menu", "images/myth_osd_menu.jpg");
 image("Video Popup Menu", "images/popup_menu.jpg");
 image("Audio Stream Menu", "images/audio_menu.jpg");
-image("ReplayTV Device Menu", "images/rtv_devicelist.jpg");
-image("ReplayTV Shows Menu", "images/rtv_show_menu.jpg");
-image("ReplayTV Show Popup Menu", "images/rtv_show_popup.jpg");
-image("ReplayTV On-Screen-Display", "images/rtv_osd.jpg");
 
+image("ReplayTV Device List", "images/rtv_devicelist.jpg");
+image("ReplayTV On-Screen-Display", "images/rtv_osd.jpg");
+image("ReplayTV Show Menu", "images/rtv_show_menu.jpg");
+image("ReplayTV Show Popup Menu", "images/rtv_show_popup.jpg");
 ?>
 

@@ -1,3 +1,11 @@
+<h3>New Release - 13-Feb-05</h3>
+                                                                                
+<p>
+Version 0.1.3 of mvpmc has been released <a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=304797">here</a>.
+</p>
+
+<hr>
+                                                                                
 <h3>New Release - 07-Jan-05</h3>
                                                                                 
 <p>

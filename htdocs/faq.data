@@ -70,13 +70,11 @@ mkdir /video
 /etc/nfsmount.sh ${SERVER}:/video /video
 mvpmc -f /etc/helvR10.fnt -s 192.168.1.15 &
 </pre><p>
-
 ###
 
 What audio file types are supported?
-mvpmc is capable of playing mp3, ac3, and uncompressed WAV files.  At this
-time, audio support in mvpmc is quite weak.  It can play audio files, but does
-not allow you to seek in them, and does not support playlists.
+mvpmc is capable of playing mp3, ogg vorbis, ac3, and uncompressed WAV files.
+It is also capable of playing m3u playlists.
 ###
 
 What video file types are supported?

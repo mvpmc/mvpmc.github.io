@@ -9,6 +9,7 @@ The following project releases are available:
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=274780">mvpmc 0.1a</a>
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=281542">mvpmc 0.1.1</a>
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=295235">mvpmc 0.1.2</a>
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=304797">mvpmc 0.1.3</a>
 </ul>
 
 <h2>Development Releases</h2>
@@ -39,9 +40,19 @@ function dev_release($list, $header)
 
 chdir("development");
 
+$dongle = glob("dongle.bin.mvpmc-*");
 $bin = glob("mvpmc-*-bin.tar.gz");
 $src = glob("mvpmc-*-src.tar.gz");
 
+dev_release($dongle, "dongle.bin Releases");
 dev_release($bin, "Binary Releases");
 dev_release($src, "Source Releases");
 ?>
+
+<h2>Daily Builds</h2>
+
+<p>
+Dirk Lison and Tim Sailer have kindly provided daily builds
+<a href="ftp://buoy.com/pub/mvpmc/www.lison.com/mvpmc/index.html">here</a>.
+</p>
+

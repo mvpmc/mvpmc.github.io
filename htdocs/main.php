@@ -7,9 +7,10 @@ MediaMVP via tftp.
 </p>
 
 <p>
-It supports mpeg1 and mpeg2 video, as well as mp3, wav, and ac3
+It supports mpeg1 and mpeg2 video, as well as mp3, ogg, wav, and ac3
 audio.  It can also display bmp, gif, png, and jpeg images.  It can
-play files off a MythTV or ReplayTV server, as well as off NFS.
+play files off a MythTV or ReplayTV server, or off NFS or a windows
+fileserver.
 </p>
 
 <br>
