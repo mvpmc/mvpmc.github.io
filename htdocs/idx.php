@@ -79,6 +79,10 @@ h2		{background: LightBlue; color: Black; text-decoration: none}
                             HOWTO</a>&nbsp;<br>
 
                       &nbsp;&nbsp;
+                      <a id="link" href="windows/mvpmc_windoze_howto.html">
+                            Windows-HOWTO</a>&nbsp;<br>
+
+                      &nbsp;&nbsp;
                       <a id="link"
                             href="idx.php?pg=downloads">
                             Downloads</a>&nbsp;<br>
