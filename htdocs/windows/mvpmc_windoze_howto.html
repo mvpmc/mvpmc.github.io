@@ -1,0 +1,494 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+ <title>mvpmc Microsoft Windows HOWTO</title>
+</head>
+<body>
+<h1>mvpmc Microsoft Windows HowTo</h1>
+
+<h2>John Honeycutt, 
+<a>honeycut@sourceforge.net</a></h2>2005-02-19, v0.00.01
+<hr>
+<em></em>
+<hr>
+<p>
+<h2><a name="toc1">1.</a> <a href="mvpmc_windoze_howto.html#s1">Introduction</a></h2>
+
+<p>
+<h2><a name="toc2">2.</a> <a href="mvpmc_windoze_howto.html#s2">I want to play mvpmc but don't have a linux box</a></h2>
+
+<p>
+<h2><a name="toc3">3.</a> <a href="mvpmc_windoze_howto.html#s3">MediaMVP & mvpmc boot process</a></h2>
+
+<p>
+<h2><a name="toc4">4.</a> <a href="mvpmc_windoze_howto.html#s4">Obtaining the mvpmc software load</a></h2>
+
+<p>
+<h2><a name="toc5">5.</a> <a href="mvpmc_windoze_howto.html#s5">Setting up the DHCP Server</a></h2>
+
+<p>
+<h2><a name="toc6">6.</a> <a href="mvpmc_windoze_howto.html#s6">Testing the DHCP Server</a></h2>
+
+<p>
+<h2><a name="toc7">7.</a> <a href="mvpmc_windoze_howto.html#s7">Setting up the TFTP Server</a></h2>
+
+<p>
+<h2><a name="toc8">8.</a> <a href="mvpmc_windoze_howto.html#s8">Testing the TFTP Server</a></h2>
+
+<p>
+<h2><a name="toc9">9.</a> <a href="mvpmc_windoze_howto.html#s9">Setup and Test the Time Server</a></h2>
+
+<p>
+<h2><a name="toc10">10.</a> <a href="mvpmc_windoze_howto.html#s10">Verifying mvpmc</a></h2>
+
+<hr>
+<h2><a name="s1">1.</a> <a href="#toc1">Introduction</a></h2>
+<p>From the mvpmc HOWTO by Robert Kulagowski:</p>
+<p>The MediaMVP is a small, diskless Linux computer which obtains its
+operating system via TFTP. From the information page at 
+<a href="http://www.hauppauge.com/pages/products/data_mediamvp.html">http://www.hauppauge.com/pages/products/data_mediamvp.html</a>:</p>
+<p>"MediaMVP is a Linux based digital media receiver based on a powerful IBM
+PowerPC processor. It includes a hardware MPEG decoder to process digital
+video movies, while music and digital pictures are software decoded by
+MediaMVP's processor. It receives the digital media from a PC via an
+Ethernet LAN, decodes the media and outputs video through composite and
+S-Video connections, and audio through stereo audio output connectors."</p>
+<p>The mvpmc project uses the MediaMVP hardware and replaces the software that
+the MediaMVP runs.  Because the MediaMVP boots completely from the network,
+changes made to the software aren't permanent - you can always switch back
+to using the Hauppauge-supplied software with the Windows server.</p>
+
+<h2><a name="s2">2.</a> <a href="#toc2">I want to play mvpmc but don't have a linux box</a></h2>
+
+<p>Since mvpmc's development environment is unix based and since up to now the
+main purpose to run mvpmc has been for a MythTV (linux based PVR)thin client there has been
+little interest in setting up and documenting a Windows development, booting, and 
+debugging environment. This HOWTO documents a proven method for building, booting and debugging 
+mvpmc from a Windows 2K or Windows XP host.<br>
+NOTE: I have not yet tested and documented a windows build environment.</p>
+
+<p><b>Following are links to free utilities required for booting and debugging mvpmc issues:</b>
+</p>
+
+<p>DHCP Server and TFTP Server:<br>
+<a href="http://www.weird-solutions.com/download/demo.html">http://www.weird-solutions.com/download/demo.html</a>
+<br>Under the above links "Standard Server Software" section download "DHCP Turbo" and "TFTP Turbo". 
+Both are free for personal use.
+</p>
+
+<p>RFC-868 TIME Server:<br>
+<a href="http://www.adjusttime.com/">http://www.adjusttime.com/</a>
+<br>Download "Absolute Time Server". Free.
+</p>
+
+<p>Network Analyzer:<br>
+If you don't have a network (packet capture) analyzer that you are familiar with I suggest "ethereal" which is free.<br>
+<a href="http://www.ethereal.com/">http://www.ethereal.com/</a>
+<br>Download and install as described at:<br>
+<a href="http://www.ethereal.com/distribution/win32/">http://www.ethereal.com/distribution/win32/</a>
+</p>
+
+<p>Telnet Client:<br>
+If you don't have a favorite telnet client a good free one is "putty":<br> 
+<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">http://www.chiark.greenend.org.uk/~sgtatham/putty/</a>
+<br>
+</p>
+<h2><a name="s3">3.</a> <a href="#toc3">MediaMVP & mvpmc boot process</a></h2>
+<p>
+There are several steps to the MediaMVP & mvpmc boot process.
+<ul>
+<li>When power is applied to the unit the processor starts running its bootloader out of flash.
+<li>The MVP's bootloader broadcasts a DHCP request to get it's networking information, 
+the boot servers IP address, and the name of the SW load file.
+<li> If a DHCP response is received then the bootloader proceeds to tftp it's software load.
+<li> If a DHCP response is not received then the MVP bootloader attempts to send another DHCP request
+but this time it broadcasts it to an unreserved UDP port (16867). The Hauppauge windows server application 
+listens on port 16867. If it sees the DHCP request, the Hauppauge server application responds.
+The MVP bootloader then tftps its load from the Hauppauge server.
+<li>For either case (real DHCP server or Hauppauge boot server), once the MVP's bootloader
+completes tftp'ing the software load it exits the bootloader and starts executing the software load.
+</ul> 
+
+Both Hauppauge's production MediaMVP load and our custom load run a stripped down 
+linux operating system. For our load, after the OS initializes it does <b>not</b> automatically start the 
+mvpmc appliacation.<br>
+Instead it tries to tftp a config file from your tftp server.
+This allows you to modify your use of mvpmc without rebuilding the software load file. 
+It also allows you to easily have different configurations for different MediaMVPs in 
+your network. This config file is the name of your software loadfile, with .config appended 
+to it.<br>
+e.g.: If your loadfile name is "dongle.bin.mvpmc" then the config file name is "dongle.bin.mvpmc.config"<br>
+<br>
+Following is an example mvp config file:<br>
+<blockquote><code>
+<pre>
+##########################
+# SECTION 1
+##########################
+
+#set timezone to Eastern Time
+# Other U.S. Timezones:
+# CST+6CDT,M4.1.0/2,M10.5.0/2
+# MST+7MDT,M4.1.0/2,M10.5.0/2
+# PST+8PDT,M4.1.0/2,M10.5.0/2
+#
+TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ
+
+# Run rdate to set the system time. $SERVER is the server IP address passed in with the 
+# DHCP response
+#
+rdate -s $SERVER
+
+# Create /wxp_video directory
+# Mount my Windows XP boxes CIF's mpeg file share
+#
+mkdir /wxp_video
+mount.cifs //172.31.1.5/video_share /wxp_video/ -o password=guest
+
+########################
+# SECTION 2
+# Setting the TZ variable above only affects the shell process this script
+# runs in. If you want to telnet to the MVP and have the TZ variable set
+# then we need to write it to the /etc/shell.config file that gets run 
+# everytime a new shell is started.
+# This section is only needed if you want to telnet to the mvp 
+# and manually run things like mvpmc.
+# It's great for deebugging.
+########################
+
+# Echo the command to set the TZ variable to the shell.config file
+#
+echo "TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ" > /etc/shell.config
+
+
+######################
+# SECTION 3 
+# Start the mvpmc application.
+# Specify the 18 point font because the default 10 point
+# font is unreadable.  
+######################
+
+mvpmc -f /etc/helvB18.pcf -R "ip=discover" &amp;
+</pre>
+</code></blockquote>
+<a href="example_mvpmc.config">Link to example config file</a>
+<br><br>
+Note: A good method of debugging mvpmc problems is to set up a config
+file that does not start the mvpmc application. After the OS boots you can telnet to 
+the MVP and manually start mvpmc with debug options causing debugging information
+to be printed to the telnet console while mvpmc runs.
+</p>
+
+<h2><a name="s4">4.</a> <a href="#toc4">Obtaining the mvpmc software load</a></h2>
+<p>
+mvpmc releases are available from the mvpmc.sourceforge.net download page.<br>
+<a href="http://mvpmc.sourceforge.net/idx.php?pg=downloads">http://mvpmc.sourceforge.net/idx.php?pg=downloads</a>
+<br><br>Nightly builds are available from:<br>
+<a href="ftp://buoy.com/pub/mvpmc">ftp://buoy.com/pub/mvpmc</a>
+</p>
+
+<h2><a name="s5">5.</a> <a href="#toc5">Setting up the DHCP Server</a></h2>
+<p>Setting up the DCHP server is by far the most difficult part of getting the
+MVP to boot. Hopefully this will streamline the process.<br><br>
+<b>Pre-configuration:</b><br>
+<ol type="1">
+<li>The Windows box acting as a DHCP server requires a known static IP address.<br>
+If you have a hardware router/firewall that acts as a DHCP server for serving 
+IP addresses to your lan you need to configure it to always provide the same IP 
+address to your windows box. If your router's DHCP server does not support static IP 
+addresses then you will need to configure a static IP address for the windows box 
+under windows networking.<br><br>
+
+<li>Write down your MediaMVP's Ethernet MAC Address.<br>
+The mac address is on a white sticker on the bottom of the MediaMVP.<br>
+The sticker will look like "MAC 000DFE009200". This corresponds to MAC address 00:0D:FE:00:92:00.<br><br>
+
+<li> If you have a hardware router/firewall that acts as a DHCP server for serving 
+IP addresses to your lan you need to add the MediaMVP's MAC address to the routers "exclude" list.<br>
+i.e.: You don't want your router/firewall responding to the MediaMVP's DHCP request.
+If your router's DHCP server does not support excluding specific MAC addresses
+then the router's DHCP will need to be disabled.<br><br>
+
+<li>The DHCP protocol uses UDP port 67 and UDP port 68. If you have a software firewall running
+on your windows box you will need to open up UDP port 67 and UDP port 68.<br><br>
+<li>Determine the following information that will be required when setting up the DHCP server:
+<ul>
+<li>Windows Server IP address
+<li>Your lan's subnet mask
+<li>Your lan's broadcast address (ends with .255)
+<li>Your lan's gateway address 
+<li>MediaMVP IP address
+<li>Hostname for the MediaMVP
+<li>mvpmc software load name
+</ul>
+<br>Following is my lan configuration which is used in the "DHCP Turbo"
+configuration example.<br>
+Note: I have two MediaMVP's One is used for development and the other runs a stable mvpmc software load<br>
+<b>My lan is setup as 172.31.1.xxx</b>.
+<ul>
+<li>Windows Server IP address: <b>172.31.1.5</b>
+<li>Subnet mask: <b>255.255.255.0</b>
+<li>Broadcast address: <b>172.31.1.255</b>
+<li>Gateway address: <b>172.31.1.1</b>
+<li>MediaMVP#1 IP Address: <b>172.31.1.12</b>
+<li>MediaMVP#1 Hostname: <b>media_mvp1</b>
+<li>MediaMVP#1 SoftwareLoad: <b>dongle.bin.mvpmc</b>
+<li>MediaMVP#2 IP Address: <b>172.31.1.14</b>
+<li>MediaMVP#2 Hostname: <b>media_mvp2</b>
+<li>MediaMVP#2 SoftwareLoad: <b>dongle_mvp2.bin</b>
+</ul>
+</ol> 
+</p>
+
+<b>Configuring DHCP Turbo:</b><br>
+We are going to setup the DHCP server to be a "private server". This means 
+it will only respond to DCHP requests for ethernet mac addresses we have 
+explicitly configured.
+
+<ol type="1">
+<li>Install DHCP Turbo.<br>
+In addition to the program setup also installs a pdf "DHCP Turbo Administrators Guide"
+Make sure to read through section 2.2.
+<li>Start DHCP Turbo.<br>
+When the application comes up double-click the "localhost"
+server and login. (No password is required).<br>
+The screen should look similar to the following.<br><br>
+<img src="dhcpturbo-pre-config.gif" width="396" height="287" alt="" border="0" align="">
+<br><br>
+<li>Right click "localhost" and select properties.<br>
+Enable "private server" and "detailed logging"<br><br>
+<img src="dhcpturbo-server-properties.gif" width="326" height="336" alt="" border="0" align="">
+<br><br>
+<li>Setup Global Policies<br>
+Global Policies are DHCP parameters that are common to all DHCP clients.<br>
+i.e.: Server Address, Subnet Mask, and Broadcast Address.
+To add Global Policies: Expand the "Named Policies" entry. Next, Right-Click 
+"Global" and select "New Option".<br>
+Add the following options:
+<ul>
+<li>standard option #1 "subnet mask"
+<li>standard option #28 "broadcast address"
+<li>standard option #3 "gateways"
+<li>server control option #-14 "next server" (This is you windows box IP)
+</ul>
+<br>Following is a capture of my global options.<br><br>
+<img src="dhcpturbo-global-opts.gif" width="396" height="287" alt="" border="0" align="">
+<br><br>
+<li>Create a "Named Policy" for each MediaMVP's specific parameters.<br>
+i.e.: boot file name, and hostname<br>
+To create a new "Named Policy": Right-Click "Named Policies" and select "New Named Policy".<br>
+Give the policy a name such as "mvp_1".<br>
+Next, add your options to the named policy, by right-clicking the named policy you
+just created and selecting "New Option".<br>
+Add the following options:
+<ul>
+<li>standard option # -1 "Boot file" (This is the name of the mvpmc software load)
+<li>standard option #12 "Hostname"
+</ul>
+<br>Following is a capture of my mvp_1 options.<br><br>
+<img src="dhcpturbo-named-opts.gif" width="396" height="287" alt="" border="0" align="">
+<br><br>
+<li>Add MediaMVP Ethernet MAC and IP address to DHCP-Turbo database<br>
+This is where the IP address gets assigned to the MediaMVP's Ethernet MAC.<br>
+<br>Right-Click "Database" and select "New Reservation".<br>
+a.: Enter you MediaMVP's MAC address and the IP address you want to assign.<br>
+b.: Check the "Policies" box and then click "...".  Add the named policy (e.g mvp_1) that 
+you created earlier to the "Defined Policies" list.
+Following is a screen shot from my setup<br><br>
+<img src="dhcpturbo-reservation.gif" width="379" height="362" alt="" border="0" align="">
+<br><br>
+<li>Add the MediaMVP's MAC address to the "HW Registrations" list<br>
+This is where we tell DHCP-Turbo to respond to DHCP requests from a specific MAC address.<br>
+Right-Click "HW Registrations" and select "New HW Registration".<br>
+Enter the MediaMVP MAC address and a comment.<br><br>
+<img src="dhcpturbo-hw-reg.gif" width="289" height="245" alt="" border="0" align="">
+<br<br><br><br>
+Screen shots of completed "Database" & "HW Registration"<br><br>
+<img src="dhcpturbo-database.gif" width="396" height="287" alt="" border="0" align="">
+<img src="dhcpturbo-hw-reg2.gif" width="396" height="287" alt="" border="0" align="">
+<br><br>
+<li>Save the DHCP-Turbo configuration<br>
+i.e. File -> Save<br><br>
+<li>Make sure the Server is started<br>
+i.e. Tools->ControlService->Start<br>
+</ol> 
+
+<h2><a name="s6">6.</a> <a href="#toc6">Testing the DHCP Server</a></h2>
+<p>
+Unplug and reconnect the MediaMVP's power adaptor<br>
+Messages at the bottom of the screen should cycle through:
+<ul>
+<li>Checking Ethernet Connectivity...
+<li>Contacting DHCP Server...
+<li>Loading Application...
+</ul>
+If you get to "Loading Application..." then the server is working properly.<br>
+<br>If not, you may want to crank up ethereal to capture packets and see where the 
+protocol is breaking down.<br>
+If the screen hangs on "Contacting DHCP Server" and then proceeds to "Contacting MediaMVP Boot Server"
+then Turbo-DHCP is either not receiving the request or is rejecting the request.<br>
+To debug check the DHCP-Turbo log file. The file is located in the DHCP-Turbo installation directory
+and is named dhcpt.log.<br><br>
+If you see logs of the form:<br>
+<code>
+Sat Feb 19 16:07:10 2005 Unregistered device 01-00-D0-59-6A-D9-E6 is being denied service.<br>
+Sat Feb 19 16:07:10 2005 The server is dropping a datagram.<br>
+</code>
+It means that DHCP-Turbo is rejecting the DHCP request. Something is screwed up
+with server's configuration.<br><br>
+If you don't see any logs specifying the MediaMVP's MAC address it means that the 
+request is not making it to the server.<br>
+Most likely, there is an ethernet connectivity problem or a software firewall is 
+blocking UDP port 67 and/or UDP port 68.
+</p>
+
+<h2><a name="s7">7.</a> <a href="#toc7">Setting up the TFTP Server</a></h2>
+TFTP-Turbo is very easy to install & configure.<br><br>
+<b>Configuring TFTP Turbo:</b><br>
+<ol type="1">
+<li>Install TFTP Turbo.<br>
+In addition to the program setup also installs a pdf "TFTP Turbo Administrators Guide"
+Make sure to read through section 2.3.<br><br>
+<b>NOTE:</b> The tftp protocol uses UDP port 69. If you have a software firewall running on 
+the windows box you will need to to open up UDP port 69.<br><br>
+<li>Start TFTP Turbo.<br>
+When the application comes up double-click the "localhost"
+server and login. (No password is required).<br>
+The screen should look similar to the following.<br><br>
+<img src="tftpturbo-pre-config.gif" width="424" height="308" alt="" border="0" align="">
+<br><br>
+<li>Right click "localhost" and select properties.<br>
+Enable "detailed logging"<br>
+<b>NOTE:</b> If you have a software firewall running on your windows box you will also need 
+to go to the TFTP Turbo properties->security tab and enable using a specific "Firewall Port". 
+(Be sure to open the port on your firewall)<br>
+<img src="tftpturbo-server-properties.gif" width="321" height="334" alt="" border="0" align="">
+<br><br>
+<li>Save the TFTP-Turbo configuration<br>
+i.e. File -> Save<br><br>
+<li>Make sure the Server is started<br>
+i.e. Tools->ControlService->Start<br>
+</ol>
+
+<h2><a name="s8">8.</a> <a href="#toc8">Testing the TFTP Server</a></h2>
+By default the TFTP-turbo "virtual root directory is &ltTFTP Turbo install dir&gt/tftp_root<br>
+i.e.: The directory where files to be tftp'd are stored.<br><br>
+<ul>
+<li>Copy your mvp load in the tftp_root dir.<br>
+Next, add the following simple config script to the tftp_root dir. 
+<blockquote><code>
+<pre>
+# Set TZ variable in this shell
+#
+TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ
+
+# Echo the command to set the TZ variable to the shell.config file
+# for telnet shells.
+#
+echo "TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ" > /etc/shell.config
+</pre>
+</code></blockquote>
+
+<li>Cycle power to the MediaMVP.<br>
+You should see the MVP screen cycle through:
+<ul>
+<li>Checking Ethernet Connectivity...
+<li>Contacting DHCP Server...
+<li>Loading Application...
+</ul>
+<br>Next, you should be able to see the files being downloaded from the 
+TFTP-Turbo "Activity" window as shown below.<br><br>
+<img src="tftpturbo-downloads.gif" width="452" height="328" alt="" border="0" align="">
+<br>
+<br>Once the downloads complete the TV screen should go blank.<br>
+<b>NOTE:</b> If you don't see the files download then:<br>
+<ul>
+<li>Check the TFTP-Turbo log file for problems: The log file is &ltTFTP Turbo install dir&gt/tftpt.log<br>
+If there is not a log entry for the either the load file or config file then you probably
+have a firewall issue or the DHCP Server may have not correctly set the "Next Server" IP address to point to your windows box.<br> 
+In either case using ethereal to capture packets for the boot process should help isolate the issue.<br><br>
+</ul>
+<li>telnet to the MediaMVP and confirm it booted properly.<br>
+Using "putty" or your favorite telnet client, telnet to the MVP's IP address.<br>
+You should get a prompt similar to the following:
+
+<blockquote><code>
+<pre>
+Welcome to MediaMVP!
+media_mvp1 login:
+</pre>
+</code></blockquote>
+
+<li>Enter "<font color="#0000FF">root</font>" to login.<br>
+<li>Enter the "<font color="#0000FF">date</font>" command.<br>
+<li>Enter the "<font color="#0000FF">env</font>" command<br>
+Output should be as follows:<br>
+<blockquote><code>
+<pre>
+media_mvp1 login: root
+
+BusyBox v1.00 (2005.02.11-01:05+0000) Built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+# date
+Wed Dec 31 19:05:02 EST 1969
+
+# env
+USER=root
+HOME=/
+LOGNAME=root
+TERM=vt102
+PATH=/usr/sbin:/bin:/usr/bin:/sbin
+SHELL=/bin/sh
+PWD=/
+TZ=EST+5EDT,M4.1.0/2,M10.5.0/2
+#
+</pre>
+</code></blockquote>
+<br> Note the date is 1969 or 1970.<br>
+Also, the "env" command output shows the "TZ" variable correctly set.<br><br>
+<li>Enter "<font color="#0000FF">exit</font>" to quit.<br>
+</ul>
+
+<h2><a name="s9">9.</a> <a href="#toc9">Setup and Test the Time Server</a></h2>
+<ol type="1">
+<li>Install and start the "Absolute Time Server".<br>
+<b>NOTE:</b> The server starts an RFC-868 (TIME) server and a RFC-2030 (SNTP) server.
+WXP-Pro also starts it's own SNTP server. So, if you get a winsock error when starting
+the server just disable the Absolute's SNTP server.<br><br>
+<li>Telnet to the MVP and login.<br><br>
+<li>Enter: <font color="#0000FF">rdate &ltServer IP Addr&gt<br></font>
+Enter: <font color="#0000FF">date</font><br>
+The date should be set correctly. Example output below.<br>
+<blockquote><code>
+<pre>
+# rdate 172.31.1.5
+Sun Feb 20 12:19:33 2005
+
+# date
+Sun Feb 20 12:19:35 EST 2005
+</pre>
+</code></blockquote>
+</ol> 
+
+<h2><a name="s10">10.</a> <a href="#toc10">Verifying mvpmc</a></h2>
+From the MVP prompt type:
+<blockquote><code>
+<pre>
+# mvpmc -f /etc/helvB18.pcf -R "ip=discover"<br>
+</pre>
+</code></blockquote>
+You should see messages scroll by in the telnet window & the mvpmc GUI 
+should be displayed on the TV.<br>
+If you have DVArchive and/or ReplayTV's you should be able to discover them, view the guide,
+and play shows.<br>
+
+When done enter: <font color="#0000FF">&ltCNTL&GT-C</font> to terminate the mvpmc application.<br><br>
+
+Finally, update your config script to run the rdate command and start mvpmc when the 
+MediaMVP boots.<br>
+Cycle the MVP's power.<br>
+The MVP should now boot, the date should be set correctly, and the mvpmc application should start.
+
+</body>
+</html>
