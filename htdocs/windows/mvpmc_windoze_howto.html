@@ -7,7 +7,7 @@
 <h1>mvpmc Microsoft Windows HowTo</h1>
 
 <h2>John Honeycutt, 
-<a>honeycut@users.sourceforge.net</a></h2>2005-03-19, v0.00.02
+<a>honeycut@users.sourceforge.net</a></h2>2005-03-27, v0.00.03
 <hr>
 <em></em>
 <hr>
@@ -123,6 +123,18 @@ to it.<br>
 e.g.: If your loadfile name is "dongle.bin.mvpmc" then the config file name is "dongle.bin.mvpmc.config"<br>
 <br>
 Following is an example mvp config file:<br>
+<b>NOTE:</b> If you are using a windows editor such a wordpad to
+create/update the config file you must insure each line is ended with
+a semi-colon. If the semi-colon is not present certain lines may fail
+to execute properly due to the carrage-return character that windows
+editors add to the line terminator.<br> 
+<b>Also NOTE:</b> The mvpmc command line (line that starts the mvpmc
+application) should be ended with an ampersand <b>instead</b> of a
+semicolon. This causes the mvpmc application to run in the
+background. If this is not done then then the mvp's os may not properly
+perform cleanup activities which can lead to resource exhaustion
+causing the mvp to hang or reboot after several days or weeks.<br>
+
 <blockquote><code>
 <pre>
 ##########################
@@ -135,18 +147,18 @@ Following is an example mvp config file:<br>
 # MST+7MDT,M4.1.0/2,M10.5.0/2
 # PST+8PDT,M4.1.0/2,M10.5.0/2
 #
-TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ
+TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ;
 
 # Run rdate to set the system time. $SERVER is the server IP address passed in with the 
 # DHCP response
 #
-rdate -s $SERVER
+rdate -s $SERVER;
 
 # Create /wxp_video directory
 # Mount my Windows XP boxes CIF's mpeg file share
 #
-mkdir /wxp_video
-mount.cifs //172.31.1.5/video_share /wxp_video/ -o password=guest,rsize=34000
+mkdir /wxp_video;
+mount.cifs //172.31.1.5/video_share /wxp_video/ -o password=guest,rsize=34000;
 
 ########################
 # SECTION 2
@@ -161,7 +173,7 @@ mount.cifs //172.31.1.5/video_share /wxp_video/ -o password=guest,rsize=34000
 
 # Echo the command to set the TZ variable to the shell.config file
 #
-echo "TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ" > /etc/shell.config
+echo "TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ" > /etc/shell.config;
 
 
 ######################
@@ -383,12 +395,12 @@ Next, add the following simple config script to the tftp_root dir.
 <pre>
 # Set TZ variable in this shell
 #
-TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ
+TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ;
 
 # Echo the command to set the TZ variable to the shell.config file
 # for telnet shells.
 #
-echo "TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ" > /etc/shell.config
+echo "TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ" > /etc/shell.config;
 </pre>
 </code></blockquote>
 
@@ -508,11 +520,12 @@ Value(Decimal): 33000
 </pre>
 </code></blockquote>
 
-<br>On Windows the CIFS share needs to be setup for guest access.<br>
-Info on setting up a WinXP share is at 
+<br>On Windows the CIFS share can be setup for guest access or you can
+add a special windows account for the share.<br>
+Info on setting up a WinXP share for guest access is at 
 <a href="http://www.wown.com/j_helmig/wxpsimsh.htm">http://www.wown.com/j_helmig/wxpsimsh.htm</a>
 <br><br>
-For Linux add the following line to the server's smb.conf file's [global] section:<br>
+For Linux running a samba server add the following line to the server's smb.conf file's [global] section:<br>
 max xmit 64000<br><br>
 
 NOTE: The above optimizations basically set the MAX CIF's data blocks to values
@@ -522,19 +535,31 @@ cause data to be streamed in efficient 32K chunks :-)<br><br>
 
 
 CIFS shares are mounted as follows from the MVP using the mount.cifs command.<br>
-NOTE: The "-o password=guest,rsize=34000" option should be used for
+<b>NOTE:</b> The "-o password=guest,rsize=34000" option should be used for
 accessing a guest share using 32K block sizes.<br>
+<b>NOTE:</b> The "-o user=myUserId,password=myPassword,rsize=34000" option should be used for
+accessing a non-guest share using 32K block sizes.<br>
 Following are example mvpmc config file entries for mounting a CIF's share
 
 <code><blockquote>
 <pre>
-mkdir /cifs_share
-mount.cifs //172.31.1.1/file_share /cifs_share/ -o password=guest,rsize=34000
+mkdir /cifs_share;
+mount.cifs //172.31.1.1/file_share /cifs_share/ -o password=guest,rsize=34000;
 </pre>
 </code></blockquote>
-
-The above mounts the share named "file_share" from server 172.31.1.1<br>
+The above mounts a <b>guest</b> share named "file_share" from server 172.31.1.1<br>
 The file share is accessed on the MVP from directory "/cifs_share"<br><br>
 
+<code><blockquote>
+<pre>
+mkdir /cifs_share;
+mount.cifs //172.31.1.1/file_share /cifs_share/ -o user=thewindowsuserid,password=thepassword,rsize=34000;
+</pre>
+</code></blockquote>
+The above mounts a share named "file_share" from server 172.31.1.1<br>
+The file share is accessed on the MVP from directory "/cifs_share"<br>
+The share is being accessed by user 'thewindowsuserid' with password
+'thepassword'. (Note: mount.cifs encrypts the password before sending it to the server) 
+<br><br>
 </body>
 </html>
