@@ -1,3 +1,33 @@
+<h3>New Release - 25-Oct-04</h3>
+
+<p>
+A new deveopment release of mvpmc is
+available <a href="idx.php?pg=downloads">here</a>.  New
+features include:
+</p>
+
+<ul>
+<li>Support for myth protocol version 14 (current CVS code).
+<li>Support for deleting MythTV recordings.
+<li>Support for viewing the upcoming MythTV recording schedule.
+<li>Fix so mythbackend won't crash when viewing recordings via
+the myth protocol.
+<li>Fix for seek problems seen by MythTV UK DVB users.
+<li>Fix autoconf build issues for Gentoo users.
+</ul>
+
+<hr>
+
+
+<h3>New Release - 12-Oct-04</h3>
+
+<p>
+Version 0.1a of mvpmc has been released <a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=274780">here</a>.
+This fixes the build problem with version 0.1 building against an old
+version of zlib.
+</p>
+
+<hr>
 <h3>New Release - 05-Oct-04</h3>
 
 <p>

@@ -6,6 +6,7 @@ The following project releases are available:
 
 <ul>
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=273101">mvpmc 0.1</a>
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=274780">mvpmc 0.1a</a>
 </ul>
 
 <h2>Development Releases</h2>
