@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-<!-- $Id: index.html,v 1.8 2004/07/11 16:42:47 gettler Exp $ -->
+<!-- $Id: index.html,v 1.9 2004/08/29 16:10:36 gettler Exp $ -->
 
 <head>
 
@@ -143,6 +143,10 @@ p               {text-align: justify}
                             Busybox</a>&nbsp;<br>
 
                       &nbsp;&nbsp;
+                      <a id="link" href="http://uclibc.org/">
+                            uClibc</a>&nbsp;<br>
+
+                      &nbsp;&nbsp;
                       <a id="link" href="http://www.microwindows.org/">
                             Microwindows</a>&nbsp;<br>
 
@@ -160,7 +164,7 @@ p               {text-align: justify}
             <tr align="right">
               <td>
                 <font size="-1">
-                  $Revision: 1.8 $<br>$Date: 2004/07/11 16:42:47 $
+                  $Revision: 1.9 $<br>$Date: 2004/08/29 16:10:36 $
                 </font>
               </td>
             </tr>
@@ -186,6 +190,24 @@ list
 
 <br>
 
+<h3>uClibc based toolchain</h3>
+
+<p>
+To build the current version of mvpmc, you should build yourself
+a uClibc based toolchain.  To do this, download 
+<a href="dl/mvpmc_toolchain.tar.gz">mvpmc_toolchain.tar.gz</a> and run
+the <b>mvpmc-uclibc.sh</b> script.  This will install a uClibc based
+toolchain in <b>/opt/crosstool</b> which you can use to build mvpmc
+against uClibc instead of glibc.
+</p>
+
+<p>
+Using uClibc will save over 1mb on the size of your ramdisk over what
+you will get with GNU libc.
+</p>
+
+<br>
+
 <h3>mvpmc media player</h3>
 
 <p>
@@ -204,17 +226,19 @@ which to create a new dongle.bin file.
 </p>
 
 <center>
-<table border="1">
-<tr><td>filename</td><td>type</td><td>size</td></tr>
+<table border="1" cellpadding="6">
+<tr><td>filename</td><td>type</td><td>size</td><td>date</td></tr>
 <tr>
   <td><a href="dl/dongle_build.tar.gz">dongle_build.tar.gz</a></td>
   <td>binary</td>
-  <td>3.5mb</td>
+  <td>3.0mb</td>
+  <td>29-Aug-04</td>
 </tr>
 <tr>
   <td><a href="dl/mvpmc_src.tar.gz">mvpmc_src.tar.gz</a></td>
   <td>source</td>
-  <td>9.2mb</td>
+  <td>8.6mb</td>
+  <td>29-Aug-04</td>
 </tr>
 </table>
 </center>
