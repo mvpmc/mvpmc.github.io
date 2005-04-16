@@ -83,6 +83,10 @@ h2		{background: LightBlue; color: Black; text-decoration: none}
                             Windows-HOWTO</a>&nbsp;<br>
 
                       &nbsp;&nbsp;
+                      <a id="link" href="mvpmc_hardware_howto.html">
+                            Hardware HOWTO</a>&nbsp;<br>
+
+                      &nbsp;&nbsp;
                       <a id="link"
                             href="idx.php?pg=downloads">
                             Downloads</a>&nbsp;<br>

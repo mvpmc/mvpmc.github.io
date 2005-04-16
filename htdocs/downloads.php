@@ -5,11 +5,12 @@ The following project releases are available:
 </p>
 
 <ul>
-<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=273101">mvpmc 0.1</a>
-<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=274780">mvpmc 0.1a</a>
-<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=281542">mvpmc 0.1.1</a>
-<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=295235">mvpmc 0.1.2</a>
-<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=304797">mvpmc 0.1.3</a>
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=273101">mvpmc 0.1</a> (2004-10-05)
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=274780">mvpmc 0.1a</a> (2004-10-12)
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=281542">mvpmc 0.1.1</a> (2004-11-09)
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=295235">mvpmc 0.1.2</a> (2005-01-07)
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=304797">mvpmc 0.1.3</a> (2005-02-13)
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=311336">mvpmc 0.1.4</a> (2005-03-08)
 </ul>
 
 <h2>Development Releases</h2>

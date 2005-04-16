@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>mvpmc_hardware_howto</title>
+</head>
+<body>
+<h1>mvpmc Hardware HowTo</h1>
+<h2>stuart<a>@users.sourceforge.net</a></h2>
+2005-03-15, v0.00.01
+<hr><em></em>
+<hr>
+<h2><a name="toc1">1.</a> <a href="#s1">Introduction</a></h2>
+<h2><a name="toc2">2.</a> <a href="#s2">What is TOSLINK and / or SPDIF</a></h2>
+<h2><a name="toc3">3.</a> <a href="#s3">Adding a TOSLINK and / or SPDIF</a></h2>
+<h2><a name="toc3">4.</a> <a href="#s4">Is there really a serial port
+on
+this box?</a></h2>
+<h2><a name="toc5">5.</a> <a href="#s5">Adding a serial port<br>
+</a></h2>
+<h2><a name="toc6">6.</a> <a href="#s6">What is a VFD and or LCD?<br>
+</a></h2>
+<h2><a name="toc7">7.</a> <a href="#s7">Adding a VFD.<br>
+</a></h2>
+<hr>
+<h2><a name="s1">1. Introduction</a></h2>
+The MediaMVP has some hidden talents that are not part of the out of
+the box" offerings.&nbsp; First, we can add a digital output much like
+the one many DVD players sport.&nbsp; Second we can add a serial port
+which turns out to be the consul at boot up.&nbsp; To this, we can
+connect a local display such that we can see what's playing.&nbsp; Many
+thanks to the likes of BobTheBuilder and other's who hang out at
+shspvr.com/forum!<br>
+<h2><a name="s2">2. What is SPDIF and / or TOSLINK?</a></h2>
+<p>SPDIF is a standard which can transfer audio and data streams over a
+75 ohm cable in a digital format.&nbsp; For details search on these
+standards: IEC958, IEC60958 and IEC61937. TOSLINK usually refers to
+the optical version of SPDIF.</p>
+<h2><a name="s3">3. Adding an SPDIF and / or TOSLINK</a></h2>
+<p>Hold it, before taking another step, be aware that opening your
+MediaMVP box will probably void the warranty and making alterations
+will certainly void the warranty.&nbsp; The HOWTO and MVPMC Code
+authors and contributors are not responsible for any damage caused to
+your MediaMVP box, to anything you connect to your MediaMVP box or to
+your self. <br>
+</p>
+<p>Now that you feel totally on your own let's get started.<br>
+</p>
+<p>Seriously, if you haven't worked on static sensitive digital
+circuits
+before this may not be the right project for you.&nbsp; Taking static
+precautions is just one of many procedural steps we are going to assume
+you already know about.&nbsp; The only topic that will be covered here
+is what has worked for other people with reference to adding a SPDIF
+interface. If you would like to emulate what they did, that will be up
+to you.<br>
+</p>
+The SPDIF signal is already available inside the MediaMVP.&nbsp;
+Locate TP60 by matching up the pattern on your printed circuit board
+with the picture below (in this image, the front of the MediaMVP is to
+the left).&nbsp; TP60 is where the capacitor is connected to the
+circuit board near the center of the photograph (use a small gage wire
+for this - probably at least AWG 30).&nbsp; Click on the picture for a
+larger image. Thanks goes to BobTheBuilder for figuring out these
+particulars and for this picture.<br>
+<a href="images/mvp_spdif_large.jpg"><img alt="SPDIF Modification"
+ src="images/mvp_spdif.jpg"
+ style="border: 0px solid ; width: 400px; height: 267px;"></a><br>
+<br>
+The SPDIF signal flows through this capacitor and onto the center of
+the SPDIF connector. The other capacitor is used to AC couple the SPDIF
+connector's shielded side to ground.&nbsp; Note the pad just above the
+power LED should be a ground. This alteration is for an electrically
+connected SPDIF port.&nbsp; Note the modification uses 2 capacitors to
+isolate any DC component of the signal on both the signal and the
+ground reference. In this alteration, the capacitors were each 0.1 uF
+ceramic discs.&nbsp; This alteration uses a BNC connector.&nbsp; This
+type of connector mounts solidly and makes secure and dependable
+connections.&nbsp; Most home equipment will, however, use RCA
+connectors and cables.&nbsp; Here's a circuit diagram in case you
+really need one.<br>
+<span class="postbody"><br>
+TP60 ----------------|(-------------&gt; SPDIF signal to AMP
+<br>
+<br>
+GND -----------------|(------------&gt; SPDIF Ground for AMP
+<br>
+<br>
+In a similar fashion one can add an optical TOSLINK. In the image below
+the TOSLINK connector is located near the top (at the back of an
+MediaMVP) between the Ethernet and left audio ports.&nbsp; The
+connector is mounted up-side-down and covered by a small circuit board
+so as not to solder the wires directly to it's pins.&nbsp; The white
+wire is connected to TP60, the red to the regulated +5v side of the
+power regulator IC and the black to the ground tab of the power
+regulator IC.&nbsp; These TOSLINK connectors have a small circuit
+inside to drive the LED which is the reason they require a power
+connection.&nbsp; Note the SPDIF signal at TP 60 is probably a 0 to 3
+volt signal and this alteration works despite the TOSLINK being powered
+at 5 volts.&nbsp; Please take a look at the specifications of the
+TOSLINK connector / adapter you will use to make sure there will be no
+problems.<br>
+<br>
+<a href="images/mvp_toslink_internal_large.jpg"><img
+ alt="TOSLINK Modification" src="images/mvp_toslink_internal.jpg"
+ style="border: 0px solid ; width: 400px; height: 300px;"></a><br>
+<br>
+Here are some external views of the TOSLINK modification...<br>
+<br>
+<img alt="TOSLINK External" src="images/mvp_toslink_external.jpg"
+ style="width: 400px; height: 300px;"><img alt="TOSLINK with Plugs"
+ src="images/mvp_toslink_plugs.jpg" style="width: 400px; height: 300px;"><br>
+<br>
+</span><br>
+<h2><a name="s4">4. Is there really a serial port on this box?</a></h2>
+<p>Yes!&nbsp; But it is missing a chip and some capacitors.&nbsp; It
+turns out that this is the operating system's console.&nbsp; It comes
+in
+very handy for debugging.&nbsp; But we are mostly past that state
+thanks to the efforts of the developers here.<br>
+</p>
+<h2><a name="s5">5. Adding a serial port</a></h2>
+<p>On
+the bottom of the circuit board, there is a "target" for a <a
+ href="http://www.maxim-ic.com/">MAXIM</a> <a
+ href="http://www.maxim-ic.com/quick_view2.cfm/qv_pk/1129">MAX562</a>
+chip. There are also 6 capacitors missing (if I remember right). The <a
+ href="http://www.maxim-ic.com/quick_view2.cfm/qv_pk/1129">MAX562</a>
+link should take you to a MAXIM web page which has a Typical Operating
+Circuit diagram on it.&nbsp; There you&nbsp; can find appropriate
+capacitor values. In the picture below all these parts have been
+installed.&nbsp; Evidently the pads inside the white box to the right
+were for a serial port header / connector.&nbsp; In this image the
+black wire is connected to ground.&nbsp; This would go to pin 5 of a
+DB9 female serial port connector.&nbsp; The red wire would go to pin 3
+of the same connector.&nbsp; And the yellow would go to pin 2.&nbsp;
+Thanks again to BobTheBuilder for pointing the rest of us in the right
+direction and for this picture.<br>
+</p>
+<p><a href="images/mvp_serial_large.jpg"><img alt="Serial Port Chip"
+ src="images/mvp_serial.jpg"
+ style="border: 0px solid ; width: 400px; height: 300px;"></a><br>
+</p>
+<h2><a name="s6">6. What is a VFD and or LCD?</a></h2>
+<p>VFD stands for Vacuum Fluorescent Display.&nbsp; Just about everyone
+knows that LCD stands for Liquid Crystal Display.&nbsp; The main
+differences are that VFDs generate their own light (usually a bright
+blue), can be easily read at different angles, operate over a large
+temperature range and can be viewed in bright light.&nbsp; LCDs are
+passive (unless back lighted), and have contrast problems at different
+angles and temperatures.&nbsp; For portable battery operated devices
+LCDs wins hands down as they only take a fraction of the power to
+operate.&nbsp; But for our application, I prefer VFDs.<br>
+</p>
+<h2><a name="s7">7. Adding a VFD.</a></h2>
+<br>
+Here is a rather small VFD (1 row x 16 characters)
+connected to the serial port of a MediaMVP running modified MVPMC
+code.&nbsp; This particular unit is an used IEE VFD with a parallel
+interface.&nbsp; The reseller included an Atmel processor base serial
+to parallel board which makes it ideal for the MVPMC project.<br>
+<ol type="1">
+</ol>
+<img alt="VFD &quot;MVPMC MediaMVP&quot;" src="images/mvp_vfd_1.jpg"
+ style="width: 284px; height: 213px;"><img alt="VFD &quot;Symphony No. 5&quot;"
+ src="images/mvp_vfd_2.jpg" style="width: 284px; height: 213px;"><br>
+<br>
+Yes, there are more details that I didn't include.&nbsp; But I assume
+most of you are experienced at this sort of thing and would be over
+come by boredom if I dribbled on about how hard this was or easy that
+can be.&nbsp; However, if I missed something, use the e-mail at the top
+of this page and I'll try to update this HOWTO accordingly.&nbsp;
+Thanks again to BobTheBuilder for his efforts and pictures.&nbsp; <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>
