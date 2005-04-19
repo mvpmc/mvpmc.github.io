@@ -96,6 +96,19 @@ If you don't have a favorite telnet client a good free one is "putty":<br>
 <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">http://www.chiark.greenend.org.uk/~sgtatham/putty/</a>
 <br>
 </p>
+
+<p>Windows Editor that supports saving text files in UNIX mode:<br>
+Note: the difference between unix and dos text files is that dos
+places carrage-return and linefeed characters at the end of each line
+where unix only places a linefeed at the end of each line.<br>
+Following are some editors recommended by folks on AVS-Forum:<br>
+<a href="http://welcome.to/metapad">metapad (Freeware)</a> Set unix mode: File-FileFormat-UnixText<br>
+<a href="http://www.gena01.com/win32pad/">win32pad (Freeware)</a>Set unix mode: File-FileFormat-Unix<br>
+
+<a href="http://www.textpad.com/">textpad (Shareware with unlimited evaluation period)</a>Set unix mode: File-SaveAs-File Format-Unix<br>
+<a href="http://www.zeusedit.com/">zeus (Shareware 60 day evaluation period)</a>
+</p>
+
 <h2><a name="s3">3.</a> <a href="#toc3">MediaMVP & mvpmc boot process</a></h2>
 <p>
 There are several steps to the MediaMVP & mvpmc boot process.
@@ -127,7 +140,9 @@ Following is an example mvp config file:<br>
 create/update the config file you must insure each line is ended with
 a semi-colon. If the semi-colon is not present certain lines may fail
 to execute properly due to the carrage-return character that windows
-editors add to the line terminator.<br> 
+editors add to the line terminator.<br>
+Better yet try one of the editors listed in the utilities section that
+supports saving files in Unix mode.<br> 
 <b>Also NOTE:</b> The mvpmc command line (line that starts the mvpmc
 application) should be ended with an ampersand <b>instead</b> of a
 semicolon. This causes the mvpmc application to run in the
