@@ -6,7 +6,7 @@
 <body>
 <h1>mvpmc ReplayTV</h1>
 <h2>John Honeycutt, 
-<a>honeycut@users.sourceforge.net</a></h2>2005-02-21, v0.00.01
+<a>honeycut@users.sourceforge.net</a></h2>2005-05-15, v0.00.02
 <hr>
 <em></em>
 <hr>
@@ -63,8 +63,12 @@ eg:
 <blockquote><code>
 <font color="#0000FF">mvpmc -f /etc/helvB18.pcf</font><br>
 </code></blockquote>
-
-<br><b>mvpmc ReplayTV options</b><br>
+<font color="#FF0000">NOTE: As of mvpmc 0.1.6, the replaytv code is themeble. The
+/usr/share/mvpmc/default.xml specifies the 18 point font for replaytv
+widgets<br> 
+The '-f /etc/helvB18.pcf' option is no longer required.</font><br>
+<br>
+<b>mvpmc ReplayTV options</b><br>
 ReplayTV options are specified with the "-R" flag.<br>
 At a minimum you must specify either a static IP address list or tell mvpmc
 to run ReplayTV Discovery.<br>
@@ -121,9 +125,23 @@ examples:
 <li>FFWD:   2X FastForward
 <li>REW:    Jump back one second
 <li>SKIP:   Jump forward 28 seconds
-<li>REPLAY: Jump back 7 seconds
+<li>REPLAY: Jump back 8 seconds
 <li>[0..9]: Enter Time to Jump to
 <li>GO or GREEN: Jump to entered time
+<li>BLUE: Commercial Skip Forward (Jump to end of next commercial break)
+<li>YELLOW: Commercial Skip Back (If last key press was not
+'Commercial Skip Fwd' then jump to end of last commercial break. If
+last key press was 'Commercial Skip Fwd' then jump to previous time
+when 'Commercial Skip Fwd' was pressed.)
+</ul>
+<b>Seek: On Screen Display (OSD)</b><ul>
+<li>SKIP (End of commercial break NOT encountered): +28 >>
+<li>SKIP (End of commercial break encountered): +ss >>[CB]
+<li>REPLAY: -08 <<
+<li>Jump to Time: h:mm JUMP
+<li>Commercial Skip Forward: +m:ss >>[CS]
+<li>Commercial Skip Back (last key press not 'CS Fwd'): -m:ss <<[CS]
+<li>Commercial Skip Back (last key press was 'CS Fwd'): << PREV
 </ul>
 </pre> 
 </p>
@@ -193,30 +211,28 @@ Myself or someone else will ask you to email the core file so we can analyze it.
 If you'd like to help out let me know.<br><br>
 <b>ReplayTV List-O-Things</b><br>
 <ul>
-<li>Screwed up RTV streaming performance some time in last month. Can't keep buffer 
-full for some high quality mpgs. Need to fix.
 <li>For show "play", currently only query RTV that show is stored on for "last play pos".
 Need to investigate protocol further, cache last-play-pos on MVP so this works better.
 <li>When hit "stop" | "back" during show play: display popup: (Resume|Back-To-Guide|Delete).
 <li>When end of mpg reached: display popup: (Back-To-Guide|Delete).
-<li>Update libreplaytv to process 5K evt files and create structure with comercial markers.
-<li>Implement GUI 5K manual comercial skip.
 <li>Currently only run RTV SSDP server long enough to kick DVArchive into 5K mode.
 This causes DVArchive to generate error messages after our server is stopped.
 Need to change SSDP server to thread that runs in background.
-<li>RTV 4K stuff is not complete. I can kick DVArchive into 4K mode for testing 
-but I don't have a real 4K mpg or ndx file.
-If someone could send me a CD with a 4K 1/2 hour low res mpg &amp ndx file that would be great!<br>
-Do 4k Jump/seek &amp manual comercial skip.
 <li>GUI can hang for certian networking error conditions. Need to update libreplaytv networking code
 to use signals and shorter error timeouts.
 <li>Update libreplaytv guide parsing to finish parsing replay channel info.
 <li>Add "details" show menu popup, that displays tons-o gorry details about 
 a replay show, it's replay channel, etc...
 <li>get rtv_shell building for w32 winsock.
-<li>wrap mvpmc/src/replaytv.c error &amp debug output to use libreplaytv logging utilities.
-<li>setup a more ReplayTV GUI like color scheme.
 <li>optimize replaytv pthread stack size. 
+<li><strike>Screwed up RTV streaming performance some time in last month. Can't keep buffer 
+full for some high quality mpgs. Need to fix.</strike> Done 05/15/2005
+<li><strike>Update libreplaytv to process 5K evt files and create structure with comercial markers.</strike> Done 05/15/2005
+<li><strike>Implement GUI 5K manual comercial skip.</strike> Done 05/15/2005
+<li><strike>RTV 4K stuff is not complete. I can kick DVArchive into 4K mode for testing 
+but I don't have a real 4K mpg or ndx file.</strike> No plans to implement
+<li><strike>setup a more ReplayTV GUI like color scheme.</strike> Can
+be implemented with mvpmc theme xml file.
 
 </ul> 
 <b>MVP General List-O-Things</b><br>
