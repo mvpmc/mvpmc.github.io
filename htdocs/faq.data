@@ -11,17 +11,18 @@ and please report bugs and missing functionality as you find them.
 ###
 
 What do I need to get started?
+The easiest thing is to download one of the pre-built dongle.bin
+files <a href="http://mvpmc.sourceforge.net/idx.php?pg=downloads">here</a>.
+Read the <a href="http://mvpmc.sourceforge.net/mvpmc-HOWTO-singlehtml.html">
+HOWTO</a> to see how to set up Linux to boot the MediaMVP.  If you are going
+to boot the MediaMVP from Windows, see the
+<a herf="http://mvpmc.sourceforge.net/windows/mvpmc_windoze_howto.html">
+Windows HOWTO</a>.
+###
+
+How do I build mvpmc myself?
 In order to build mvpmc from source, you will need a Linux system on
-which you can install a cross compilation environment.  If you do not
-have this, you can still build the binary release as long as you have
-an x86 Linux system on which to run the build script.
-
-Once you create your dongle.bin, you will want to set up a tftpboot
-server, and some sort of media server.  This could be as simple as an
-NFS filesystem, or as complicated as a MythTV backend.
-
-You will then need a DHCP server and a tftp server to allow the MediaMVP
-to boot.
+which you can install a cross compilation environment.
 ###
 
 How do I build a cross compilation environment?
@@ -110,13 +111,27 @@ unable to give useful names to each stream.
 How do I connect to a MythTV server?
 Use mvpmc with the -s flag to specify the IP address of the MythTV server.  If
 you also use the -r flag to specify the NFS mount point of the MythTV
-recordings directory, then you will play your MythTV recordings via NFS.  If
+recordings directory, then you will play your MythTV recordings via NFS
+(If you have multiple backends, use -r with a colon-seperated list for each
+directory in which to look for recordings).  If
 not, you will play them via the Myth protocol.
+###
+
+What version of MythTV does mvpmc support?
+mvpmc 0.1.6 supports MythTV 0.14 through 0.18 (plus CVS versions beyond 0.18).
+###
+
+Why is MythTV complaining "Client speaks protocol version 8 but we speak 15!"?
+This is because MythTV itself only ever supports one protocol version at a
+time, while mvpmc tries to be compatible with all versions of MythTV.  So
+mvpmc starts with protocol 8, and MythTV will tell it what protocol version
+it should be speaking, and mvpmc will then switch to the correct version.
 ###
 
 How well does mvpmc work as a MythTV frontend?
 You can watch and delete your recordings, as well as view the upcoming
-recording schedule.  Additional functionality, such as scheduling of
+recording schedule.  You can also watch live tv on any available tuner.
+Additional functionality, such as scheduling of
 recordings, commercial skip, etc are not supported at this time.
 ###
 
@@ -132,10 +147,15 @@ is not capable of playing.  Your recordings need to be in mpeg1/mpeg2 format.
 ###
 
 How do I watch live TV off a MythTV server?
-It does not work well, but you can use the -b option to point mvpmc to the
-directory containing your ringbuffer.  You can change channels with the
-channel up/down buttons, but you then need to return to the beginning of
-the file to start watching the new channel (with the '0' button).
+You can watch live TV either via the filesystem or the myth protocol.  If you
+use the -b option to mvpmc, you can tell mvpmc which directory contains the
+ringbuffer.  If you do not use the -b option, then live tv will be played
+via the myth protocol.
+
+When you select live TV, you will be given a menu containing all of the
+programs currently being broadcast.  If you choose one of the programs, it
+will attempt to start playing it on any of the tuners where that program
+is available.
 ###
 
 How do I connect to a ReplayTV/DVArchive?
@@ -183,6 +203,38 @@ not display at all.  If you find your jpeg images will not display,
 reducing their size may help.
 ###
 
+How can I change the interface colors?
+You will find a couple XML files in /usr/share/mvpmc when you boot the mvp.
+If you use the -t option to mvpmc to point to one of these files, you will
+get a different interface.  You can also easily modify these files to suit
+your tastes.  You can change the fonts, the colors, and some simple widget
+decorations for most of the widgets.
+###
+
+Can I override the fonts in one of the default themes?
+Yes.  Add something like the following to your config file:
+
+</p><pre>
+cat &lt;&lt;EOF &gt; /tmp/font_override.xml
+&lt;mvpmctheme version="0" name="font override"&gt;
+	&lt;font name="standard"&gt;/etc/helvB18.pcf&lt;font&gt;
+	&lt;font name="large"&gt;/etc/helvB18.pcf&lt;font&gt;
+&lt;mvpmctheme&gt;
+EOF
+</pre><p>
+###
+
+Can I override widget settings in one of the default themes?
+Yes.  Add your settings to the file /tmp/user_override.xml.
+###
+
+How do I add my own themes?
+Any xml theme file added to /tmp/themes will be picked up by mvpmc and
+added to the theme menu.  If you use the -t option to mvpmc, it will start
+with that theme.  Otherwise, it will start with the default theme, and you
+will be able to change the theme from the theme menu.
+###
+
 I found a bug.  What should I do?
 Either send an email to
 <a class=redlink href="mailto:gettler@users.sourceforge.net">gettler@users.sourceforge.net</a> or
@@ -200,16 +252,13 @@ In no particular order:
 <li>seek in an audio file
 <li>ID3 support
 <li>MythTV support for scheduling recordings
-<li>MythTV support for watching live TV (and changing channels)
 <li>Tivo support
 <li>VideoLan support
 <li>video rewind
 <li>internationalization for the menus/OSD
-<li>a better default font
-<li>support for more audio types (ie, OGG, WMA, ...)
+<li>support for more audio types (ie, WMA, ...)
 <li>DVD subtitle support
 <li>DVD menu and navigation
-<li>support to customize menu/OSD colors from a config file
 <li>build tools for use under windows
 <li>user and developer documentation
 </ul>

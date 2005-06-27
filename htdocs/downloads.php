@@ -11,6 +11,8 @@ The following project releases are available:
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=295235">mvpmc 0.1.2</a> (2005-01-07)
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=304797">mvpmc 0.1.3</a> (2005-02-13)
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=311336">mvpmc 0.1.4</a> (2005-03-08)
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=322161">mvpmc 0.1.5</a> (2005-04-20)
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=333416">mvpmc 0.1.6</a> (2005-06-07)
 </ul>
 
 <h2>Development Releases</h2>
@@ -46,7 +48,7 @@ $bin = glob("mvpmc-*-bin.tar.gz");
 $src = glob("mvpmc-*-src.tar.gz");
 
 dev_release($dongle, "dongle.bin Releases");
-dev_release($bin, "Binary Releases");
+//dev_release($bin, "Binary Releases");
 dev_release($src, "Source Releases");
 ?>
 

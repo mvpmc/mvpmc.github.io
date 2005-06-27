@@ -87,6 +87,10 @@ h2		{background: LightBlue; color: Black; text-decoration: none}
                             Hardware HOWTO</a>&nbsp;<br>
 
                       &nbsp;&nbsp;
+                      <a id="link" href="http://hvdkooij.xs4all.nl/docs-mvpmc.cms">
+                            Hugo's Docs</a>&nbsp;<br>
+
+                      &nbsp;&nbsp;
                       <a id="link"
                             href="idx.php?pg=downloads">
                             Downloads</a>&nbsp;<br>
