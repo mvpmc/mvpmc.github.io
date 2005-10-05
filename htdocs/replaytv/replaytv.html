@@ -6,31 +6,52 @@
 <body>
 <h1>mvpmc ReplayTV</h1>
 <h2>John Honeycutt, 
-<a>honeycut@users.sourceforge.net</a></h2>2005-05-15, v0.00.02
+<a>honeycut@users.sourceforge.net</a></h2>2005-10-04, v0.00.03
 <hr>
 <em></em>
 <hr>
 <p>
-<h2><a name="toc1">1.</a> <a href="replaytv.html#s1">Screenshots</a></h2>
+<h2><a name="toc1">1.</a> <a href="replaytv.html#s1">Intro</a></h2>
 
 <p>
-<h2><a name="toc2">2.</a> <a href="replaytv.html#s2">ReplayTV commandline options</a></h2>
+<h2><a name="toc2">2.</a> <a href="replaytv.html#s2">Screenshots</a></h2>
 
 <p>
-<h2><a name="toc3">3.</a> <a href="replaytv.html#s3">Using the Remote Control</a></h2>
+<h2><a name="toc3">3.</a> <a href="replaytv.html#s3">ReplayTV commandline options</a></h2>
+
+<p>
+<h2><a name="toc4">4.</a> <a href="replaytv.html#s4">Using the Remote Control</a></h2>
 
 <p>
 <h2><a name="toc5">5.</a> <a href="replaytv.html#s5">rtv_shell</a></h2>
 
 <p>
-<h2><a name="toc5">5.</a> <a href="replaytv.html#s5">Debugging Problems</a></h2>
+<h2><a name="toc6">6.</a> <a href="replaytv.html#s6">Debugging Problems</a></h2>
 
 <p>
-<h2><a name="toc6">6.</a> <a href="replaytv.html#s6">List of things to do</a></h2>
+<h2><a name="toc7">7.</a> <a href="replaytv.html#s7">List of things to do</a></h2>
 
 
 <hr>
-<h2><a name="s1">1.</a> <a href="#toc1">Screenshots</a></h2>
+<h2><a name="s1">1.</a> <a href="#toc1">Intro</a></h2>
+mvpmc includes support for streaming from ReplayTV 4K and 5K series PVRs.<br>
+Support is also provided for DVArchive 3.1.<br>
+Functionality includes:
+<ul>
+<li>Automatic discovery of all RTV devices on the network.
+<li>Displaying information about the RTV devices including model numbers,
+harddrive capacity, and harddrive space used.
+<li>Retrieval and parsing of Replay Guides including show title,
+eposide title/description, actors, show length, time/date recorded,
+etc...
+<li>Ability to delete shows. 
+<li>OnScreen display during video playback.
+<li>Extensive navigation during playback including: +28 second seek
+forward, -3 second seek back, absolute jump to any time, relative jump
+from current play position.
+<li>Manual commercial skip.
+</ul>
+<h2><a name="s2">2.</a> <a href="#toc2">Screenshots</a></h2>
 
 <pre><b>     mvpmc main menu                 device menu</b><br></pre>
 <a href="mvp_rtv_main.gif"><img src="tn_mvp_rtv_main.gif" width="200" height="133" alt="" border="0" align="" hspace="20"></a>
@@ -48,8 +69,13 @@
 <br><br><br>
 
 
-<h2><a name="s2">2.</a> <a href="#toc2">ReplayTV Commandline Options</a></h2>
+<h2><a name="s3">3.</a> <a href="#toc3">ReplayTV Commandline Options</a></h2>
 <p>
+<b>specifying the ReplayTV theme when starting mvpmc</b><br>
+mvpmc has a built in theme which provides a ReplayTV like color scheme.<br>
+The ReplayTV theme is specifyed with the "-t /usr/share/mvpmc/replaytv.xml" command line option.
+<br>
+<br>
 <b>mvpmc Fonts</b><br>
 mvpmc offers three GUI OSD(On Screen Display) font sizes.<br>
 <ul>
@@ -58,35 +84,35 @@ mvpmc offers three GUI OSD(On Screen Display) font sizes.<br>
 <li>18 point Helvetica: /etc/helvB18.pcf
 </ul> 
 The ReplayTV GUI is optimized for an 18 point font.<br>
-The font is specified on the mvpmc command line with the "-f" option.<br>
-eg: 
-<blockquote><code>
-<font color="#0000FF">mvpmc -f /etc/helvB18.pcf</font><br>
-</code></blockquote>
-<font color="#FF0000">NOTE: As of mvpmc 0.1.6, the replaytv code is themeble. The
-/usr/share/mvpmc/default.xml specifies the 18 point font for replaytv
-widgets<br> 
-The '-f /etc/helvB18.pcf' option is no longer required.</font><br>
+As of mvpmc 0.1.6, the replaytv code is themeble. The
+xml theme files (/usr/share/mvpmc/default.xml and
+/use/share/mvpmc/replaytv.xml) specifiy the 18 point font for replaytv
+widgets<br>
+If desired uses can modify the gui fonts for any widget by creating a
+custom xml theme file and loading it with the mvpmc '-t' option. 
+<br>
 <br>
 <b>mvpmc ReplayTV options</b><br>
 ReplayTV options are specified with the "-R" flag.<br>
 At a minimum you must specify either a static IP address list or tell mvpmc
 to run ReplayTV Discovery.<br>
-<font color="#FF0000">NOTE: DVArchive must be discovered to kick it in to ReplayTV 5K mode.<br></font>
+<font color="#FF0000">NOTE: DVArchive must be discovered to kick it in
+to ReplayTV 4K or 5K mode.<br></font>
 The format is:
 <pre><tt>
    -R discover
    -R IPAddr1/IPAddr2/IPAddr3...
 e.g: -R 192.168.1.10/192.168.1.11/192.168.1.12
 
-Example for 18 point font with ReplayTV discovery:
-<font color="#0000FF">mvpmc -f /etc/helvB18.pcf -R discover</font>
+Example for specifying ReplayTV discovery and the ReplayTV theme:
+<font color="#0000FF">mvpmc -t /usr/share/mvpmc/replaytv.xml -R discover</font>
 </tt></pre>
 
 Multiple ReplayTV options can be passed using the form: <code>-R "&lt option list &gt"</code><br>
 The following options are supported:<br>
 <ul>
 <li>ip=&lt address list or discover &gt <font color="#FF0000">(This parameter is required)</font><br> 
+<li>mode=4k (Force DVArchive into RTV 4K mode instead of 5K mode)<br> 
 <li>debug=&lt trace mask &gt<br>
 Where trace types are:<br>
 <pre><code>
@@ -103,14 +129,16 @@ Where trace types are:<br>
 </ul> 
 examples:
 <code><pre>
-   <font color="#0000FF">mvpmc -f /etc/helvB18.pcf -R "ip=discover debug=58"</font>
-   <font color="#0000FF">mvpmc -f /etc/helvB18.pcf -R "ip=discover debug=1FF logfile=/nfs/mvplogs"</font>
+Specify ReplayTV theme, discover RTV's, set debug level 0x58:
+   <font color="#0000FF">mvpmc -t /usr/share/mvpmc/replaytv.xml -R "ip=discover debug=58"</font><br>
+Discover RTV's and make DVArchive believe the MVP is a RTV 4K instead of RTV 5K device.
+   <font color="#0000FF">mvpmc -R "ip=discover mode=4k"</font>
 </pre></code>
 </p>
 <br>
 
 
-<h2><a name="s3">3.</a> <a href="#toc3">Using the Remote Control</a></h2>
+<h2><a name="s4">4.</a> <a href="#toc4">Using the Remote Control</a></h2>
 <p>
 <pre>
 <b>Show Menu</b><ul>
@@ -126,8 +154,10 @@ examples:
 <li>REW:    Jump back one second
 <li>SKIP:   Jump forward 28 seconds
 <li>REPLAY: Jump back 8 seconds
-<li>[0..9]: Enter Time to Jump to
-<li>GO or GREEN: Jump to entered time
+<li>[0..9]: Enter Jump Time: Then GO or GREEN to Jump to entered time
+<li>[0..9]: Enter Jump Time: Then SKIP to Jump forward number of minutes from current play position.
+<li>[0..9]: Enter Jump Time: Then REPLAY to Jump back number of minutes from current play position.
+<li>[0..9]: Enter Jump Time: Then REW to Jump back number of seconds from current play position.
 <li>BLUE: Commercial Skip Forward (Jump to end of next commercial break)
 <li>YELLOW: Commercial Skip Back (If last key press was not
 'Commercial Skip Fwd' then jump to end of last commercial break. If
@@ -182,7 +212,7 @@ To build for x86 cd in your build tree to host/mvplib/libreplaytv and do a make.
 
 </p>
 
-<h2><a name="s5">5.</a> <a href="#toc5">Debugging Problems</a></h2>
+<h2><a name="s6">6.</a> <a href="#toc6">Debugging Problems</a></h2>
 <p>
 Problems should be reported to the mvpmc-devel mailing list.<br>
 There are lots of Error print statements in the mvpmc and ReplayTV code.<br>
@@ -206,11 +236,13 @@ Otherwise, post the problem to the mvpmc-devel mailing list.<br>
 Myself or someone else will ask you to email the core file so we can analyze it.<br>
 </p>
 
-<h2><a name="s6">6.</a> <a href="#toc6">John's List-O-Things-To-Do</a></h2>
+<h2><a name="s7">7.</a> <a href="#toc7">John's List-O-Things-To-Do</a></h2>
 <p>
 If you'd like to help out let me know.<br><br>
 <b>ReplayTV List-O-Things</b><br>
 <ul>
+<li>Add next/last device quick navigation to guide menu. i.e. use
+remotes seek button to jump between RTV units. (Request 1309453)
 <li>For show "play", currently only query RTV that show is stored on for "last play pos".
 Need to investigate protocol further, cache last-play-pos on MVP so this works better.
 <li>When hit "stop" | "back" during show play: display popup: (Resume|Back-To-Guide|Delete).
@@ -223,26 +255,37 @@ to use signals and shorter error timeouts.
 <li>Update libreplaytv guide parsing to finish parsing replay channel info.
 <li>Add "details" show menu popup, that displays tons-o gorry details about 
 a replay show, it's replay channel, etc...
+<li> Add 'Category' groupings to Replay Guide. Allow displaying shows
+by category. (Request 1309458)
 <li>get rtv_shell building for w32 winsock.
-<li>optimize replaytv pthread stack size. 
-<li><strike>Screwed up RTV streaming performance some time in last month. Can't keep buffer 
-full for some high quality mpgs. Need to fix.</strike> Done 05/15/2005
+<li>optimize replaytv pthread stack size.
+<li>Add automatic commercial skip with ability to enable / disable via
+gui.
+<li>Add telephone keypad indexing for Replay Guide. (Request 1310036)
+<li>Allow for merged Replay Guide. i.e. Option to show list of
+channels/shows from all RTV devices as a single guide menu (Request 1309465)
+</ul>
+<ul>
 <li><strike>Update libreplaytv to process 5K evt files and create structure with comercial markers.</strike> Done 05/15/2005
 <li><strike>Implement GUI 5K manual comercial skip.</strike> Done 05/15/2005
-<li><strike>RTV 4K stuff is not complete. I can kick DVArchive into 4K mode for testing 
-but I don't have a real 4K mpg or ndx file.</strike> No plans to implement
+<li><strike>Add RTV 4K support</strike> Done 10/04/2005
 <li><strike>setup a more ReplayTV GUI like color scheme.</strike> Can
 be implemented with mvpmc theme xml file.
-
+<li><strike>Add support for relative jump from current play
+position.</strike> (Request 1309433) Done 10/04/2005
+<br>
 </ul> 
 <b>MVP General List-O-Things</b><br>
 <ul>
+<li>Figure out how to get hardware to tell us current position in mpg stream.
 <li>Do some nifty OSD graphics widgets for video operations. play, fwd, rew, seek, replay,
 comercial skip, etc...
 <li>Setup and test cygwin development environment for mvpmc w32 builds &amp debugging.
 <li>Investigate getting freetype anti-aliased fonts working.
 <li>package useful utilities such as colortest &amp rtv_shell so they can easily be installed
 on a NFS/CIFS export and executed from the MVP.
+</ul>
+<ul>
 <li><strike>CIFS filesystem streaming performance is lacking. Figure out whats going on. Fix.</strike> Done 03/06/2005
 </ul> 
 

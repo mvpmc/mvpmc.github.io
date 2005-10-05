@@ -7,7 +7,7 @@
 <h1>mvpmc Microsoft Windows HowTo</h1>
 
 <h2>John Honeycutt, 
-<a>honeycut@users.sourceforge.net</a></h2>2005-03-27, v0.00.03
+<a>honeycut@users.sourceforge.net</a></h2>2005-10-04, v0.00.04
 <hr>
 <em></em>
 <hr>
@@ -43,6 +43,9 @@
 
 <p>
 <h2><a name="toc11">11.</a> <a href="mvpmc_windoze_howto.html#s11">Configuring a CIFS server</a></h2>
+
+<p>
+<h2><a name="toc12">12.</a> <a href="mvpmc_windoze_howto.html#s12">Enabling Logging in Putty Telnet Client</a></h2>
 
 <hr>
 <h2><a name="s1">1.</a> <a href="#toc1">Introduction</a></h2>
@@ -193,12 +196,10 @@ echo "TZ=EST+5EDT,M4.1.0/2,M10.5.0/2; export TZ" > /etc/shell.config;
 
 ######################
 # SECTION 3 
-# Start the mvpmc application.
-# Specify the 18 point font because the default 10 point
-# font is unreadable.  
+# Start the mvpmc application.  
 ######################
 
-mvpmc -f /etc/helvB18.pcf -R "ip=discover" &amp;
+mvpmc -R "ip=discover" &amp;
 </pre>
 </code></blockquote>
 <a href="example_mvpmc.config">Link to example config file</a>
@@ -505,7 +506,7 @@ Sun Feb 20 12:19:35 EST 2005
 From the MVP prompt type:
 <blockquote><code>
 <pre>
-# mvpmc -f /etc/helvB18.pcf -R "ip=discover"<br>
+# mvpmc -R "ip=discover"<br>
 </pre>
 </code></blockquote>
 You should see messages scroll by in the telnet window & the mvpmc GUI 
@@ -575,6 +576,26 @@ The above mounts a share named "file_share" from server 172.31.1.1<br>
 The file share is accessed on the MVP from directory "/cifs_share"<br>
 The share is being accessed by user 'thewindowsuserid' with password
 'thepassword'. (Note: mount.cifs encrypts the password before sending it to the server) 
+<br><br>
+
+<h2><a name="s12">12.</a> <a href="#toc12">Enabling Logging in Putty Telnet Client</a></h2>
+
+<p>Sometimes it is useful to capture a telnet session's I/O. The
+following details how to enable logging for the putty telnet client.<br><br>
+
+<ol type="a">
+<li> start putty
+<li> under left side category: 'session' select 'logging'
+<li> select 'log printable output only'
+<li> Change the log file name & path to whatever you like.
+<li> under left side category: select 'Session'
+<li> Enter your mvp's IP address
+<li> Select Protocol 'telnet'
+<li> For 'Saved Sessions' enter a name like 'mvp_logged'
+<li> Click 'save'
+</ul><br><br>
+<p>You should now have a 'mvp_logged' profile in your list of saved sessions.<br>
+Double click 'mvp_logged' to start putty & connect to the mvp.<br>
 <br><br>
 </body>
 </html>
