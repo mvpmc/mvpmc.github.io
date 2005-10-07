@@ -217,9 +217,9 @@ Yes.  Add something like the following to your config file:
 </p><pre>
 cat &lt;&lt;EOF &gt; /tmp/font_override.xml
 &lt;mvpmctheme version="0" name="font override"&gt;
-	&lt;font name="standard"&gt;/etc/helvB18.pcf&lt;font&gt;
-	&lt;font name="large"&gt;/etc/helvB18.pcf&lt;font&gt;
-&lt;mvpmctheme&gt;
+	&lt;font name="standard"&gt;/etc/helvB18.pcf&lt;/font&gt;
+	&lt;font name="large"&gt;/etc/helvB18.pcf&lt;/font&gt;
+&lt;/mvpmctheme&gt;
 EOF
 </pre><p>
 ###

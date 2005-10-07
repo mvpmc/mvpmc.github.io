@@ -1,3 +1,19 @@
+<h3>New Release - 2005-09-13</h3>
+
+<p>
+Version 0.1.8 of mvpmc has been released <a href="https://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=356389">here</a>.
+</p>
+
+<hr>
+
+<h3>New Release - 2005-07-14</h3>
+
+<p>
+Version 0.1.7 of mvpmc has been released <a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=342105">here</a>.
+</p>
+
+<hr>
+
 <h3>HOWTO Update - 2005-06-20</h3>
 
 <p>
@@ -9,8 +25,7 @@ A long-overdue update of the HOWTO is now available.
 <h3>New Release - 2005-06-07</h3>
 
 <p>
-Version 0.1.6 of mvpmc has been released <a href="http://sourceforge.net/project
-/showfiles.php?group_id=103474&package_id=111160&release_id=333416">here</a>.
+Version 0.1.6 of mvpmc has been released <a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=333416">here</a>.
 </p>
 
 <hr>
