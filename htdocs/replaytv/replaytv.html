@@ -6,7 +6,7 @@
 <body>
 <h1>mvpmc ReplayTV</h1>
 <h2>John Honeycutt, 
-<a>honeycut@users.sourceforge.net</a></h2>2005-10-04, v0.00.03
+<a>honeycut@users.sourceforge.net</a></h2>2005-10-09, v0.00.04
 <hr>
 <em></em>
 <hr>
@@ -111,8 +111,22 @@ Example for specifying ReplayTV discovery and the ReplayTV theme:
 Multiple ReplayTV options can be passed using the form: <code>-R "&lt option list &gt"</code><br>
 The following options are supported:<br>
 <ul>
-<li>ip=&lt address list or discover &gt <font color="#FF0000">(This parameter is required)</font><br> 
-<li>mode=4k (Force DVArchive into RTV 4K mode instead of 5K mode)<br> 
+<li>ip=&lt address list or discover &gt <font color="#FF0000">(This parameter is required)</font><br><br> 
+<li>mode=4k (Force DVArchive into RTV 4K mode instead of 5K mode)<br><br>
+<li>dtmo=&lt discovery timeout (seconds) &gt (Default is 6 seconds)<br>
+<li>mrtv=&lt Maximum number of ReplayTV devices to discover &gt<br>
+The "dtmo" and "mrtv" options can be used to tune how mvpmc performs
+ReplayTV device discovery.<br>
+"dtmo" is used to specify how long to wait for ReplayTV devices to
+respond when performing discovery. If you have a slow computer running
+DVArchive you may need to specify a "dtmo" value larger than the
+default.<br>
+"mrtv" is used to specify how many ReplayTVs to discover before
+completing discovery and presenting the mvpmc GUI.
+"mrtv" can be used to speed up the discovery process if a user knows
+how many ReplayTV/DVArchive devices are on the network.
+
+<br><br>
 <li>debug=&lt trace mask &gt<br>
 Where trace types are:<br>
 <pre><code>
