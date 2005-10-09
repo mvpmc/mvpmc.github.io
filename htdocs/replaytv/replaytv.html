@@ -261,9 +261,6 @@ remotes seek button to jump between RTV units. (Request 1309453)
 Need to investigate protocol further, cache last-play-pos on MVP so this works better.
 <li>When hit "stop" | "back" during show play: display popup: (Resume|Back-To-Guide|Delete).
 <li>When end of mpg reached: display popup: (Back-To-Guide|Delete).
-<li>Currently only run RTV SSDP server long enough to kick DVArchive into 5K mode.
-This causes DVArchive to generate error messages after our server is stopped.
-Need to change SSDP server to thread that runs in background.
 <li>GUI can hang for certian networking error conditions. Need to update libreplaytv networking code
 to use signals and shorter error timeouts.
 <li>Update libreplaytv guide parsing to finish parsing replay channel info.
@@ -287,6 +284,9 @@ channels/shows from all RTV devices as a single guide menu (Request 1309465)
 be implemented with mvpmc theme xml file.
 <li><strike>Add support for relative jump from current play
 position.</strike> (Request 1309433) Done 10/04/2005
+<li><strike>Currently only run RTV SSDP server long enough to kick DVArchive into 5K mode.
+This causes DVArchive to generate error messages after our server is stopped.
+Need to change SSDP server to thread that runs in background.</strike> Done 10/09/2005
 <br>
 </ul> 
 <b>MVP General List-O-Things</b><br>
