@@ -6,7 +6,7 @@
 <body>
 <h1>mvpmc ReplayTV</h1>
 <h2>John Honeycutt, 
-<a>honeycut@users.sourceforge.net</a></h2>2005-10-09, v0.00.04
+<a>honeycut@users.sourceforge.net</a></h2>2005-11-02, v0.00.05
 <hr>
 <em></em>
 <hr>
@@ -51,6 +51,11 @@ forward, -3 second seek back, absolute jump to any time, relative jump
 from current play position.
 <li>Manual commercial skip.
 </ul>
+Instructions for Booting mvpmc from a linux box are located at:<br>
+<a href="http://mvpmc.sourceforge.net/mvpmc-HOWTO-singlehtml.html">mvpmc-HOWTO</a><br>
+Instructions for Booting mvpmc from a Windows box are located at:<br>
+<a href="http://mvpmc.sourceforge.net/windows/mvpmc_windoze_howto.html">mvpmc-Windows-HOWTO</a><br>
+
 <h2><a name="s2">2.</a> <a href="#toc2">Screenshots</a></h2>
 
 <pre><b>     mvpmc main menu                 device menu</b><br></pre>
@@ -88,7 +93,7 @@ As of mvpmc 0.1.6, the replaytv code is themeble. The
 xml theme files (/usr/share/mvpmc/default.xml and
 /use/share/mvpmc/replaytv.xml) specifiy the 18 point font for replaytv
 widgets<br>
-If desired uses can modify the gui fonts for any widget by creating a
+If desired users can modify the gui fonts for any widget by creating a
 custom xml theme file and loading it with the mvpmc '-t' option. 
 <br>
 <br>
@@ -139,7 +144,7 @@ Where trace types are:<br>
    RTVLOG_CMD           0x00000040
    RTVLOG_NETDUMP       0x10000000
 </code></pre>
-<li>logfile=&lt NFS or CIFS mounted logfile path &gt<br>
+<li>logfile=&lt NFS or CIFS (Windows File Share) mounted logfile path &gt<br>
 </ul> 
 examples:
 <code><pre>
@@ -219,7 +224,7 @@ SHELL COMMANDS:
 <a href="rtv_shell.txt">Link to rtv_shell session</a><br><br>
 
 rtv_shell for PPC can be executed from the MVP by copying the 
-rtv_shell executable from the mvpmc build tree to a NFS or CIFS share
+rtv_shell executable from the mvpmc build tree to a NFS or Windows share
 that is mounted by the MVP.<br>
 rtv_shell builds and runs for linux x86. 
 To build for x86 cd in your build tree to host/mvplib/libreplaytv and do a make.<br>
@@ -237,13 +242,13 @@ when it happens.<br><br>
 If mvpmc is trapping and exiting when the problem occurs you can get a core
 file to debug by doing the following:<br>
 <ul>
-<li>Mount a NFS or CIFS share in Read/Write mode on the MVP.
+<li>Mount a NFS or Windows share in Read/Write mode on the MVP.
 <li>telnet to the MVP.
 <li>Enter: "ulimit -c 2000" to enable coredumps.
-<li>cd to the NFS or CIFS share directory.
+<li>cd to the NFS or Windows share directory.
 <li>start mvpmc and reproduce the problem.
 </ul> 
-This should cause a core file to be dumped to to the NFS/CIFS's share.
+This should cause a core file to be dumped to to the NFS/Windows share.
 If you have a mvpmc development environment setup then run gdb 
 on the core file.
 Otherwise, post the problem to the mvpmc-devel mailing list.<br>
