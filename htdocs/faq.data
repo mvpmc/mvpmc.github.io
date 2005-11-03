@@ -12,11 +12,11 @@ and please report bugs and missing functionality as you find them.
 
 What do I need to get started?
 The easiest thing is to download one of the pre-built dongle.bin
-files <a href="http://mvpmc.sourceforge.net/idx.php?pg=downloads">here</a>.
-Read the <a href="http://mvpmc.sourceforge.net/mvpmc-HOWTO-singlehtml.html">
+files <a href="idx.php?pg=downloads">here</a>.
+Read the <a href="mvpmc-HOWTO-singlehtml.html">
 HOWTO</a> to see how to set up Linux to boot the MediaMVP.  If you are going
 to boot the MediaMVP from Windows, see the
-<a herf="http://mvpmc.sourceforge.net/windows/mvpmc_windoze_howto.html">
+<a href="windows/mvpmc_windoze_howto.html">
 Windows HOWTO</a>.
 ###
 
@@ -27,22 +27,14 @@ which you can install a cross compilation environment.
 
 How do I build a cross compilation environment?
 To build a uClibc cross compilation environment, you should download
-<a class=redlink href="dl/mvpmc_toolchain.tar.gz">this</a> tarball and run the
+<a class="redlink" href="dl/mvpmc_toolchain.tar.gz">this</a> tarball and run the
 <b>mvpmc-uclibc.sh</b> script.
 ###
 
-Should I use glibc or uClibc?
-Functionally, there should be no difference between mvpmc built
-against glibc and uClibc.  The difference is size.  The uClibc based
-ramdisk will be around 1MB smaller than a glibc based ramdisk.  And on the
-MediaMVP, that is a big difference.
-###
-
 How do I build a new dongle.bin file?
-There is a build script in both the binary and source releases called
-dongle_build.sh.  You pass it a Hauppauge supplied dongle.bin file, and it
-will extract the IBM kernel modules, and build a new dongle.bin based on a
-supplied linux kernel and ramdisk filesystem.
+If you download the source release, follow the instructions in the <b>README</b>
+file.  For more detailed information, please read the 
+<a href="mvpmc-HOWTO-singlehtml.html">HOWTO</a>.
 ###
 
 NFS is hanging.  How do I fix this?
@@ -65,12 +57,12 @@ need for your environment.  For example, you might want to set the date, mount
 an NFS filesystem, and start mvpmc with whatever options you need.
 
 An example config file might look like:
-</p><pre>
+</span></p><pre>
 rdate -s $SERVER
 mkdir /video
 /etc/nfsmount.sh ${SERVER}:/video /video
-mvpmc -f /etc/helvR10.fnt -s 192.168.1.15 &
-</pre><p>
+mvpmc -s 192.168.1.1 -R discover -c 192.168.1.2 &amp;
+</pre><p><span>
 ###
 
 What audio file types are supported?
@@ -86,8 +78,7 @@ is more than one (ie, a DVD VOB file with multiple language tracks).
 
 What image file types are supported?
 mvpmc is capable of displaying bmp, gif, png, and jpeg images.  At this time,
-image support in mvpmc is quite weak.  There is no support for scaling images
-to fit on the screen, for example.
+image support in mvpmc is quite weak, and large images can cause mvpmc to hang.
 ###
 
 Can I play a DVD movie?
@@ -106,6 +97,12 @@ Currently, the audio, video, and subtitle streams are referred to by
 their hex stream ID.  For DVD .VOB files, the information about which
 track goes with which language is not in the MPEG itself, so mvpmc is
 unable to give useful names to each stream.
+###
+
+Why do I not hear any audio when I start playing a video?
+This is often caused by a mvpmc choosing to play a silent audio track
+over one with sound.  Try using the <b>MENU</b> key and changing the audio
+stream in the audio stream menu.
 ###
 
 How do I connect to a MythTV server?
@@ -136,7 +133,7 @@ recordings, commercial skip, etc are not supported at this time.
 ###
 
 How do I delete a MythTV recording?
-Use the MENU key when the recording is highlighted to bring up the episode
+Use the <b>MENU</b> key when the recording is highlighted to bring up the episode
 menu.  From there you can either delete the recording, or delete it while
 allowing future recordings.
 ###
@@ -155,29 +152,41 @@ via the myth protocol.
 When you select live TV, you will be given a menu containing all of the
 programs currently being broadcast.  If you choose one of the programs, it
 will attempt to start playing it on any of the tuners where that program
-is available.
+is available.  If you use the <b>MENU</b> button, you will get a menu that
+will allow you to choose which tuner you want to watch the program on.
 ###
 
 How do I connect to a ReplayTV/DVArchive?
 You need to specify either the IP address of your ReplayTV/DVArchive server 
 or tell mvpmc to run replaytv discovery via the -R option.
 The -R option accepts a parameter string as follows:
-</p><pre>
+</span></p><pre>
 A single IP address can be specified or discovery enabled as follows:
    mvpmc -R 192.168.1.10
    mvpmc -R discover
+&nbsp;
 Multiple options can be specified by passing in a quoted string.
+&nbsp;
 The following options are supported:
    ip=ipaddress1/ipaddress2/ipaddress3/...
    ip=discover
    debug=tracemask
    logfile=nfsmount-logfile-path
+&nbsp;
 examples:
    mvpmc -R "ip=192.168.1.10"
    mvpmc -R "ip=192.168.1.10/192.168.1.11"
    mvpmc -R "ip=discover debug=05"
    mvpmc -R "ip=192.168.1.10 debug=0ff logfile=/nfs/mvplogs"
-</pre><p>
+</pre><p><span>
+###
+
+How does the music client work?
+The music client connects to
+<a href="http://www.slimdevices.com/su_downloads.html">SlimServer</a>, which
+is an audio server that is capable of playing audio files off a server, or
+connecting to Internet radio sites.  Run mvpmc using the -c option with the
+IP address of your server.
 ###
 
 What keys do what on the remote control?
@@ -204,7 +213,7 @@ reducing their size may help.
 ###
 
 How can I change the interface colors?
-You will find a couple XML files in /usr/share/mvpmc when you boot the mvp.
+You will find a few XML files in /usr/share/mvpmc when you boot the mvp.
 If you use the -t option to mvpmc to point to one of these files, you will
 get a different interface.  You can also easily modify these files to suit
 your tastes.  You can change the fonts, the colors, and some simple widget
@@ -214,14 +223,14 @@ decorations for most of the widgets.
 Can I override the fonts in one of the default themes?
 Yes.  Add something like the following to your config file:
 
-</p><pre>
+</span></p><pre>
 cat &lt;&lt;EOF &gt; /tmp/font_override.xml
 &lt;mvpmctheme version="0" name="font override"&gt;
 	&lt;font name="standard"&gt;/etc/helvB18.pcf&lt;/font&gt;
 	&lt;font name="large"&gt;/etc/helvB18.pcf&lt;/font&gt;
 &lt;/mvpmctheme&gt;
 EOF
-</pre><p>
+</pre><p><span>
 ###
 
 Can I override widget settings in one of the default themes?
@@ -236,41 +245,44 @@ will be able to change the theme from the theme menu.
 ###
 
 I found a bug.  What should I do?
-Either send an email to
-<a class=redlink href="mailto:gettler@users.sourceforge.net">gettler@users.sourceforge.net</a> or
-send an email to one of the
-<a class=redlink href="http://sourceforge.net/mail/?group_id=103474">mailing
-lists</a>.
+Please file a bug on the project
+<a href="http://sourceforge.net/tracker/?atid=634920&amp;group_id=103474">bug tracker</a>.
+###
+
+I need help using mvpmc?
+Either send an email to one of the
+<a class="redlink" href="http://sourceforge.net/mail/?group_id=103474">mailing
+lists</a>, or post on one of the
+<a href="http://sourceforge.net/forum/?group_id=103474">forums</a>.
 ###
 
 What features are missing?
 In no particular order:
+</span></p>
 <ul>
-<li>a real image viewer
-<li>a real audio player
-<li>image scaling
-<li>seek in an audio file
-<li>ID3 support
-<li>MythTV support for scheduling recordings
-<li>Tivo support
-<li>VideoLan support
-<li>video rewind
-<li>internationalization for the menus/OSD
-<li>support for more audio types (ie, WMA, ...)
-<li>DVD subtitle support
-<li>DVD menu and navigation
-<li>build tools for use under windows
-<li>user and developer documentation
+<li>a real image viewer</li>
+<li>seek in an audio file</li>
+<li>MythTV support for scheduling recordings</li>
+<li>Tivo support</li>
+<li>VideoLan support</li>
+<li>video rewind</li>
+<li>internationalization for the menus/OSD</li>
+<li>support for more audio types (ie, WMA, ...)</li>
+<li>DVD subtitle support</li>
+<li>DVD menu and navigation</li>
+<li>build tools for use under windows</li>
+<li>user and developer documentation</li>
 </ul>
+<p><span>
 ###
 
 How can I get involved?
 Send an email to one of the
-<a class=redlink href="http://sourceforge.net/mail/?group_id=103474">mailing
+<a class="redlink" href="http://sourceforge.net/mail/?group_id=103474">mailing
 lists</a> and participate in the discussions.  Feel free to volunteer to work
 on any piece of the project, and feel free to submit patches via email either
 to the development mailing list or to
-<a class=redlink
+<a class="redlink"
 href="mailto:gettler@users.sourceforge.net">gettler@users.sourceforge.net</a>.
 Or just use it and report back your ideas on how to make it better.
 ###
