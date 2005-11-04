@@ -156,6 +156,13 @@ is available.  If you use the <b>MENU</b> button, you will get a menu that
 will allow you to choose which tuner you want to watch the program on.
 ###
 
+Why do I only get a single, empty live TV program listing with MythTV?
+This is probably because you have not set the date properly on the mvp.
+The easiest way to do this is to use rdate in your config script, and point
+it at your MythTV server.  You will need to enable rdate on the server, if
+it is not already enabled.
+###
+
 How do I connect to a ReplayTV/DVArchive?
 You need to specify either the IP address of your ReplayTV/DVArchive server 
 or tell mvpmc to run replaytv discovery via the -R option.
