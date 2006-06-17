@@ -1,0 +1,443 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
+ <TITLE>Installing and using mvpmc</TITLE>
+</HEAD>
+<BODY>
+<H1>Installing and using mvpmc</H1>
+
+<H2>Robert Kulagowski, 
+<A HREF="mailto:rkulagow@rocketmail.com">mailto:rkulagow@rocketmail.com</A></H2>2005-11-15, v0.00.05
+<HR>
+<EM></EM>
+<HR>
+<P>
+<H2><A NAME="toc1">1.</A> <A HREF="mvpmc-HOWTO-singlehtml.html#s1">Introduction - What is the MediaMVP</A></H2>
+
+<P>
+<H2><A NAME="toc2">2.</A> <A HREF="mvpmc-HOWTO-singlehtml.html#s2">How to use this guide to install the mvpmc</A></H2>
+
+<P>
+<H2><A NAME="toc3">3.</A> <A HREF="mvpmc-HOWTO-singlehtml.html#s3">Configuring your boot host for DHCP and TFTP </A></H2>
+
+<UL>
+<LI><A NAME="toc3.1">3.1</A> <A HREF="mvpmc-HOWTO-singlehtml.html#ss3.1">Debian</A>
+<LI><A NAME="toc3.2">3.2</A> <A HREF="mvpmc-HOWTO-singlehtml.html#ss3.2">Mandrake</A>
+<LI><A NAME="toc3.3">3.3</A> <A HREF="mvpmc-HOWTO-singlehtml.html#ss3.3">Creating a TFTPBOOT shell variable</A>
+<LI><A NAME="toc3.4">3.4</A> <A HREF="mvpmc-HOWTO-singlehtml.html#ss3.4">Configuring DHCP</A>
+</UL>
+<P>
+<H2><A NAME="toc4">4.</A> <A HREF="mvpmc-HOWTO-singlehtml.html#s4">Configuring your compile host </A></H2>
+
+<P>
+<H2><A NAME="toc5">5.</A> <A HREF="mvpmc-HOWTO-singlehtml.html#s5">Obtaining an original dongle.bin</A></H2>
+
+<P>
+<H2><A NAME="toc6">6.</A> <A HREF="mvpmc-HOWTO-singlehtml.html#s6">Obtaining mvpmc </A></H2>
+
+<UL>
+<LI><A NAME="toc6.1">6.1</A> <A HREF="mvpmc-HOWTO-singlehtml.html#ss6.1">Pre-compiled</A>
+<LI><A NAME="toc6.2">6.2</A> <A HREF="mvpmc-HOWTO-singlehtml.html#ss6.2">CVS</A>
+<LI><A NAME="toc6.3">6.3</A> <A HREF="mvpmc-HOWTO-singlehtml.html#ss6.3">Creating the dongle.bin.mvpmc.config file </A>
+</UL>
+<P>
+<H2><A NAME="toc7">7.</A> <A HREF="mvpmc-HOWTO-singlehtml.html#s7">Confirming that everything works</A></H2>
+
+<P>
+<H2><A NAME="toc8">8.</A> <A HREF="mvpmc-HOWTO-singlehtml.html#s8">Tips and tricks</A></H2>
+
+
+<HR>
+<H2><A NAME="s1">1.</A> <A HREF="#toc1">Introduction - What is the MediaMVP</A></H2>
+
+<P>The MediaMVP is a small, diskless Linux computer which obtains its
+operating system via TFTP. From the information page at 
+<A HREF="http://www.hauppauge.com/pages/products/data_mediamvp.html">http://www.hauppauge.com/pages/products/data_mediamvp.html</A>:</P>
+<P>"MediaMVP is a Linux based digital media receiver based on a powerful IBM
+PowerPC processor. It includes a hardware MPEG decoder to process digital
+video movies, while music and digital pictures are software decoded by
+MediaMVP's processor. It receives the digital media from a PC via an
+Ethernet LAN, decodes the media and outputs video through composite and
+S-Video connections, and audio through stereo audio output connectors."</P>
+<P>The mvpmc project uses the MediaMVP hardware and replaces the software that
+the MediaMVP runs.  Because the MediaMVP boots completely from the network,
+changes made to the software aren't permanent - you can always switch back
+to using the Hauppauge-supplied software with the Windows server.</P>
+<P>This HOWTO is for version 0.2.0 of mvpmc and for CVS.</P>
+
+<H2><A NAME="s2">2.</A> <A HREF="#toc2">How to use this guide to install the mvpmc</A></H2>
+
+<P>There are a few different ways to getting the mvpmc software running on
+your system.  The easiest is to download a pre-compiled version of the
+software and to install that on a system running dhcp and tftp.</P>
+<P>The second method is to download a copy of the software from CVS and compile
+it on your own.  This is more difficult, since it involves loading
+cross-compilers and other development tools, but will allow you to stay
+up-to-date with the most recent code committed to sourceforge.</P>
+<P>If you're new to the mvpmc and just want to get the system running as
+quickly as possible follow the steps outlined in 
+<A HREF="#configboothost">Configuring your boot host for DHCP and TFTP</A>, 
+<A HREF="#obtainingmvpmc">Obtaining mvpmc</A>, and 
+<A HREF="#create_dongle.bin.mvpmc.config">Creating the dongle.bin.mvpmc.config file</A>.</P>
+<P>If you're more experienced, or want to run newer software, you'll follow the
+same basic sequence of steps with the addition of configuring a
+cross-compiler environment.</P>
+
+<H2><A NAME="configboothost"></A> <A NAME="s3">3.</A> <A HREF="#toc3">Configuring your boot host for DHCP and TFTP </A></H2>
+
+<P>The mvpmc performs a diskless boot from the network.  If you are using a
+pre-compiled binary from the MVPMC project page you won't need to install
+the compiler as specified in the 
+<A HREF="#ConfigureCompile">Configuring your compile host</A> section.</P>
+
+<H2><A NAME="ss3.1">3.1</A> <A HREF="#toc3.1">Debian</A>
+</H2>
+
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+# apt-get install dhcp atftpd
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>By default, the Debian DHCP server will not listen to any of the interfaces. 
+Edit the <B>dhcp</B> configuration file and look for the line that looks
+like: <CODE>INTERFACES=""</CODE> and change it to something like
+<CODE>INTERFACES="eth0"</CODE></P>
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+# joe /etc/default/dhcp
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>You will also need to create a directory called <CODE>tftpboot</CODE>.</P>
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+# mkdir /tftpboot
+# chmod a+rwx /tftpboot
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+
+<H2><A NAME="ss3.2">3.2</A> <A HREF="#toc3.2">Mandrake</A>
+</H2>
+
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+# urpmi dhcp-server tftp-server
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>Mandrake will create the <CODE>tftpboot</CODE> directory for you automatically.</P>
+
+<H2><A NAME="ss3.3">3.3</A> <A HREF="#toc3.3">Creating a TFTPBOOT shell variable</A>
+</H2>
+
+<P>To simplify this HOWTO, execute the following command to create a shell
+variable for the actual location of your <CODE>tftpboot</CODE> directory:</P>
+<P>Debian:
+<BLOCKQUOTE><CODE>
+<PRE>
+# export TFTPBOOT=/tftpboot
+</PRE>
+</CODE></BLOCKQUOTE>
+
+Mandrake:
+<BLOCKQUOTE><CODE>
+<PRE>
+# export TFTPBOOT=/var/lib/tftpboot
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+
+<H2><A NAME="ss3.4">3.4</A> <A HREF="#toc3.4">Configuring DHCP</A>
+</H2>
+
+<P>You will need to edit your <CODE>/etc/dhcpd.conf</CODE> file.  In the
+example below, we're setting up a subnet 192.168.10.100 through
+192.168.10.250.  The DNS servers are 63.240.76.4 and 204.127.198.4 Our
+default gateway is 192.168.10.1 and we are going to permanently assign IP
+address 192.168.10.57 to our MediaMVP.  Most of these values are not used by
+the MediaMVP, but this is how you could use a linux DHCP server in your own
+environment.</P>
+<P><B>NOTE</B>: You must replace <CODE>00:0d:fe:00:a2:ab</CODE> with the MAC
+address of your actual MediaMVP.  If you use the MAC address in the example,
+your setup will not work.</P>
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+option domain-name              "local";
+option subnet-mask              255.255.255.0;
+option domain-name-servers 63.240.76.4, 204.127.198.4;
+
+allow bootp;
+allow booting;
+
+#option ip-forwarding    false;  # No IP forwarding
+#option mask-supplier    false;  # Don't respond to ICMP Mask req
+
+subnet 192.168.10.0 netmask 255.255.255.0 {
+  option routers        192.168.10.1;
+  range 192.168.10.100 192.168.10.250;
+}
+
+group {
+  next-server 192.168.10.50;          # IP address of your TFTP server
+
+  host mvp { # NOTE: Change the hardware ethernet to the MAC address of your actual MVP
+           hardware ethernet 00:0d:fe:00:a2:ab;
+           fixed-address 192.168.10.57;
+           filename "dongle.bin.mvpmc";
+           option root-path "/home/mvp,rsize=4096,wsize=4096,nolock";
+  }
+
+}
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>Make sure that dhcp is started.</P>
+<P>Debian:
+<BLOCKQUOTE><CODE>
+<PRE>
+$ su
+# /etc/init.d/dhcp start
+# tail /var/log/daemon.log
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>Mandrake:
+<BLOCKQUOTE><CODE>
+<PRE>
+$ su
+# service dhcpd start
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+
+<H2><A NAME="ConfigureCompile"></A> <A NAME="s4">4.</A> <A HREF="#toc4">Configuring your compile host </A></H2>
+
+<P>This HOWTO is developed on a machine running Debian unstable, but the
+basic configuration of each of the steps should be similar between
+distributions.  It also focuses on running the MediaMVP with MythTV, so if
+you would like to see instructions on using ReplayTV please submit them.</P>
+<P>Debian: Install required libraries and programs:
+<BLOCKQUOTE><CODE>
+<PRE>
+# apt-get install autoconf libtool bison flex wget unzip libjpeg62-dev
+</PRE>
+</CODE></BLOCKQUOTE>
+
+Mandrake:
+<BLOCKQUOTE><CODE>
+<PRE>
+# urpmi autoconf libtool bison flex wget unzip libjpeg62-dev
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>Download the mvpmc toolchain: 
+<A HREF="http://mvpmc.sourceforge.net/dl/mvpmc_toolchain.tar.gz">http://mvpmc.sourceforge.net/dl/mvpmc_toolchain.tar.gz</A>
+<BLOCKQUOTE><CODE>
+<PRE>
+$ su
+# mkdir -p /opt/crosstool
+# chmod a+rwx /opt/crosstool
+# exit
+$ wget http://mvpmc.sourceforge.net/dl/mvpmc_toolchain.tar.gz
+$ tar -xzvf mvpmc_toolchain.tar.gz
+$ cd mvpmc_toolchain
+$ ./mvpmc-uclibc.sh
+</PRE>
+</CODE></BLOCKQUOTE>
+
+The crosstool scripts will download a number of packages from the Internet,
+so it may take a while.  When everything has finished building, you should
+see something like this:
+<BLOCKQUOTE><CODE>
+<PRE>
+powerpc-405-linux-uclibc-hello2
+/opt/crosstool/powerpc-405-linux-uclibc/gcc-3.3.3-uClibc-0.9.23/lib/gcc-lib/powerpc-405-linux-uclibc/3.3.3/../../../../powerpc-405-linux-uclibc/lib/libstdc++.so:
+undefined reference to `Sqrtf'
+collect2: ld returned 1 exit status
+</PRE>
+</CODE></BLOCKQUOTE>
+
+Yes, this is an error, but the build has actually succeeded.</P>
+<H2><A NAME="s5">5.</A> <A HREF="#toc5">Obtaining an original dongle.bin</A></H2>
+
+<P><B>dongle.bin</B> is the name of the Linux kernel and ramdisk that
+Hauppauge supplies for the MediaMVP. The mvpmc project creates a new version
+of this file, replacing Hauppauge's frontend software with mvpmc.</P>
+<P>You will need to place a copy of the Hauppauge-supplied <B>dongle.bin</B>
+file into your <CODE>tftpboot</CODE> directory.  The mvpmc build procedure will
+be looking for the software in that location.</P>
+<P>Download the Hauppauge Windows server software from 
+<A HREF="http://hauppauge.lightpath.net/software/mediamvp/mediamvpsetup_24_23096_web.exe">http://hauppauge.lightpath.net/software/mediamvp/mediamvpsetup_24_23096_web.exe</A>
+and extract the <CODE>dongle.bin</CODE> file:</P>
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+$ wget http://hauppauge.lightpath.net/software/mediamvp/mediamvpsetup_24_23096_web.exe
+$ unzip -Ln mediamvpsetup_24_23096_web.exe dongle.bin
+$ cp dongle.bin $TFTPBOOT
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+
+<H2><A NAME="obtainingmvpmc"></A> <A NAME="s6">6.</A> <A HREF="#toc6">Obtaining mvpmc </A></H2>
+
+<H2><A NAME="ss6.1">6.1</A> <A HREF="#toc6.1">Pre-compiled</A>
+</H2>
+
+<P>Download the pre-compiled binaries from sourceforge from the links in the
+Downloads section of the webpage.  Make sure that you grab
+<CODE>dongle.bin.mvpmc-0.2.0</CODE> and copy it to your tftpboot directory. 
+<BLOCKQUOTE><CODE>
+<PRE>
+$ cp dongle.bin.mvpmc-0.2.0 $TFTPBOOT
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>Please note that the filename in your tftpboot directory must match the
+filename configured in <CODE>dhcpd.conf</CODE>; if you download
+<CODE>dongle.bin.mvpmc-0.2.0</CODE> or any other pre-compiled file, you will
+either need to rename the file, update <CODE>dhcpd.conf</CODE> or use a symlink. 
+See the Tips and Tricks section for an 
+<A HREF="#usingsymlink">example</A> of using a symlink.</P>
+<P>Once you are done downloading and copying the software, jump ahead to the
+<A HREF="#create_dongle.bin.mvpmc.config">Creating the dongle.bin.mvpmc.config file</A></P>
+
+<H2><A NAME="ss6.2">6.2</A> <A HREF="#toc6.2">CVS</A>
+</H2>
+
+<P>If you will be using CVS, you will need to do the following steps. 
+Anytime you are prompted for a password, press ENTER.  
+<BLOCKQUOTE><CODE>
+<PRE>
+$ mkdir mvpmc
+$ cd mvpmc
+$ cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc login
+$ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc co build
+$ cd build
+$ mkdir release
+$ cd release
+$ cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc login
+$ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc co mvplib
+$ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc co mvpmc
+$ cd ..
+</PRE>
+</CODE></BLOCKQUOTE>
+
+You must now run <B>autoconf</B> to create the configure file:
+<BLOCKQUOTE><CODE>
+<PRE>
+$ cd ~/mvpmc/build
+$ autoconf
+</PRE>
+</CODE></BLOCKQUOTE>
+
+Now, time to compile.  The first command is one long line.
+<BLOCKQUOTE><CODE>
+<PRE>
+$ CC=/opt/crosstool/powerpc-405-linux-uclibc/gcc-3.3.3-uClibc-0.9.23/bin/powerpc-405-linux-uclibc-gcc \
+./configure --with-mvpmc-mediamvp --with-mvpmc-host
+$ make populate
+$ make configure
+$ make
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>When the compile is complete, copy the <CODE>mediamvp/dongle.bin.mvpmc</CODE>
+file to your <CODE>tftpboot</CODE> directory.
+<BLOCKQUOTE><CODE>
+<PRE>
+$ cp mediamvp/dongle.bin.mvpmc $TFTPBOOT
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+
+<H2><A NAME="create_dongle.bin.mvpmc.config"></A> <A NAME="ss6.3">6.3</A> <A HREF="#toc6.3">Creating the dongle.bin.mvpmc.config file </A>
+</H2>
+
+<P>When the MediaMVP is booting, it will try to download the
+<CODE>dongle.bin.mvpmc.config</CODE> file from the tftp server. If you would
+like your MediaMVP to automatically start the mvpmc application, you could
+make your config file look like the example below.  In this case,
+192.168.10.50 is the IP address of the masterbackend MythTV server.  We are
+creating a mount point called <CODE>/var/myth</CODE> and then mounting the
+directory using NFS.  The <B>-r</B> parameter instructs mvpmc to look for
+the recordings in <CODE>/var/myth/video</CODE></P>
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+rdate -s 192.168.10.50
+mkdir /var
+mkdir /var/myth/
+mount -t nfs -o nolock,rsize=4096,wsize=4096,nfsvers=3 192.168.10.50:/var/myth/ /var/myth/
+mvpmc -f /etc/helvR10.fnt -s 192.168.10.50 -r /var/myth/video &amp;
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>See the NFS section of the MythTV HOWTO 
+<A HREF="http://www.mythtv.org/docs/mythtv-HOWTO-21.html#ss21.9">http://www.mythtv.org/docs/mythtv-HOWTO-21.html#ss21.9</A> for examples
+on how to configure NFS.</P>
+<P>The mvpmc software can also use the Myth protocol directly rather than using
+NFS.  If you would like to use the Myth protocol, the
+<CODE>dongle.bin.mvpmc.config</CODE> would look like this.
+<BLOCKQUOTE><CODE>
+<PRE>
+rdate -s 192.168.10.50
+mvpmc -f /etc/helvR10.fnt -s 192.168.10.50 &amp;
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>Once you have created the file, copy it to $TFTPBOOT:
+<BLOCKQUOTE><CODE>
+<PRE>
+# cp dongle.bin.mvpmc.config $TFTPBOOT
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+
+<H2><A NAME="s7">7.</A> <A HREF="#toc7">Confirming that everything works</A></H2>
+
+<P>The <CODE>/var/log/daemon.log</CODE> file will show that DHCP has started. 
+When the MediaMVP boots, you should see something similar to this in your
+logs:
+<BLOCKQUOTE><CODE>
+<PRE>
+Nov 25 14:09:48 masterbackend dhcpd: DHCPDISCOVER from 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:09:48 masterbackend dhcpd: DHCPOFFER on 192.168.10.57 to 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:09:48 masterbackend in.tftpd[1470]: connect from 192.168.10.57 (192.168.10.57)
+Nov 25 14:09:48 masterbackend tftpd[1470]: Trivial FTP server started (0.6.2)
+Nov 25 14:09:48 masterbackend tftpd[1472]: Serving dongle.bin.mvpmc to 192.168.10.57:3909
+Nov 25 14:10:04 masterbackend dhcpd: BOOTREQUEST from 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:04 masterbackend dhcpd: BOOTREPLY for 192.168.10.57 to mvp (00:0d:fe:00:a2:ab) via eth0
+Nov 25 14:10:05 masterbackend dhcpd: DHCPDISCOVER from 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:05 masterbackend dhcpd: DHCPOFFER on 192.168.10.57 to 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:05 masterbackend dhcpd: DHCPREQUEST for 192.168.10.57 from 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:05 masterbackend dhcpd: DHCPACK on 192.168.10.57 to 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:05 masterbackend tftpd[1473]: Serving dongle.bin.mvpmc.config to 192.168.10.57:2048
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+
+<H2><A NAME="usingsymlink"></A> <A NAME="s8">8.</A> <A HREF="#toc8">Tips and tricks</A></H2>
+
+<P>If you wish to maintain multiple versions of the <CODE>dongle.bin</CODE>
+file, it's easy to use a symlink.  For example:
+<BLOCKQUOTE><CODE>
+<PRE>
+# cd $TFTPBOOT
+# ln -sf dongle.bin.mvpmc-0.2.0 dongle.bin.mvpmc
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<P>This will allow you to have multiple versions of the code available, and you
+may switch between them by updating the symlink.</P>
+
+</BODY>
+</HTML>

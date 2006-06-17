@@ -65,12 +65,3 @@ dev_release($dongle, "dongle.bin Releases");
 //dev_release($src, "Source Releases");
 ?>
 
-<div class="title">
-  <h3><span>Daily Builds</span></h3>
-</div>
-
-<div class="item">
-Dirk Lison and Tim Sailer have kindly provided daily builds
-<a href="ftp://buoy.com/pub/mvpmc/www.lison.com/mvpmc/index.html">here</a>.
-</div>
-

@@ -8,7 +8,20 @@
 <body>
 <h1>mvpmc Hardware HowTo</h1>
 <h2>stuart<a>@users.sourceforge.net</a></h2>
+<h2>
+Contributors:
+<br>
+Steve Tell
+<br>
+</h2>
 2005-05-22, v0.01.01
+<br>
+First release.
+<br>
+2006-05-10, v0.01.02
+<br>
+Added Steve's H1 serial port text and images.
+<br>
 <hr><em></em>
 <hr>
 <h2><a name="toc1">1.</a> <a href="#s1">Introduction</a></h2>
@@ -19,9 +32,16 @@ on
 this box?</a></h2>
 <h2><a name="toc5">5.</a> <a href="#s5">Adding a serial port<br>
 </a></h2>
-<h2><a name="toc6">6.</a> <a href="#s6">What is a VFD and or LCD?<br>
+<h2><a name="toc6">6.</a> <a href="#s6">Adding a serial port to revsion H1<br>
 </a></h2>
-<h2><a name="toc7">7.</a> <a href="#s7">Adding a VFD.<br>
+<h2><a name="toc7">7.</a> <a href="#s7">Adding a second serial port to rev H1<br>
+</a></h2>
+
+
+
+<h2><a name="toc8">8.</a> <a href="#s8">What is a VFD and or LCD?<br>
+</a></h2>
+<h2><a name="toc9">9.</a> <a href="#s9">Adding a VFD.<br>
 </a></h2>
 <hr>
 <h2><a name="s1">1. Introduction</a></h2>
@@ -120,7 +140,8 @@ in
 very handy for debugging.&nbsp; But we are mostly past that state
 thanks to the efforts of the developers here.<br>
 </p>
-<h2><a name="s5">5. Adding a serial port</a></h2>
+
+<h2><a name="s5">5. Adding a serial port to revisions G and earlier</a></h2>
 <p>On
 the bottom of the circuit board, there is a "target" for a <a
  href="http://www.maxim-ic.com/">MAXIM</a> <a
@@ -133,16 +154,74 @@ capacitor values. In the picture below all these parts have been
 installed.&nbsp; Evidently the pads inside the white box to the right
 were for a serial port header / connector.&nbsp; In this image the
 black wire is connected to ground.&nbsp; This would go to pin 5 of a
-DB9 female serial port connector.&nbsp; The red wire would go to pin 3
+DE9 female serial port connector.&nbsp; The red wire would go to pin 3
 of the same connector.&nbsp; And the yellow would go to pin 2.&nbsp;
 Thanks again to BobTheBuilder for pointing the rest of us in the right
 direction and for this picture.<br>
 </p>
-<p><a href="images/mvp_serial_large.jpg"><img alt="Serial Port Chip"
- src="images/mvp_serial.jpg"
- style="border: 0px solid ; width: 400px; height: 300px;"></a><br>
-</p>
-<h2><a name="s6">6. What is a VFD and or LCD?</a></h2>
+
+<h2><a name="s6">6. Adding a serial port to revision H1</a></h2>
+<p>
+The MVP revision H1 has a slightly different circuit for 
+its serial console port.  
+The chip required is a 
+<a href="http://www.maxim-ic.com/">MAXIM</a> 
+<a href="http://www.maxim-ic.com/quick_view2.cfm/qv_pk/1798">MAX232ACSE</a>,
+and the 5 0805-size capacitors should be 0.1uF.
+Note that a MAX232 chip will probably not work; the "A" suffix
+version is required.
+<br>
+<a href="images/h1_console.jpg"><img alt="Rev H1 Serial Console Port Chip"
+ src="images/h1_console_small.jpg"
+ style="border: 0px solid ; width: 400px; height: 267px;"></a><br>
+<br>
+
+The pads labeled J11 are numbered correctly for wiring to
+a DE9 serial connector wired as a DTE.
+
+<h2><a name="s7">7. Adding a second serial port to revision H1</a></h2>
+<p>
+The MVP revision H1 has a chip location for a second serial port,
+which can be accessed as <tt>/dev/ttyS02</tt>. 
+
+Required parts are another 
+<a href="http://www.maxim-ic.com/quick_view2.cfm/qv_pk/1798">MAX232ACSE</a> and
+5 more 0805-size capacitors.
+<br>
+<a href="images/h1_serial2_chip.jpg"><img alt="Rev H1 second Serial Port Chip"
+ src="images/h1_serial2_chip_small.jpg"
+ style="border: 0px solid ; width: 400px; height: 267px;"></a><br>
+<br>
+
+This serial port is wired to the SCART connector pins through
+tiny inductors.  For a factory-correct version of this hack that might
+pass RFI emission testing, suitable inductors must be installed.  Otherwise,
+the board locations labled L53, L54, L55, and L56 can be bridged with a tiny
+wire.
+
+<br>
+<a href="images/h1_serial2_pinout.jpg"><img alt="Rev H1 second Serial Port Chip"
+ src="images/h1_serial2_pinout_small.jpg"
+ style="border: 0px solid ; width: 400px; height: 267px;"></a><br>
+<br>
+
+In North American variants of the MVP, the SCART connector is not
+installed, so wires from a DE9 connector can be soldered into the empty holes 
+out to a DE9 connector.  
+
+<table  border=1 cellpadding=2>
+<tr><td>Function</td> <td>SCART pin</td> <td>DE9 pin (DTE)</td></tr>
+<td>GND</td> <td>4</td> <td>5</td></tr>
+<td>TXD</td> <td>12</td> <td>3</td></tr>
+<td>RXD</td> <td>6</td> <td>2</td></tr>
+<td>RTS</td> <td>10</td> <td>7</td></tr>
+<td>CTS</td> <td>2</td> <td>8</td></tr>
+</tr>
+</table>
+
+
+
+<h2><a name="s8">8. What is a VFD and or LCD?</a></h2>
 <p>VFD stands for Vacuum Fluorescent Display.&nbsp; Just about everyone
 knows that LCD stands for Liquid Crystal Display.&nbsp; The main
 differences are that VFDs generate their own light (usually a bright
@@ -153,7 +232,7 @@ angles and temperatures.&nbsp; For portable battery operated devices
 LCDs wins hands down as they only take a fraction of the power to
 operate.&nbsp; But for our application, I prefer VFDs.<br>
 </p>
-<h2><a name="s7">7. Adding a VFD.</a></h2>
+<h2><a name="s9">9. Adding a VFD.</a></h2>
 <br>
 Here is a rather small VFD (1 row x 16 characters)
 connected to the serial port of a MediaMVP running modified MVPMC
