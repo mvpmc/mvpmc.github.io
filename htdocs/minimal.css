@@ -101,28 +101,6 @@ p {
 #larchives li, #lresources li, #sf {
 }
 
-#sf {
-        margin-top: 20px;
-        background: transparent url(http://sourceforge.net/sflogo.php?group_id=103474&amp;type=2) no-repeat left top;
-	width: 125px; 
-	height: 37px; 
-	float: left;
-}
-#sf2 {
-	display: none;
-}
-
-#donate {
-        margin-top: 20px;
-        background: transparent url(http://images.sourceforge.net/images/project-support.jpg) no-repeat left top;
-        width: 88px;
-        height: 32px;
-        float: left;
-}
-#donate2 {
-        display: none;
-}
-
 .title h3 {
         font-weight: bold;
 	font-size: 2em;

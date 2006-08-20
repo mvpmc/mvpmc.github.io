@@ -66,7 +66,7 @@ function dev_release($list, $header)
 	print "</div>\n";
 }
 
-chdir("development");
+//chdir("development");
 
 $dongle = glob("dongle.bin.mvpmc-*");
 $bin = glob("mvpmc-*-bin.tar.gz");
