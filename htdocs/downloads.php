@@ -6,7 +6,10 @@
 
 <div class="item">
    <span>Daily builds are available 
-             <a href="http://builds.mvpmc.org/">here.</a></span>
+             <a href="http://www.mvpmc.org/builds/">here.</a></span>
+   <br>
+   <span>Daily doxygen output is available
+             <a href="http://www.mvpmc.org/builds/doxygen/">here.</a></span>
 </div>
 
 <div class="title">
@@ -28,7 +31,7 @@
    <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&amp;package_id=111160&amp;release_id=322161">mvpmc 0.1.5</a> (2005-04-20)</li>
    <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&amp;package_id=111160&amp;release_id=333416">mvpmc 0.1.6</a> (2005-06-07)</li>
    <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&amp;package_id=111160&amp;release_id=342105">mvpmc 0.1.7</a> (2005-07-14)</li>
-   <li><a href="https://sourceforge.net/project/showfiles.php?group_id=103474&amp;package_id=111160&amp;release_id=356389">mvpmc 0.1.8</a> (2005-09-13)</li>
+   <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&amp;package_id=111160&amp;release_id=356389">mvpmc 0.1.8</a> (2005-09-13)</li>
    <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&amp;package_id=111160&amp;release_id=368091">mvpmc 0.2.0</a> (2005-11-02)</li>
    <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&amp;package_id=111160&amp;release_id=392824">mvpmc 0.2.1</a> (2006-02-11)</li>
    <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&amp;package_id=111160&amp;release_id=425148">mvpmc 0.3.0</a> (2006-06-15)</li>
@@ -36,9 +39,11 @@
 
 </div>
 
+<!--
 <div class="title">
    <h3><span>Development Releases</span></h3>
 </div>
+-->
 
 <?php
 
@@ -72,7 +77,7 @@ $dongle = glob("dongle.bin.mvpmc-*");
 $bin = glob("mvpmc-*-bin.tar.gz");
 $src = glob("mvpmc-*-src.tar.gz");
 
-dev_release($dongle, "dongle.bin Releases");
+//dev_release($dongle, "dongle.bin Releases");
 //dev_release($bin, "Binary Releases");
 //dev_release($src, "Source Releases");
 

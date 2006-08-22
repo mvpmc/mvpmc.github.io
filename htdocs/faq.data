@@ -23,7 +23,7 @@ How do I build mvpmc myself?
 In order to build mvpmc from source, you will need a Linux system on
 which you can install a cross compilation environment.  You can
 get the source either from one of the releases, or from the
-<a href="http://mvpmc.sourceforge.net/cgi-bin/gitweb.cgi">git repository</a>.
+<a href="http://git.mvpmc.org/">git repository</a>.
 ###
 
 How do I build a cross compilation environment?
