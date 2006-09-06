@@ -26,10 +26,23 @@
 
     <div id="supportingText">
 
-      <?PHP if(isset($_GET['pg']))
-                { include($_GET['pg'].".php"); }
-            else
-                { include("main.php"); }
+      <?PHP
+            if (isset($_GET['pg'])) {
+                if ($_GET['pg'] == "news") {
+                    include("news.php");
+                } else if ($_GET['pg'] == "downloads") {
+                    include("downloads.php");
+                } else if ($_GET['pg'] == "faq") {
+                    include("faq.php");
+                } else if ($_GET['pg'] == "main") {
+                    include("main.php");
+                } else if ($_GET['pg'] == "screenshots") {
+                    include("screenshots.php");
+                } else {
+                }
+            } else {
+                include("main.php");
+            }
       ?>
 
     </div>
