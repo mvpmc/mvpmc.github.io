@@ -6,7 +6,7 @@
 <body>
 <h1>mvpmc ReplayTV</h1>
 <h2>John Honeycutt, 
-<a>honeycut@users.sourceforge.net</a></h2>2005-11-02, v0.00.05
+<a>honeycut@mvpmc.org</a></h2>2006-09-06, v0.00.06
 <hr>
 <em></em>
 <hr>
@@ -28,14 +28,11 @@
 <p>
 <h2><a name="toc6">6.</a> <a href="replaytv.html#s6">Debugging Problems</a></h2>
 
-<p>
-<h2><a name="toc7">7.</a> <a href="replaytv.html#s7">List of things to do</a></h2>
-
 
 <hr>
 <h2><a name="s1">1.</a> <a href="#toc1">Intro</a></h2>
 mvpmc includes support for streaming from ReplayTV 4K and 5K series PVRs.<br>
-Support is also provided for DVArchive 3.1.<br>
+Support is also provided for DVArchive 3.2.<br>
 Functionality includes:
 <ul>
 <li>Automatic discovery of all RTV devices on the network.
@@ -47,14 +44,10 @@ etc...
 <li>Ability to delete shows. 
 <li>OnScreen display during video playback.
 <li>Extensive navigation during playback including: +28 second seek
-forward, -3 second seek back, absolute jump to any time, relative jump
+forward, -8 second seek back, absolute jump to any time, relative jump
 from current play position.
 <li>Manual commercial skip.
 </ul>
-Instructions for Booting mvpmc from a linux box are located at:<br>
-<a href="http://mvpmc.sourceforge.net/mvpmc-HOWTO-singlehtml.html">mvpmc-HOWTO</a><br>
-Instructions for Booting mvpmc from a Windows box are located at:<br>
-<a href="http://mvpmc.sourceforge.net/windows/mvpmc_windoze_howto.html">mvpmc-Windows-HOWTO</a><br>
 
 <h2><a name="s2">2.</a> <a href="#toc2">Screenshots</a></h2>
 
@@ -79,6 +72,9 @@ Instructions for Booting mvpmc from a Windows box are located at:<br>
 <b>specifying the ReplayTV theme when starting mvpmc</b><br>
 mvpmc has a built in theme which provides a ReplayTV like color scheme.<br>
 The ReplayTV theme is specifyed with the "-t /usr/share/mvpmc/replaytv.xml" command line option.
+<br>
+Note: The ReplayTV theme can also be selected from the mvpmc main menu
+screen under [settings] [themes]
 <br>
 <br>
 <b>mvpmc Fonts</b><br>
@@ -130,7 +126,15 @@ default.<br>
 completing discovery and presenting the mvpmc GUI.
 "mrtv" can be used to speed up the discovery process if a user knows
 how many ReplayTV/DVArchive devices are on the network.
-
+<li>chunksz=&lt num &gt<br>
+The chunksz option allows modifying how much video stream data
+ to read before passing it to the MVP hardware.
+This seems to help if the streaming RTV has a slow harddrive.
+This option should only be modified if you are having streaming
+  problems such as a black screen when starting a new video or jumping
+  in a video. The default is '3'. <br>
+  Try chunksz=4 or chunksz=5 and see if the problem goes away.
+  
 <br><br>
 <li>debug=&lt trace mask &gt<br>
 Where trace types are:<br>
@@ -253,61 +257,6 @@ If you have a mvpmc development environment setup then run gdb
 on the core file.
 Otherwise, post the problem to the mvpmc-devel mailing list.<br>
 Myself or someone else will ask you to email the core file so we can analyze it.<br>
-</p>
-
-<h2><a name="s7">7.</a> <a href="#toc7">John's List-O-Things-To-Do</a></h2>
-<p>
-If you'd like to help out let me know.<br><br>
-<b>ReplayTV List-O-Things</b><br>
-<ul>
-<li>Add next/last device quick navigation to guide menu. i.e. use
-remotes seek button to jump between RTV units. (Request 1309453)
-<li>For show "play", currently only query RTV that show is stored on for "last play pos".
-Need to investigate protocol further, cache last-play-pos on MVP so this works better.
-<li>When hit "stop" | "back" during show play: display popup: (Resume|Back-To-Guide|Delete).
-<li>When end of mpg reached: display popup: (Back-To-Guide|Delete).
-<li>GUI can hang for certian networking error conditions. Need to update libreplaytv networking code
-to use signals and shorter error timeouts.
-<li>Update libreplaytv guide parsing to finish parsing replay channel info.
-<li>Add "details" show menu popup, that displays tons-o gorry details about 
-a replay show, it's replay channel, etc...
-<li> Add 'Category' groupings to Replay Guide. Allow displaying shows
-by category. (Request 1309458)
-<li>get rtv_shell building for w32 winsock.
-<li>optimize replaytv pthread stack size.
-<li>Add automatic commercial skip with ability to enable / disable via
-gui.
-<li>Add telephone keypad indexing for Replay Guide. (Request 1310036)
-<li>Allow for merged Replay Guide. i.e. Option to show list of
-channels/shows from all RTV devices as a single guide menu (Request 1309465)
-</ul>
-<ul>
-<li><strike>Update libreplaytv to process 5K evt files and create structure with comercial markers.</strike> Done 05/15/2005
-<li><strike>Implement GUI 5K manual comercial skip.</strike> Done 05/15/2005
-<li><strike>Add RTV 4K support</strike> Done 10/04/2005
-<li><strike>setup a more ReplayTV GUI like color scheme.</strike> Can
-be implemented with mvpmc theme xml file.
-<li><strike>Add support for relative jump from current play
-position.</strike> (Request 1309433) Done 10/04/2005
-<li><strike>Currently only run RTV SSDP server long enough to kick DVArchive into 5K mode.
-This causes DVArchive to generate error messages after our server is stopped.
-Need to change SSDP server to thread that runs in background.</strike> Done 10/09/2005
-<br>
-</ul> 
-<b>MVP General List-O-Things</b><br>
-<ul>
-<li>Figure out how to get hardware to tell us current position in mpg stream.
-<li>Do some nifty OSD graphics widgets for video operations. play, fwd, rew, seek, replay,
-comercial skip, etc...
-<li>Setup and test cygwin development environment for mvpmc w32 builds &amp debugging.
-<li>Investigate getting freetype anti-aliased fonts working.
-<li>package useful utilities such as colortest &amp rtv_shell so they can easily be installed
-on a NFS/CIFS export and executed from the MVP.
-</ul>
-<ul>
-<li><strike>CIFS filesystem streaming performance is lacking. Figure out whats going on. Fix.</strike> Done 03/06/2005
-</ul> 
-
 </p>
 
 </body>
