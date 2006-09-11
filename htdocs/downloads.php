@@ -5,11 +5,19 @@
 </div>
 
 <div class="item">
-   <span>Daily builds are available 
-             <a href="http://www.mvpmc.org/builds/">here.</a></span>
+   <span>Daily builds are available from
+             <a href="http://www.mvpmc.org/builds/">USA</a>,
+             <a href="http://uk.mvpmc.org/builds/">UK</a>.
+   </span>
    <br>
-   <span>Daily doxygen output is available
-             <a href="http://www.mvpmc.org/builds/doxygen/">here.</a></span>
+   <span>Daily doxygen output is available as:
+             <a href="http://www.mvpmc.org/builds/doxygen/">HTML</a>, 
+             <a href="http://www.mvpmc.org/builds/doxygen/refman.pdf">PDF</a>.
+   </span>
+   <br>
+   <span>perl script to automate downloading the daily build:
+             <a href="get_dongle">here</a>.
+   </span>
 </div>
 
 <div class="title">
