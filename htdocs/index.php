@@ -38,6 +38,8 @@
                     include("main.php");
                 } else if ($_GET['pg'] == "screenshots") {
                     include("screenshots.php");
+                } else if ($_GET['pg'] == "press") {
+                    include("press.php");
                 } else {
                 }
             } else {
