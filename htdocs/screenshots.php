@@ -47,6 +47,11 @@ image("images/rtv_show_popup.jpg");
 image("replaytv/rtv_delete.jpg");
 print "</div>\n";
 
+print "<div class=\"item\"><h3><span>MClient (a client of Slimserver)</span></h3>\n";
+image("images/mclient_1.jpg");
+image("images/mclient_2.jpg");
+print "</div>\n";
+
 print "<div class=\"item\"><h3><span>Settings</span></h3>\n";
 image("screenshots/settings_aspect.jpg");
 image("screenshots/settings_av.jpg");
