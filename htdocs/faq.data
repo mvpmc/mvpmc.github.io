@@ -2,13 +2,14 @@ What is the goal of this project?
 The goal is to build a media player that runs on the MediaMVP itself,
 and fetches media files off standard, external servers.  Currently, it
 supports using remote filesystems (NFS and CIFS), digital video recorders
-(MythTV and ReplayTV), SlimServer, and HTTP.
+(MythTV and ReplayTV), SlimServer, HTTP, the Hauppauge MediaMVP server,
+GBPVR, VLC, Yahoo! Weather, and more.
 ###
 
 What is the state of mvpmc?
-mvpmc is alpha software.  Some things work, some things do not.
-Please do not be surprised if things do not work as well as you want,
-and please report bugs and missing functionality as you find them.
+mvpmc is beta software.  You may that features that you want are either
+broken or missing.  Please report any bugs or feature requests to the
+mailing lists.
 ###
 
 What do I need to get started?
@@ -33,8 +34,7 @@ built for you as part of the build.
 
 How do I build a new dongle.bin file?
 If you download the source release, follow the instructions in
-the <b>README</b>
-file.
+the <b>README</b> file.
 ###
 
 NFS is hanging.  How do I fix this?
@@ -44,10 +44,9 @@ this easier.
 ###
 
 Why is it trying to tftp a config file?
-The default init scripts do not start mvpmc.  Instead they try and tftp a
-config file from your tftp server.  This allows you to modify your use of
-mvpmc without rebuilding the dongle.bin file.  It also allows you to easily
-have different configurations for different MediaMVPs in your network.
+mvpmc allows you to have a config file on your tftp server so that you
+can customize your use of mvpmc to suit your needs.  If the config file
+does not exist, mvpmc will start with default options.
 This config file is the name of your
 dongle.bin bootfile, with .config appended to it (ie, dongle.bin.config).
 
@@ -80,7 +79,8 @@ rdate -s 192.168.1.1
 ###
 
 What audio file types are supported?
-mvpmc is capable of playing mp3, ogg vorbis, ac3, and uncompressed WAV files.
+mvpmc is capable of playing mp3, ogg vorbis, ac3, flac,
+and uncompressed WAV files.
 It is also capable of playing m3u playlists.
 ###
 
@@ -88,6 +88,8 @@ What video file types are supported?
 mvpmc is capable of playing mpeg1/mpeg2 videos with mpeg or AC3 audio
 streams.  In addition, the user can choose the audio stream to play if there
 is more than one (ie, a DVD VOB file with multiple language tracks).
+
+For other video types, you can use VLC to transcode to mpeg1/mpeg2.
 ###
 
 What image file types are supported?
@@ -128,7 +130,7 @@ not, you will play them via the Myth protocol.
 ###
 
 What version of MythTV does mvpmc support?
-mvpmc 0.3.0 supports MythTV 0.14 through 0.19 (plus SVN versions beyond 0.19).
+mvpmc 0.3.4 supports MythTV 0.14 through 0.20 (plus SVN versions beyond 0.20).
 ###
 
 Why is MythTV complaining "Client speaks protocol version 8 but we speak 15!"?
@@ -139,10 +141,9 @@ it should be speaking, and mvpmc will then switch to the correct version.
 ###
 
 How well does mvpmc work as a MythTV frontend?
-You can watch and delete your recordings, as well as view the upcoming
-recording schedule.  You can also watch live tv on any available tuner.
-Additional functionality, such as scheduling of
-recordings, commercial skip, etc are not supported at this time.
+mvpmc is not a complete replacement for the MythTV frontend that comes with
+MythTV.  However, it is capable of doing most of the things that a typical
+user will do on a day-to-day basis.
 ###
 
 How do I delete a MythTV recording?
@@ -154,11 +155,13 @@ allowing future recordings.
 How come I get a blank screen when I attempt to play my MythTV recordings?
 You are probably transcoding your recordings to a format that the MediaMVP
 is not capable of playing.  Your recordings need to be in mpeg1/mpeg2 format.
+If your recordings are in some other video format, you can set up VLC to
+transcode them to mpeg1/mpeg2 on the fly for mvpmc.
 ###
 
 How do I watch live TV off a MythTV server?
-Live TV does not currently work with MythTV 0.19.  mvpmc is capable of
-of playing live TV with older versions of MythTV.
+Live TV changed quite drastically in MythTV 0.19.  However, mvpmc is
+capable of playing live TV from both older and newer backends.
 
 You can watch live TV either via the filesystem or the myth protocol.  If you
 use the -b option to mvpmc, you can tell mvpmc which directory contains the
@@ -259,7 +262,7 @@ will be able to change the theme from the theme menu.
 ###
 
 I found a bug.  What should I do?
-Please file a bug on the project
+Please report it to one of the mailing lists or file a bug on the project
 <a href="http://sourceforge.net/tracker/?atid=634920&amp;group_id=103474">bug tracker</a>.
 ###
 
@@ -275,7 +278,6 @@ In no particular order:
 </span></p>
 <ul>
 <li>seek in an audio file</li>
-<li>MythTV support for scheduling recordings</li>
 <li>Tivo support</li>
 <li>video rewind</li>
 <li>internationalization for the menus/OSD</li>

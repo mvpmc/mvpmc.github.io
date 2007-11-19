@@ -46,6 +46,7 @@
    <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=458011">mvpmc 0.3.1</a> (2006-10-23)</li>
    <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=472821">mvpmc 0.3.2</a> (2006-12-20)</li>
    <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=480926">mvpmc 0.3.3</a> (2007-01-23)</li>
+   <li><a href="http://sourceforge.net/project/showfiles.php?group_id=103474&package_id=111160&release_id=555254">mvpmc 0.3.4</a> (2007-11-19)</li>
    </ul>
 
 </div>
