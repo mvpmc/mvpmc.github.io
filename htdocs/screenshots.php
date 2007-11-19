@@ -50,6 +50,7 @@ print "</div>\n";
 print "<div class=\"item\"><h3><span>MClient (a client of Slimserver)</span></h3>\n";
 image("images/mclient_1.jpg");
 image("images/mclient_2.jpg");
+image("images/mclient_3.jpg");
 print "</div>\n";
 
 print "<div class=\"item\"><h3><span>Settings</span></h3>\n";
