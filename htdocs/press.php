@@ -17,6 +17,7 @@ function article($date, $url, $name)
     print "</a>($date)\n";
 }
 
+article("2007-03-06", "http://www.xxlinux.com/linux/article/development/embed/20070306/7811.html", "xxlinux.com (Chinese)");
 article("2006-09-29", "http://www.linuxdevices.com/news/NS6566396725.html", "$99 device offers minimalistic Linux/PPC dev platform");
 article("2006-09-26", "http://www-128.ibm.com/developerworks/linux/library/l-lobmediamvp.html", "Linux on board: Inside the MediaMVP");
 article("2006-07-13", "http://www.tomsnetworking.com/2006/07/13/hauppauge_media_mvp/index.html", "Hauppauge's Media MVP: An Oldie but Goodie?");
