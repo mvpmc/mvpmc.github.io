@@ -40,6 +40,8 @@
                     include("screenshots.php");
                 } else if ($_GET['pg'] == "press") {
                     include("press.php");
+                } else if ($_GET['pg'] == "iphone") {
+                    include("iphone.php");
                 } else {
                 }
             } else {
