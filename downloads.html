@@ -1,4 +1,14 @@
-<div class="title">
+---
+layout: default
+title: mvpmc downloads
+---
+
+
+{% include description.html %}
+
+    <div id="supportingText">
+
+      <div class="title">
 
   <h3><span>Daily Builds</span></h3>
 
@@ -50,48 +60,4 @@
    </ul>
 
 </div>
-
-<!--
-<div class="title">
-   <h3><span>Development Releases</span></h3>
-</div>
--->
-
-<?php
-
-function dev_release($list, $header)
-{
-	$dir = "development";
-
-        print "<div class=\"item\"><h3><span>$header</span></h3>\n\n";
-
-	foreach ($list as $item) {
-		$fp = fopen("$item", "r");
-		$fstat = fstat($fp);
-		$d = date("F d Y H:i:s T", $fstat["mtime"]);
-
-		print "<ul>";
-		print "<li>Name: <a href=\"$dir/$item\">$item</a>\n";
-		print "<li>Bytes: ";
-		print $fstat["size"];
-		print "\n";
-		print "<li>Date: $d\n";
-		fclose($fp);
-		print "\n</ul>\n\n";
-	}
-
-	print "</div>\n";
-}
-
-//chdir("development");
-
-$dongle = glob("dongle.bin.mvpmc-*");
-$bin = glob("mvpmc-*-bin.tar.gz");
-$src = glob("mvpmc-*-src.tar.gz");
-
-//dev_release($dongle, "dongle.bin Releases");
-//dev_release($bin, "Binary Releases");
-//dev_release($src, "Source Releases");
-
-?>
 

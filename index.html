@@ -1,11 +1,27 @@
-<html>
+---
+layout: default
+title: MediaMVP Media Center
+---
 
-<head>
-<title>mvpmc</title>
-</head>
+{% include description.html %}
 
-<body>
-<a href="https://github.com/organizations/mvpmc">mvpmc</a>
-</body>
+<div id="supportingText">
 
-</html>
+  <div class="title">
+
+    <h3><span>News</span></h3>
+
+  </div>
+
+  {% for post in site.posts limit:50 %}
+
+  <div class="item">
+    <h3><span>
+	{{ post.title }} - {{ post.date | date_to_string }}
+    </span></h3>
+	{{ post.content }}
+  </div>
+
+  {% endfor %}
+
+</div>
