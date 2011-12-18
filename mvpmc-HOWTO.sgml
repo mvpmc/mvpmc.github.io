@@ -1,0 +1,270 @@
+<!doctype linuxdoc system>
+<article>
+<title>Installing and using mvpmc
+<author>Robert Kulagowski, <url url="mailto:rkulagow@rocketmail.com"
+name="mailto:rkulagow@rocketmail.com">
+<date>2004-11-28, v0.00.02
+<abstract>
+</abstract>
+<toc>
+<sect>What is the MediaMVP
+<p>The MediaMVP is a small, diskless Linux computer which obtains its
+operating system via TFTP. From the information page at <url
+url="http://www.hauppauge.com/pages/products/data_mediamvp.html"
+name="http://www.hauppauge.com/pages/products/data_mediamvp.html">:
+
+"MediaMVP is a Linux based digital media receiver based on a powerful IBM
+PowerPC processor. It includes a hardware MPEG decoder to process digital
+video movies, while music and digital pictures are software decoded by
+MediaMVP's processor. It receives the digital media from a PC via an
+Ethernet LAN, decodes the media and outputs video through composite and
+S-Video connections, and audio through stereo audio output connectors."
+
+The mvpmc project uses the MediaMVP hardware and replaces the software that
+the MediaMVP runs.  Because the MediaMVP boots completely from the network,
+changes made to the software aren't permanent - you can always switch back
+to using the Hauppauge-supplied software with the Windows server.
+
+<sect>Configuring your compile host
+<p>This HOWTO is developed on a machine running Debian unstable, but the
+basic configuration of each of the steps should be similar between
+distributions.  It also focuses on running the MediaMVP with MythTV, so if
+you would like to see instructions on using ReplayTV please submit them.
+
+Install required libraries and programs:
+<tscreen><verb>
+# apt-get install autoconf wget unzip
+</verb></tscreen>
+
+Download the mvpmc toolchain: <url
+url="http://mvpmc.sourceforge.net/dl/mvpmc_toolchain.tar.gz"
+name="http://mvpmc.sourceforge.net/dl/mvpmc_toolchain.tar.gz">
+<tscreen><verb>
+$ su
+# mkdir /opt/
+# mkdir /opt/crosstool
+# chmod a+rwx /opt/crosstool
+# mkdir /tftpboot
+# chmod a+rwx /tftpboot
+# exit
+$ wget http://mvpmc.sourceforge.net/dl/mvpmc_toolchain.tar.gz
+$ tar -xzvf mvpmc_toolchain.tar.gz
+$ cd mvpmc_toolchain
+$ ./mvpmc-uclibc.sh
+</verb></tscreen>
+The crosstool scripts will download a number of packages from the Internet,
+so it may take a while.  When everything has finished building, you should
+see something like this:
+<tscreen><verb>
+powerpc-405-linux-uclibc-hello2
+/opt/crosstool/powerpc-405-linux-uclibc/gcc-3.3.3-uClibc-0.9.23/lib/gcc-lib/powerpc-405-linux-uclibc/3.3.3/../../../../powerpc-405-linux-uclibc/lib/libstdc++.so:
+undefined reference to `Sqrtf'
+collect2: ld returned 1 exit status
+</verb></tscreen>
+Yes, this is an error, but the build has actually succeeded.
+<sect>Obtaining an original dongle.bin
+<p><bf>dongle.bin</bf> is the name of the Linux kernel and ramdisk that Hauppauge supples for the MediaMVP.
+The mvpmc project creates a new version of this file, replacing Hauppauge's frontend software with mvpmc.
+
+You will need to place a copy of the Hauppauge-supplied <bf>dongle.bin</bf>
+file into <tt>/tftpboot</tt>.  The mvpmc build procedure will be looking for the software in that location.
+
+Download the Hauppauge Windows server software from <url
+url="http://hauppauge.lightpath.net/software/mediamvp/mediamvpsetup_22_22146.exe"
+name="http://hauppauge.lightpath.net/software/mediamvp/mediamvpsetup_22_22146.exe">
+and extract the <tt>dongle.bin</tt> file:
+
+<tscreen><verb>
+$ wget http://hauppauge.lightpath.net/software/mediamvp/mediamvpsetup_22_22146.exe
+$ unzip -Ln mediamvpsetup_22_22146.exe dongle.bin
+$ cp dongle.bin /tftpboot
+</verb></tscreen>
+
+<sect>Obtaining mvpmc
+<p>If you will be using CVS, you will need to do the following steps.  Anytime you are prompted
+for a password, press ENTER.
+<tscreen><verb>
+$ mkdir mvpmc
+$ cd mvpmc
+$ cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc login
+$ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc co build
+$ cd build
+$ mkdir release
+$ cd release
+$ cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc login
+$ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc co mvplib
+$ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvpmc co mvpmc
+$ cd ..
+</verb></tscreen>
+You must now run <bf>autoconf</bf> to create the configure file:
+<tscreen><verb>
+$ cd ~/mvpmc/build
+$ autoconf
+</verb></tscreen>
+Now, time to compile.  The first command is one long line.
+<tscreen><verb>
+$ CC=/opt/crosstool/powerpc-405-linux-uclibc/gcc-3.3.3-uClibc-0.9.23/bin/powerpc-405-linux-uclibc-gcc \
+./configure --with-mvpmc-mediamvp --with-mvpmc-host
+$ make populate
+$ make configure
+$ make
+</verb></tscreen>
+
+When the compile is complete, copy the <tt>mediamvp/dongle.bin.mvpmc</tt>
+file to <tt>/tftpboot</tt>
+
+<tscreen><verb>
+$ cp mediamvp/dongle.bin.mvpmc /tftpboot
+</verb></tscreen>
+
+<sect>Configuring tftp and DHCP
+<sect1>tftp
+<p>First, install tftp.  On Debian, you would:
+<tscreen><verb>
+$ su
+# apt-get install atftpd
+</verb></tscreen>
+
+<sect1>Installing DHCP
+<p>DHCP is required as well.  You must be able to specify the location of
+the tftp server in the DHCP response packet, otherwise the MediaMVP will not be able to boot.
+
+Install DHCP:
+<tscreen><verb>
+$ su
+# apt-get install dhcp
+# joe /etc/default/dhcp
+</verb></tscreen>
+
+By default, Debian will not listen to any of the interfaces.  Look for the line that looks like:
+<tt>INTERFACES=""</tt> and change it to something like <tt>INTERFACES="eth0"</tt>
+
+<sect1>Configuring DHCP
+<p>You will need to edit your <tt>/etc/dhcpd.conf</tt> file first.  In the
+example below, we're setting up a subnet 192.168.10.100 through 192.168.10.250.  The
+DNS servers are 63.240.76.4 and 204.127.198.4  Our default gateway is 192.168.10.1
+We are going to permanently assign IP address 192.168.10.57 to our MediaMVP.  Most of these values
+are not used by the MediaMVP, but this is how you could use a linux DHCP server in your own
+environment.
+
+<bf>NOTE</bf>: You must replace <tt>00:0d:fe:00:a2:ab</tt> with the MAC address of your actual
+MediaMVP.  If you use the MAC address in the example, your setup will not work.
+
+<tscreen><verb>
+option domain-name              "local";
+option subnet-mask              255.255.255.0;
+option domain-name-servers 63.240.76.4, 204.127.198.4;
+
+allow bootp;
+allow booting;
+
+#option ip-forwarding    false;  # No IP forwarding
+#option mask-supplier    false;  # Don't respond to ICMP Mask req
+
+subnet 192.168.10.0 netmask 255.255.255.0 {
+  option routers        192.168.10.1;
+  range 192.168.10.100 192.168.10.250;
+}
+
+group {
+  next-server 192.168.10.50;          # name of your TFTP server
+
+  host mvp { # NOTE: Change the hardware ethernet to the MAC address of your actual MVP
+           hardware ethernet 00:0d:fe:00:a2:ab;
+           fixed-address 192.168.10.57;
+           filename "dongle.bin.mvpmc";
+           option root-path "/home/mvp,rsize=4096,wsize=4096,nolock";
+  }
+
+}
+</verb></tscreen>
+
+Make sure that dhcp is started:
+<tscreen><verb>
+$ su
+# /etc/init.d/dhcp start
+# tail /var/log/daemon.log
+</verb></tscreen>
+
+<sect1>Creating the dongle.bin.mvpmc.config file
+<p>When the MediaMVP is booting, it will try to download this file from the
+tftp server. If you would like your MediaMVP to automatically start the
+mvpmc application, you could make your config file look something like this
+if you will be using NFS.  In this case, 192.168.10.50 is the IP address of the 
+masterbackend server.  We are creating a mount point called <tt>/var/myth</tt> and then
+mounting the directory using NFS.  The <bf>-r</bf> parameter instructs mvpmc to look for
+the recordings in <tt>/var/myth/video</tt>
+
+<tscreen><verb>
+rdate -s 192.168.10.50
+mkdir /var/myth/
+mount -t nfs -o nolock,rsize=4096,wsize=4096,nfsvers=3 192.168.10.50:/var/myth/ /var/myth/
+mvpmc -f /etc/helvR10.fnt -s 192.168.10.50 -r /var/myth/video &
+</verb></tscreen>
+
+See the NFS section of the MythTV HOWTO <url url="http://www.mythtv.org/docs/mythtv-HOWTO-21.html#ss21.9" name="http://www.mythtv.org/docs/mythtv-HOWTO-21.html#ss21.9">
+for examples on how to configure NFS.
+
+The mvpmc software can also use the Myth protocol directly rather than using
+NFS.  If you would like to use the Myth protocol, the
+<tt>dongle.bin.mvpmc.config</tt> would look like this.
+<tscreen><verb>
+rdate -s 192.168.10.50
+mvpmc -f /etc/helvR10.fnt -s 192.168.10.50 &
+</verb></tscreen>
+
+<sect>Confirming that everything works
+<p>The <tt>/var/log/daemon.log</tt> file will show that DHCP has started.  When the MediaMVP boots, you should
+see something similar to this in your logs:
+<tscreen><verb>
+Nov 25 14:09:48 masterbackend dhcpd: DHCPDISCOVER from 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:09:48 masterbackend dhcpd: DHCPOFFER on 192.168.10.57 to 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:09:48 masterbackend in.tftpd[1470]: connect from 192.168.10.57 (192.168.10.57)
+Nov 25 14:09:48 masterbackend tftpd[1470]: Trivial FTP server started (0.6.2)
+Nov 25 14:09:48 masterbackend tftpd[1472]: Serving dongle.bin.mvpmc to 192.168.10.57:3909
+Nov 25 14:10:04 masterbackend dhcpd: BOOTREQUEST from 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:04 masterbackend dhcpd: BOOTREPLY for 192.168.10.57 to mvp (00:0d:fe:00:a2:ab) via eth0
+Nov 25 14:10:05 masterbackend dhcpd: DHCPDISCOVER from 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:05 masterbackend dhcpd: DHCPOFFER on 192.168.10.57 to 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:05 masterbackend dhcpd: DHCPREQUEST for 192.168.10.57 from 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:05 masterbackend dhcpd: DHCPACK on 192.168.10.57 to 00:0d:fe:00:a2:ab via eth0
+Nov 25 14:10:05 masterbackend tftpd[1473]: Serving dongle.bin.mvpmc.config to 192.168.10.57:2048
+</verb></tscreen>
+  
+</article>
+<!-- Revision History
+
+v0.00.01, 2004-11-21.  Initial version.
+v0.00.02, 2004-11-28.  Update to build instruction.
+-->
+
+<!--
+To create documentation, run "make" in the docs/ subdirectory
+-->
+
+<!-- Basic Style Guide for the HOWTO.
+
+Paths are specified with <tt>
+
+Program names are specified with <bf>
+
+Use full close tags, such as </tt> rather than the "/>" shortcut.
+
+For a URL link, the url= and name= should be the same.  This ensures that
+users who are reading the text version of the document will see what the URL
+is.
+
+For "Notes", the format is <bf>NOTE</bf>: text here.
+
+label id's must be contained on one line.  If they break across the right
+margin the wrapped text will be considered as text and not a destination.
+
+Don't make a section "a" if there's no section "b". Same for numbers; no
+number 1 if there's no number 2, etc.
+
+Itemized and enumerated items should be full sentences, and should end with
+a period.
+
+All major sections end with a period; subsections don't.
+
+-->

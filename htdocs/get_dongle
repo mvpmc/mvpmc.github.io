@@ -1,0 +1,156 @@
+#!/usr/bin/perl
+
+# Written by Mike Richardson, University of Manchester.
+# Suitable for downloading dongle files for MVPMC. 
+# You can do whatever you want with this. 
+# I'd appreciate it if you could let me have any changes or improvements.
+# My email address is doctor@mcc.ac.uk
+# This really isn't tested too well so if there are any problems let me know
+# and I'll do what I can to fix it.
+
+# You'll need the LWP and GetOpts::Std perl modules installed.
+# I run it as root in a cron job.
+
+# The suggested way to cron it is something like:
+
+# 30 10 * * * sleep $(expr $RANDOM \% 7200) && /usr/local/bin/get_dongle
+
+# to avoid stressing the servers all at the same time.
+
+# And it ought to be run after 09:00 GMT against www.mvpmc.org or
+# after 11:00 GMT against the mirror at uk.mvpmc.org if you want the
+# latest dongle versions
+
+use LWP;
+
+my $DOWNLOAD_PREFIX = 'dongle.bin.mvpmc-';
+my $DOWNLOAD_DIR = '/tftpboot';
+my $LINK_DIR = '/tftpboot';
+my $LINK_NAME = $LINK_DIR."/dongle.bin.mvpmc";
+my $URL = 'http://uk.mvpmc.org/builds/';
+
+use vars qw/ %opt /;
+
+init();
+
+## Test that the locations are suitable
+
+test_dir($DOWNLOAD_DIR);
+test_dir($LINK_DIR);
+
+
+## Open a connection with the web server and get the index page with the list of dongles on
+our $browser = LWP::UserAgent->new; 
+my $response = $browser->get($URL);
+
+if (! $response->is_success)
+{  
+  print "Fetch of index page failed: ".$response->status_line."\n";
+  exit 0;
+}
+
+## Find the highest numbered dongle file (date format is just right :-)
+
+my $version = 0;
+foreach my $line (split ("\n",$response->content))
+{
+  $line =~ /\<a href=\"$DOWNLOAD_PREFIX(\d{8})\"\>/;
+  $version=$1>$version?$1:$version;
+}
+
+# Exit unless there is a valid version.
+
+die "Can't find valid version" unless $version;
+
+## Don't get the file if it already exists, unless the force flag is on.
+
+die "$DOWNLOAD_PREFIX$version already exists. Not fetching\n"
+  if (-f $DOWNLOAD_DIR."/".$DOWNLOAD_PREFIX.$version and ! $opt{f} );
+
+## Uses the LWP 5.66 option 'content_file' to save the file to disk. 
+## I think this is cheating but I'm not sure.
+  
+my $response = $browser->get($URL.$DOWNLOAD_PREFIX.$version,':content_file' => $DOWNLOAD_DIR."/".$DOWNLOAD_PREFIX.$version);
+
+die "Fetch of $DOWNLOAD_PREFIX.$version failed: ".$response->status_line 
+  unless $response->is_success;
+
+die "Not the right content type: ".$response->content_type 
+  unless $response->content_type eq 'application/octet-stream';
+ 
+die "Zero length file" 
+  unless $response->content_length;
+
+die "$DOWNLOAD_DIR."/".$DOWNLOAD_PREFIX.$version does not exist" 
+  unless isfile( $DOWNLOAD_DIR."/".$DOWNLOAD_PREFIX.$version );
+
+
+# Check link exists
+if ( -e $LINK_NAME )
+{
+  # Make sure the file is a symlink
+  -l $LINK_NAME 
+    or die "$LINK_NAME is not a symbolic link, ",$!;
+
+  # Remove old sym link
+  unlink($LINK_NAME)
+    or die "Can't unlink $LINK_NAME, ",$!;
+}
+elsif ( -z $LINK_NAME ) # or is zero length file
+{
+  # remove the file
+  unlink($LINK_NAME)
+    or die "Can't unlink $LINK_NAME, ",$!;
+}
+
+# Create new sym link
+symlink ($DOWNLOAD_DIR."/".$DOWNLOAD_PREFIX.$version,$LINK_NAME)
+  or die "Can't symlink $DOWNLOAD_PREFIX$version,$LINK_NAME, ",$!;
+
+-l $LINK_NAME or die "No sym link created, ",$!;
+
+print "Downloaded $DOWNLOAD_PREFIX$version and re-symlinked it\n";
+
+exit 0;
+
+  
+sub test_dir
+{
+  my $dir = shift;
+  
+  # Test that it is a directory, writable and executable
+  -d $dir && -w $dir && -x $dir or die "$dir has to be a directory with wx permissions,",$@;
+}
+
+sub init
+{						
+  use Getopt::Std;
+  my $opt_string = 'hf';
+  getopts( "$opt_string", \%opt) or usage();
+  usage() if $opt{h};
+}
+        
+sub isfile
+{
+  my ( $filename ) = shift;
+
+  return (-e $filename && -s $filename);
+}
+
+sub usage
+{
+  print STDERR<<"EOF";
+
+This program FTPs the latest dongle file, uncompresses it and relinks it.
+
+usage: $0 -hf
+
+-h      : this (help) message
+-f      : forces a download and uncompression
+
+example: $0 -f
+
+EOF
+  exit;
+}
+	      

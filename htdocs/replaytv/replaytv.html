@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+ <title>mvpmc ReplayTV</title>
+</head>
+<body>
+<h1>mvpmc ReplayTV</h1>
+<h2>John Honeycutt, 
+<a>honeycut@mvpmc.org</a></h2>2006-09-06, v0.00.06
+<hr>
+<em></em>
+<hr>
+<p>
+<h2><a name="toc1">1.</a> <a href="replaytv.html#s1">Intro</a></h2>
+
+<p>
+<h2><a name="toc2">2.</a> <a href="replaytv.html#s2">Screenshots</a></h2>
+
+<p>
+<h2><a name="toc3">3.</a> <a href="replaytv.html#s3">ReplayTV commandline options</a></h2>
+
+<p>
+<h2><a name="toc4">4.</a> <a href="replaytv.html#s4">Using the Remote Control</a></h2>
+
+<p>
+<h2><a name="toc5">5.</a> <a href="replaytv.html#s5">rtv_shell</a></h2>
+
+<p>
+<h2><a name="toc6">6.</a> <a href="replaytv.html#s6">Debugging Problems</a></h2>
+
+
+<hr>
+<h2><a name="s1">1.</a> <a href="#toc1">Intro</a></h2>
+mvpmc includes support for streaming from ReplayTV 4K and 5K series PVRs.<br>
+Support is also provided for DVArchive 3.2.<br>
+Functionality includes:
+<ul>
+<li>Automatic discovery of all RTV devices on the network.
+<li>Displaying information about the RTV devices including model numbers,
+harddrive capacity, and harddrive space used.
+<li>Retrieval and parsing of Replay Guides including show title,
+eposide title/description, actors, show length, time/date recorded,
+etc...
+<li>Ability to delete shows. 
+<li>OnScreen display during video playback.
+<li>Extensive navigation during playback including: +28 second seek
+forward, -8 second seek back, absolute jump to any time, relative jump
+from current play position.
+<li>Manual commercial skip.
+</ul>
+
+<h2><a name="s2">2.</a> <a href="#toc2">Screenshots</a></h2>
+
+<pre><b>     mvpmc main menu                 device menu</b><br></pre>
+<a href="mvp_rtv_main.gif"><img src="tn_mvp_rtv_main.gif" width="200" height="133" alt="" border="0" align="" hspace="20"></a>
+<a href="rtv_devicelist.jpg"><img src="tn_rtv_devicelist.jpg" width="200" height="133" alt="" border="0" align=""></a>
+<br><br><br>
+
+<pre><b>         show menu                  show menu popup</b><br></pre>
+<a href="rtv_show_menu.jpg"><img src="tn_rtv_show_menu.jpg" width="200" height="133" alt="" border="0" align="" hspace="20"></a>
+<a href="rtv_show_popup.jpg"><img src="tn_rtv_show_popup.jpg" width="200" height="133" alt="" border="0" align=""></a>
+<br><br><br>
+
+<pre><br><b>       delete show                on screen display</b><br></pre>
+<a href="rtv_delete.jpg"><img src="tn_rtv_delete.jpg" width="200" height="133" alt="" border="0" align="" hspace="20"></a>
+<a href="rtv_osd.jpg"><img src="tn_rtv_osd.jpg" width="200" height="133" alt="" border="0" align=""></a>
+<br><br><br>
+
+
+<h2><a name="s3">3.</a> <a href="#toc3">ReplayTV Commandline Options</a></h2>
+<p>
+<b>specifying the ReplayTV theme when starting mvpmc</b><br>
+mvpmc has a built in theme which provides a ReplayTV like color scheme.<br>
+The ReplayTV theme is specifyed with the "-t /usr/share/mvpmc/replaytv.xml" command line option.
+<br>
+Note: The ReplayTV theme can also be selected from the mvpmc main menu
+screen under [settings] [themes]
+<br>
+<br>
+<b>mvpmc Fonts</b><br>
+mvpmc offers three GUI OSD(On Screen Display) font sizes.<br>
+<ul>
+<li>10 point Helvetica: (default)
+<li>14 point Helvetica: /etc/helvB14.pcf
+<li>18 point Helvetica: /etc/helvB18.pcf
+</ul> 
+The ReplayTV GUI is optimized for an 18 point font.<br>
+As of mvpmc 0.1.6, the replaytv code is themeble. The
+xml theme files (/usr/share/mvpmc/default.xml and
+/use/share/mvpmc/replaytv.xml) specifiy the 18 point font for replaytv
+widgets<br>
+If desired users can modify the gui fonts for any widget by creating a
+custom xml theme file and loading it with the mvpmc '-t' option. 
+<br>
+<br>
+<b>mvpmc ReplayTV options</b><br>
+ReplayTV options are specified with the "-R" flag.<br>
+At a minimum you must specify either a static IP address list or tell mvpmc
+to run ReplayTV Discovery.<br>
+<font color="#FF0000">NOTE: DVArchive must be discovered to kick it in
+to ReplayTV 4K or 5K mode.<br></font>
+The format is:
+<pre><tt>
+   -R discover
+   -R IPAddr1/IPAddr2/IPAddr3...
+e.g: -R 192.168.1.10/192.168.1.11/192.168.1.12
+
+Example for specifying ReplayTV discovery and the ReplayTV theme:
+<font color="#0000FF">mvpmc -t /usr/share/mvpmc/replaytv.xml -R discover</font>
+</tt></pre>
+
+Multiple ReplayTV options can be passed using the form: <code>-R "&lt option list &gt"</code><br>
+The following options are supported:<br>
+<ul>
+<li>ip=&lt address list or discover &gt <font color="#FF0000">(This parameter is required)</font><br><br> 
+<li>mode=4k (Force DVArchive into RTV 4K mode instead of 5K mode)<br><br>
+<li>dtmo=&lt discovery timeout (seconds) &gt (Default is 6 seconds)<br>
+<li>mrtv=&lt Maximum number of ReplayTV devices to discover &gt<br>
+The "dtmo" and "mrtv" options can be used to tune how mvpmc performs
+ReplayTV device discovery.<br>
+"dtmo" is used to specify how long to wait for ReplayTV devices to
+respond when performing discovery. If you have a slow computer running
+DVArchive you may need to specify a "dtmo" value larger than the
+default.<br>
+"mrtv" is used to specify how many ReplayTVs to discover before
+completing discovery and presenting the mvpmc GUI.
+"mrtv" can be used to speed up the discovery process if a user knows
+how many ReplayTV/DVArchive devices are on the network.
+<li>chunksz=&lt num &gt<br>
+The chunksz option allows modifying how much video stream data
+ to read before passing it to the MVP hardware.
+This seems to help if the streaming RTV has a slow harddrive.
+This option should only be modified if you are having streaming
+  problems such as a black screen when starting a new video or jumping
+  in a video. The default is '3'. <br>
+  Try chunksz=4 or chunksz=5 and see if the problem goes away.
+  
+<br><br>
+<li>debug=&lt trace mask &gt<br>
+Where trace types are:<br>
+<pre><code>
+   RTVLOG_INFO          0x00000001
+   RTVLOG_DSCVR         0x00000002
+   RTVLOG_GUIDE         0x00000004
+   RTVLOG_HTTP          0x00000008
+   RTVLOG_HTTP_VERB     0x00000010
+   RTVLOG_NET           0x00000020
+   RTVLOG_CMD           0x00000040
+   RTVLOG_NETDUMP       0x10000000
+</code></pre>
+<li>logfile=&lt NFS or CIFS (Windows File Share) mounted logfile path &gt<br>
+</ul> 
+examples:
+<code><pre>
+Specify ReplayTV theme, discover RTV's, set debug level 0x58:
+   <font color="#0000FF">mvpmc -t /usr/share/mvpmc/replaytv.xml -R "ip=discover debug=58"</font><br>
+Discover RTV's and make DVArchive believe the MVP is a RTV 4K instead of RTV 5K device.
+   <font color="#0000FF">mvpmc -R "ip=discover mode=4k"</font>
+</pre></code>
+</p>
+<br>
+
+
+<h2><a name="s4">4.</a> <a href="#toc4">Using the Remote Control</a></h2>
+<p>
+<pre>
+<b>Show Menu</b><ul>
+<li>OK:     Brings up show menu popup
+<li>PLAY:   Plays show
+<li>RED:    Up one page
+<li>YELLOW: Down one page 
+</ul>
+<b>Video Playback</b><ul>
+<li>BLANK:  Brings up OSD
+<li>PLAY:   Plays show
+<li>FFWD:   2X FastForward
+<li>REW:    Jump back one second
+<li>SKIP:   Jump forward 28 seconds
+<li>REPLAY: Jump back 8 seconds
+<li>[0..9]: Enter Jump Time: Then GO or GREEN to Jump to entered time
+<li>[0..9]: Enter Jump Time: Then SKIP to Jump forward number of minutes from current play position.
+<li>[0..9]: Enter Jump Time: Then REPLAY to Jump back number of minutes from current play position.
+<li>[0..9]: Enter Jump Time: Then REW to Jump back number of seconds from current play position.
+<li>BLUE: Commercial Skip Forward (Jump to end of next commercial break)
+<li>YELLOW: Commercial Skip Back (If last key press was not
+'Commercial Skip Fwd' then jump to end of last commercial break. If
+last key press was 'Commercial Skip Fwd' then jump to previous time
+when 'Commercial Skip Fwd' was pressed.)
+</ul>
+<b>Seek: On Screen Display (OSD)</b><ul>
+<li>SKIP (End of commercial break NOT encountered): +28 >>
+<li>SKIP (End of commercial break encountered): +ss >>[CB]
+<li>REPLAY: -08 <<
+<li>Jump to Time: h:mm JUMP
+<li>Commercial Skip Forward: +m:ss >>[CS]
+<li>Commercial Skip Back (last key press not 'CS Fwd'): -m:ss <<[CS]
+<li>Commercial Skip Back (last key press was 'CS Fwd'): << PREV
+</ul>
+</pre> 
+</p>
+
+<h2><a name="s5">5.</a> <a href="#toc5">rtv_shell</a></h2>
+<p>
+rtv_shell is a command line utility for executing libreplaytv functionality.<br>
+It provides access the ReplayTV's http filesystem, guide, etc...
+Following is the help menu:
+<pre><code>
+rtv_sh>help
+SHELL COMMANDS:
+   sendlogs   :    send logs to a file
+   sdm        :    set the debug trace mask
+   discover   :    discover RTV devices
+   di         :    get RTV device information
+   devlist    :    print device list summary
+   guide      :    get RTV guide
+   delshow    :    delete a show
+   playpos    :    get shows current play position
+   free       :    free rtv data struct
+   fsvi       :    http filesystem: get volume info
+   fsstat     :    http filesystem: get file status
+   fsls       :    http filesystem: list directory
+   fsget      :    http filesystem: get file
+   crypttest  :    Test encryption routines
+   clitestfxn :    test parameter parsing
+   help       :    display this help
+   help &ltcommand&gt provides detailed help for the command.
+</code></pre>
+<a href="rtv_shell.txt">Link to rtv_shell session</a><br><br>
+
+rtv_shell for PPC can be executed from the MVP by copying the 
+rtv_shell executable from the mvpmc build tree to a NFS or Windows share
+that is mounted by the MVP.<br>
+rtv_shell builds and runs for linux x86. 
+To build for x86 cd in your build tree to host/mvplib/libreplaytv and do a make.<br>
+
+</p>
+
+<h2><a name="s6">6.</a> <a href="#toc6">Debugging Problems</a></h2>
+<p>
+Problems should be reported to the mvpmc-devel mailing list.<br>
+There are lots of Error print statements in the mvpmc and ReplayTV code.<br>
+To be able to see them you need to start mvpmc from a telnet session instead
+of starting it from the config script.<br>
+Hopefully the problem can be reproduced easily and Error logs will occur 
+when it happens.<br><br>
+If mvpmc is trapping and exiting when the problem occurs you can get a core
+file to debug by doing the following:<br>
+<ul>
+<li>Mount a NFS or Windows share in Read/Write mode on the MVP.
+<li>telnet to the MVP.
+<li>Enter: "ulimit -c 2000" to enable coredumps.
+<li>cd to the NFS or Windows share directory.
+<li>start mvpmc and reproduce the problem.
+</ul> 
+This should cause a core file to be dumped to to the NFS/Windows share.
+If you have a mvpmc development environment setup then run gdb 
+on the core file.
+Otherwise, post the problem to the mvpmc-devel mailing list.<br>
+Myself or someone else will ask you to email the core file so we can analyze it.<br>
+</p>
+
+</body>
+</html>
+

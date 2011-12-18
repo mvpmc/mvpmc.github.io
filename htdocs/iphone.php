@@ -1,0 +1,70 @@
+<div class="title">
+
+  <h3><span>mvpmc on the iphone</span></h3>
+
+</div>
+
+<div class="item">
+  <p>
+    mvpmc is available from the Apple iTunes store as mvpmc 0.1.8.  It will
+    run on an iPhone or iPod Touch (and presumably an iPad).  This first
+    release is very basic, and is more of a proof-of-concept than anything
+    else.  It will allow you to watch your MythTV recordings and initiate
+    a transcode via VLC to a format that is playable on the iPhone.
+  </p>
+
+  <p>
+    In order to use it, you will need a <a href="http://www.mythtv.org/">
+    MythTV</a>, and probably <a href="http://www.videolan.org/">VLC</a> and
+    a web server.  And your VLC installation will need to be capable of
+    encoding AAC audio, which will likely mean that you will need to either
+    build it yourself, or get it from somewhere like
+    <a href="http://www.medibuntu.org/">medibuntu</a>.
+  </p>
+
+  <p>
+    If your MythTV recordings are playable directly on the iPhone, then you
+    do not need to do any transcoding.  You can simply play the original
+    file and ignore the settings for VLC and the web server.
+  </p>
+
+  <p>
+    In order to initiate a transcode from the iPhone,
+    you will need to start VLC with the <i>-I telnet</i> option.  This will
+    allow mvpmc to control the transcoding of your MythTV recordings.
+  </p>
+
+  <p>
+    In order to view your transcoded files, you will need a web server
+    capable of serving them to your phone.
+  </p>
+
+</div>
+
+<div class="title">
+  <h3><span>building mvpmc for the iphone</span></h3>
+</div>
+
+<div class="item">
+  <p>
+    You can build mvpmc for the iphone with the code in the git repositories
+    at <a href="http://git.mvpmc.org/">http://git.mvpmc.org/</a>.
+  </p>
+
+  <p>
+    Clone the mvpmc_iphone.git repo and the cmyth.git repo into the same
+    directory.  Switch to the iphone branch of the cmyth.git repo, and build
+    the mvpmc project with Xcode in the mvpmc_iphone repo.  For example:
+  </p>
+
+  <pre>
+    $ git clone git://git.mvpmc.org/repos/cmyth.git
+    $ git clone git://git.mvpmc.org/repos/mvpmc_iphone.git
+    $ cd cmyth
+    $ git checkout -b iphone origin/iphone
+
+    open mvpmc_iphone/mvpmc.xcodeproj with Xcode and build the project
+  </pre>
+</div>
+
+</div>
